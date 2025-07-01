@@ -1,120 +1,78 @@
-📄 Parshant Yadav - Personal Portfolio
+# ⭐ **Parshant Yadav - Personal Portfolio**
 
-Welcome to the official GitHub repository for Parshant Yadav's Personal Portfolio Website.
-
+Welcome to the official portfolio of **Parshant Yadav** — a passionate Computer Science student (AI & ML specialization) showcasing real-world projects, competitive coding achievements, and a rich collection of learning resources.
 This portfolio represents my journey, skills, certifications, and featured projects as a Software Developer with expertise in Web Development, Python, DSA, and AI/ML.
 
-📁 Live Website
+**🌐 Live Website**
 
 Visit: www.parshantyadav.com
 
-Hosted via GitHub Pages and domain.
+---
 
-📂 Features
+## 🚀 **Features**
 
-Responsive Web Design (Desktop + Mobile Friendly)
+* 🔐 Login / Signin using Firebase Authentication (Email/Password)
+* 📄 Downloadable resume (94+ ATS score)
+* 🎓 20+ curated free certification courses
+* 🧠 Projects in AI/ML, Web Development, DSA
+* 💳 Razorpay-integrated payments for premium resources
+* 📜 Free Certificates, Roadmaps, Resources pages
+* 📱 Fully responsive (mobile-first design)
+* 🔗 Social Media Integration (WhatsApp, GitHub, LinkedIn, Instagram)
+* 🖼️ Animated scroll effects, tooltips, and hover interactivity
+* 🎯 Protected post-login dashboard
 
-Secure Login/Signin System using Firebase Authentication (Email/Password)
+---
 
-Payment Integration (for roadmap/resources)
+## 🛠️ **Technologies Used**
 
-Protected Dashboard after login
+* **HTML5, CSS3, JavaScript**
+* **Tailwind CSS** for modern utility-first styling
+* **Firebase** (Auth, Firestore)
+* **Razorpay API** for payments
+* **GitHub Pages** for deployment
+* **Python, Java, C, C++**
+* **MySQL** for DB concepts
+* **VS Code**, **PyCharm** for development
+* **Canva & Figma** (UI Design)
+* **GSAP / CSS Animations** for transitions
 
-Admin panel for certificate/resource management (hidden/private)
-
-Sections included:
-
-Home
-
-About
-
-Skills
-
-Certificates
-
-Education
-
-Leetcode
-
-GitHub Projects
-
-Resources & Roadmaps
-
-Contact Form
-
-✨ Technologies Used
-
-🌐 Frontend
-
-HTML5 / CSS3 / JavaScript
-
-Responsive Layout using Flexbox
-
-Custom animations, tooltips, and hover effects
-
-Mobile Navbar Toggle (Hamburger menu)
-
-Typing effect (JS)
-
-🧰 Backend/Services
-
-Firebase Auth: Email/Password Login/Signup
-
-Firebase Firestore: User & purchase data
-
-Razorpay: Payment gateway for resources
-
-⚖️ Other Tools
-
-GitHub Pages (Hosting)
-
-Font Awesome (Icons)
-
-Canva (Profile visuals)
+---
 
 
-🚀 Deployment
 
-Project hosted using GitHub Pages
+## 💡 **Upcoming Features**
 
-Domain www.parshantyadav.com linked using CNAME
+* 📧 Contact form with backend email support (using EmailJS or Firebase Functions)
+* 📊 Visitor Analytics dashboard (via Plausible/Google Analytics)
+* 📁 Resume Builder tool
+* 💬 AI Chat Assistant for roadmap suggestions
+* 💼 Internship Opportunities integration
+* 🧾 Admin panel for certificate/roadmap uploads
 
-Custom HTTPS Certificate (auto-issued by GitHub)
+---
 
-DNS setup via Namecheap:
+## 📬 **Contact**
 
-A Records: GitHub IPs
+* **Email**: [parshant786yadav@gmail.com](mailto:parshant786yadav@gmail.com)
+* **Phone**: +91 8826448907
+* **Location**: Gurgaon, India
 
-CNAME: points www to parshant786yadav.github.io
+### 📱 **Connect:**
 
-✅ Upcoming Features
+* [GitHub](https://github.com/parshant786yadav)
+* [LinkedIn](https://www.linkedin.com/in/parshant786)
+* [Instagram](https://www.instagram.com/its_yduvnshi)
+* [WhatsApp](http://wa.me/+918826448907)
 
-Admin login panel (secured)
+---
 
-User-specific dashboard stats
-
-Resume parser with ATS score analysis
-
-Blog section for dev tips and updates
-
-🌟 Contact
-
-Parshant Yadav📱 +91 8826448907📧 parshant786yadav@gmail.com📍 Gurgaon, India
-
-Connect:
-
-LinkedIn
-
-GitHub
-
-Instagram
-
-Leetcode
-
-✨ License
+## 📄 **License**
 
 This project is open for personal use and learning purposes. You may reference ideas or structure, but do not copy exact content/design without permission.
 
+---
+
 Thank you for visiting!
 
-Designed & Developed with passion by Parshant Yadav.
+Made with 💻 and ☕ by **Parshant Yadav**
