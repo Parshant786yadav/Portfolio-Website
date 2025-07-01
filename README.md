@@ -1,6 +1,6 @@
 # ⭐ **Parshant Yadav - Personal Portfolio**
 
-Welcome to the official portfolio of **Parshant Yadav** — a passionate Computer Science student (AI & ML specialization) showcasing real-world projects, competitive coding achievements, and a rich collection of learning resources.
+Welcome to the official portfolio of **Parshant Yadav** — a passionate Computer Science student (AI & ML specialization) showcasing real-world projects, competitive coding achievements, and a rich collection of learning resources. <br>
 This portfolio represents my journey, skills, certifications, and featured projects as a Software Developer with expertise in Web Development, Python, DSA, and AI/ML.
 
 **🌐 Live Website**
