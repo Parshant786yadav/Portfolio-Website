@@ -1,0 +1,1037 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Create Resume</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- Firebase SDKs -->
+<script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-auth.js"></script>
+
+
+
+
+
+
+
+
+<style>
+  .back-button {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    padding: 10px 20px;
+    background: transparent;
+    color: #3b82f6; /* blue-500 */
+    border: 2px solid #3b82f6;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+
+  .back-button:hover {
+    background-color: #3b82f6;
+    color: white;
+    transform: scale(1.05);
+    box-shadow: 0 4px 12px rgba(59, 130, 246, 0.4); /* blue glow */
+  }
+
+
+@media print {
+  html, body {
+    background: white !important;
+    color: black !important;
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 100%;
+  }
+
+  body * {
+    visibility: hidden;
+  }
+
+  #resumePreview, #resumePreview * {
+    visibility: visible;
+  }
+
+  #resumePreview {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    max-width: 800px;
+    margin: 0 auto; /* ✅ centers horizontally */
+    padding: 30px 80px; /* ✅ top-bottom 30px, left-right 40px */
+    background: white !important;
+    color: black !important;
+    box-shadow: none !important;
+    border-radius: 0 !important;
+    zoom: 0.85; /* ✅ scales to fit single page */
+    overflow: hidden;
+  }
+
+  @page {
+    size: A4;
+    margin: 0;
+  }
+}
+
+
+
+
+@media (max-width: 768px) {
+  h1.text-3xl {
+    margin-top: 60px; /* push title below back button */
+    font-size: 1.5rem;
+  }
+
+  .back-button {
+    top: 10px;
+    left: 10px;
+    font-size: 12px;
+    padding: 8px 16px;
+    z-index: 10;
+  }
+
+  .grid.md\:grid-cols-2 {
+    display: block; /* Stack left and right */
+  }
+
+  .grid.md\:grid-cols-2 > div {
+    margin-bottom: 2rem; /* spacing between form and preview */
+  }
+
+  #resumePreview {
+    padding: 20px 16px !important;
+    zoom: 1 !important;
+    border-radius: 12px;
+  }
+
+  body {
+    padding: 1rem;
+  }
+}
+
+
+
+
+
+
+</style>
+
+</head>
+
+
+<body class="bg-gray-950 text-white p-6 min-h-screen">
+  <a href="resume-builder.html" class="back-button">← Back</a>
+  <h1 class="text-3xl text-blue-400 font-bold mb-6 text-center">📝 Create Your Resume</h1>
+
+  <div class="grid md:grid-cols-2 gap-6">
+    <!-- LEFT SIDE FORM -->
+    <div class="bg-gray-900 p-6 rounded-2xl shadow-lg border border-blue-800">
+      <h2 class="text-xl text-blue-300 font-semibold mb-4">👤 Personal Info</h2>
+      <input id="fullName" class="w-full p-2 mb-3 bg-gray-800 rounded placeholder-gray-400" placeholder="Full Name" />
+      <input id="email" class="w-full p-2 mb-3 bg-gray-800 rounded placeholder-gray-400" placeholder="Email" />
+      <input id="phone" class="w-full p-2 mb-3 bg-gray-800 rounded placeholder-gray-400" placeholder="Phone" />
+      <input id="location" class="w-full p-2 mb-6 bg-gray-800 rounded placeholder-gray-400" placeholder="Location" />
+
+      <!-- Keep this: Personal Info section ABOVE -->
+
+<!-- Now: All swap-enabled sections go below -->
+<div id="reorderableSectionContainer">
+
+  <!-- 🧠 Summary -->
+  <div class="sectionBlock border border-gray-800 p-4 mb-4 rounded">
+    <div class="flex justify-between items-center mb-2">
+      <h2 class="text-xl text-blue-300 font-semibold">🧠 Summary</h2>
+      <div class="flex gap-2">
+        <button onclick="moveUp(this)" class="text-xs text-green-400 hover:underline">🔼</button>
+        <button onclick="moveDown(this)" class="text-xs text-green-400 hover:underline">🔽</button>
+      </div>
+    </div>
+    <textarea id="summary" rows="3" class="w-full p-2 bg-gray-800 rounded placeholder-gray-400" placeholder="Short paragraph about you..."></textarea>
+  </div>
+
+  <!-- 🎓 Education -->
+ 
+<div class="sectionBlock border border-gray-800 p-4 mb-4 rounded">
+  <div class="flex justify-between items-center mb-2">
+    <h2 class="text-xl text-blue-300 font-semibold">🎓 Education</h2>
+    <div class="flex gap-2">
+      <button onclick="moveUp(this)" class="text-xs text-green-400 hover:underline">🔼</button>
+      <button onclick="moveDown(this)" class="text-xs text-green-400 hover:underline">🔽</button>
+    </div>
+  </div>
+
+  <div id="educationContainer"></div>
+
+  <button onclick="addEducation()" class="text-sm text-blue-400 hover:underline mt-2">➕ Add More Education</button>
+</div>
+
+
+  <!-- 🛠 Skills -->
+  <div class="sectionBlock border border-gray-800 p-4 mb-4 rounded">
+    <div class="flex justify-between items-center mb-2">
+      <h2 class="text-xl text-blue-300 font-semibold">🛠 Skills</h2>
+      <div class="flex gap-2">
+        <button onclick="moveUp(this)" class="text-xs text-green-400 hover:underline">🔼</button>
+        <button onclick="moveDown(this)" class="text-xs text-green-400 hover:underline">🔽</button>
+      </div>
+    </div>
+    <div id="skillsContainer">
+      <input class="skillTitle w-full p-2 mb-2 bg-gray-800 rounded placeholder-gray-400" placeholder="Skill Title (e.g., DSA)" />
+      <input class="skillDesc w-full p-2 mb-4 bg-gray-800 rounded placeholder-gray-400" placeholder="Description (e.g., solved 100+ questions)" />
+    </div>
+    <button onclick="addSkill()" class="text-sm text-blue-400 hover:underline">➕ Add More Skills</button>
+  </div>
+
+  <!-- 💻 Projects -->
+  <div class="sectionBlock border border-gray-800 p-4 mb-4 rounded">
+    <div class="flex justify-between items-center mb-2">
+      <h2 class="text-xl text-blue-300 font-semibold">💻 Projects</h2>
+      <div class="flex gap-2">
+        <button onclick="moveUp(this)" class="text-xs text-green-400 hover:underline">🔼</button>
+        <button onclick="moveDown(this)" class="text-xs text-green-400 hover:underline">🔽</button>
+      </div>
+    </div>
+    <div id="projectsContainer">
+      <!-- 1st project by default -->
+    </div>
+    <button onclick="addProjectBlock()" class="text-sm text-blue-400 hover:underline">➕ Add Another Project</button>
+  </div>
+
+  <!-- 🏅 Achievements -->
+  <div class="sectionBlock border border-gray-800 p-4 mb-4 rounded">
+    <div class="flex justify-between items-center mb-2">
+      <h2 class="text-xl text-blue-300 font-semibold">🏅 Achievements & Certificates</h2>
+      <div class="flex gap-2">
+        <button onclick="moveUp(this)" class="text-xs text-green-400 hover:underline">🔼</button>
+        <button onclick="moveDown(this)" class="text-xs text-green-400 hover:underline">🔽</button>
+      </div>
+    </div>
+    <div id="achievementsContainer">
+      <input class="achievement w-full p-2 mb-2 bg-gray-800 rounded placeholder-gray-400" placeholder="• Achievement or Certificate" />
+    </div>
+    <button onclick="addAchievement()" class="text-sm text-blue-400 hover:underline">➕ Add More Achievements</button>
+  </div>
+
+  <!-- ➕ Add Section -->
+  <div class="sectionBlock border border-gray-800 p-4 mb-4 rounded">
+    <div class="flex justify-between items-center mb-2">
+      <h2 class="text-xl text-blue-300 font-semibold">➕ Add Custom Sections</h2>
+      <div class="flex gap-2">
+        <button onclick="moveUp(this)" class="text-xs text-green-400 hover:underline">🔼</button>
+        <button onclick="moveDown(this)" class="text-xs text-green-400 hover:underline">🔽</button>
+      </div>
+    </div>
+    <div id="customSectionsContainer"></div>
+    <button onclick="addCustomSection()" class="text-sm text-blue-400 hover:underline">➕ Add New Section</button>
+  </div>
+
+</div>
+
+
+
+      <!-- Download -->
+      <button id="downloadBtn" class="mt-6 w-full bg-blue-500 hover:bg-blue-600 text-white py-2 rounded">
+        🔽 Download Resume
+      </button>
+
+      <!-- ATS Score -->
+      <div class="mt-6 bg-gray-800 p-4 rounded">
+        <h3 class="text-lg font-semibold mb-2">📊 ATS Score: <span id="atsScore">0</span>/100</h3>
+        <ul id="atsTips" class="text-sm text-gray-300 list-disc list-inside"></ul>
+      </div>
+    </div>
+
+    <!-- RIGHT SIDE PREVIEW -->
+    
+<div id="resumePreview" class="print-target bg-white text-black p-6 rounded-2xl shadow-lg text-sm leading-relaxed font-[sans-serif]">
+
+
+
+  <h2 class="text-2xl font-bold text-center text-gray-800 mb-1" id="p_name">Your Name</h2>
+  <p class="text-center text-sm text-gray-600 mb-4" id="p_contact">📞 Phone | 📍 City | ✉️ Email</p>
+
+  <!-- Summary -->
+  <h3 class="text-lg font-semibold text-gray-800 mt-6 mb-2">Summary</h3>
+  <p id="p_summary" class="mb-4 text-gray-700">—</p>
+
+  <!-- Education -->
+  <h3 class="text-lg font-semibold text-gray-800 mt-6 mb-4">Education</h3>
+  <hr class=" border-gray-400"/>
+  <p id="p_education" class=" text-gray-700">—</p>
+
+  <!-- Skills -->
+  <h3 class="text-lg font-semibold text-gray-800 mt-6 mb-4">Skills</h3>
+  <hr class=" border-gray-400"/>
+  <ul id="p_skills" class=" text-gray-700 list-disc list-inside"></ul>
+
+  <!-- Projects -->
+  <h3 class="text-lg font-semibold text-gray-800 mt-6 mb-4">Projects</h3>
+  <hr class=" border-gray-400"/>
+  <div id="p_projects" class=" text-gray-700"></div>
+
+  <!-- Achievements -->
+  <h3 class="text-lg font-semibold text-gray-800 mt-6 mb-4">Achievements & Certificates</h3>
+  <hr class=" border-gray-400"/>
+  <ul id="p_achievements" class="text-gray-700 list-disc list-inside"></ul>
+
+  <!-- Custom Sections -->
+  <div id="p_customSections" class="text-gray-700"></div>
+
+
+    </div>
+  </div>
+
+  <!-- 🔒 LOGIN / SIGNUP MODAL -->
+<!-- 🔒 LOGIN / SIGNUP MODAL -->
+<div id="loginModal" class="fixed inset-0 bg-black bg-opacity-60 flex items-center justify-center z-50 hidden">
+  <div class="bg-gray-900 text-white rounded-xl p-6 w-80 shadow-xl relative">
+    <h2 id="modalTitle" class="text-2xl font-bold text-center text-blue-400 mb-4">Login</h2>
+
+    <!-- Email -->
+    <input type="email" id="loginEmail" placeholder="Email" class="w-full mb-3 px-3 py-2 bg-gray-800 rounded" />
+
+    <!-- Phone - visible only in Sign Up -->
+    <input type="tel" id="signupPhone" placeholder="Phone Number (10 digits)" class="w-full mb-3 px-3 py-2 bg-gray-800 rounded hidden" />
+
+    <!-- Password -->
+    <input type="password" id="loginPassword" placeholder="Password" class="w-full mb-3 px-3 py-2 bg-gray-800 rounded" />
+
+    <!-- Confirm Password - visible only in Sign Up -->
+    <input type="password" id="confirmPassword" placeholder="Re-enter Password" class="w-full mb-3 px-3 py-2 bg-gray-800 rounded hidden" />
+
+    <!-- Button -->
+<div class="flex flex-col gap-2">
+  <button id="authActionBtn" onclick="handleLogin()" class="bg-green-500 hover:bg-green-600 text-white py-2 rounded">Login</button>
+</div>
+
+
+    <!-- Toggle -->
+    <p class="text-sm text-center mt-4">
+      <span id="toggleText">Don't have an account?</span>
+      <button onclick="toggleAuthMode()" class="text-blue-400 hover:underline" id="toggleLink">Sign Up</button>
+    </p>
+
+    <!-- Close -->
+    <button onclick="closeLoginModal()" class="absolute top-2 right-3 text-gray-400 hover:text-white text-xl">×</button>
+  </div>
+</div>
+
+
+
+
+
+
+
+<!-- Link Popup -->
+<div id="linkPopup" class="hidden fixed bg-white text-black p-2 rounded shadow-lg z-50 border">
+  <button onclick="showLinkInput()">🔗 Convert to Link</button>
+</div>
+
+<!-- Link Input Box -->
+<div id="linkInputBox" class="hidden fixed bg-white text-black p-2 rounded shadow-lg z-50 border">
+  <input id="linkInputField" type="url" placeholder="Paste your URL..." class="border px-2 py-1 rounded w-64" />
+</div>
+
+
+
+
+
+
+<script>
+      const inputs = {
+    fullName: document.getElementById("fullName"),
+    email: document.getElementById("email"),
+    phone: document.getElementById("phone"),
+    location: document.getElementById("location"),
+    summary: document.getElementById("summary"),
+    
+  };
+
+  const preview = {
+    p_name: document.getElementById("p_name"),
+    p_contact: document.getElementById("p_contact"),
+    p_summary: document.getElementById("p_summary"),
+    p_education: document.getElementById("p_education"),
+    p_skills: document.getElementById("p_skills"),
+    p_projects: document.getElementById("p_projects"),
+    p_achievements: document.getElementById("p_achievements"),
+  };
+
+
+
+
+
+
+  function updatePreview() {
+  const right = document.querySelector(".bg-white.text-black");
+  right.innerHTML = ""; // Clear existing preview
+
+  // Add Name and Contact on top
+  const nameEl = document.createElement("h2");
+  nameEl.className = "text-2xl font-bold text-center text-gray-800 mb-1";
+  nameEl.textContent = inputs.fullName.value || "Your Name";
+
+  const contactEl = document.createElement("p");
+  contactEl.className = "text-center text-sm text-gray-600 mb-4";
+  contactEl.textContent = `📞 ${inputs.phone.value || "Phone"} | 📍 ${inputs.location.value || "City"} | ✉️ ${inputs.email.value || "Email"}`;
+
+  right.appendChild(nameEl);
+  right.appendChild(contactEl);
+
+  // Go through each sectionBlock on the left
+  const sections = document.querySelectorAll("#reorderableSectionContainer .sectionBlock");
+
+  sections.forEach(section => {
+    const heading = section.querySelector("h2")?.textContent || "";
+
+    if (!heading.trim().includes("Add Custom Sections")) {
+
+    // Title
+    const title = document.createElement("h3");
+    title.className = "text-lg font-semibold text-gray-800 mt-6 mb-2";
+    title.textContent = heading.replace(/^[^\w]+/, ""); // Remove emojis
+    right.appendChild(title);
+
+    const hr = document.createElement("hr");
+    hr.className = "mb-3 border-gray-400";
+    right.appendChild(hr);
+    }
+    // Summary
+    if (heading.includes("Summary")) {
+      const p = document.createElement("p");
+      p.className = "mb-4 text-gray-700";
+      p.textContent = inputs.summary.value || "—";
+      right.appendChild(p);
+    }
+
+    // Education
+    else if (heading.includes("Education")) {
+      const eduBlocks = document.querySelectorAll(".eduInput");
+      eduBlocks.forEach(input => {
+        if (input.value.trim()) {
+          const p = document.createElement("p");
+          p.className = "mb-1 text-gray-700";
+          p.textContent = input.value;
+          right.appendChild(p);
+        }
+      });
+    }
+
+    // Skills
+    else if (heading.includes("Skills")) {
+      const ul = document.createElement("ul");
+      ul.className = "text-gray-700 list-disc list-inside";
+      const titles = document.querySelectorAll(".skillTitle");
+      const descs = document.querySelectorAll(".skillDesc");
+      for (let i = 0; i < titles.length; i++) {
+        if (titles[i].value && descs[i].value) {
+          const li = document.createElement("li");
+          li.innerHTML = `<strong>${titles[i].value}:</strong> ${descs[i].value}`;
+          ul.appendChild(li);
+        }
+      }
+      right.appendChild(ul);
+    }
+
+    // Projects
+    else if (heading.includes("Projects")) {
+      const blocks = document.querySelectorAll(".projectBlock");
+      blocks.forEach(block => {
+        const title = block.querySelector(".projectTitle").value;
+        const points = block.querySelectorAll(".projectPoint");
+
+        if (title) {
+          const titleEl = document.createElement("p");
+          titleEl.innerHTML = `<strong>💻 ${title}</strong>`;
+          titleEl.className = "mb-2";
+          right.appendChild(titleEl);
+        }
+
+        points.forEach(point => {
+          if (point.value) {
+            const pointEl = document.createElement("p");
+            pointEl.textContent = `• ${point.value}`;
+            right.appendChild(pointEl);
+          }
+        });
+      });
+    }
+
+    // Achievements
+    else if (heading.includes("Achievements")) {
+      const ul = document.createElement("ul");
+      ul.className = "text-gray-700 list-disc list-inside";
+      const achs = document.querySelectorAll(".achievement");
+      achs.forEach(el => {
+        if (el.value) {
+          const li = document.createElement("li");
+          li.textContent = el.value;
+          ul.appendChild(li);
+        }
+      });
+      right.appendChild(ul);
+    }
+
+    // Custom Sections
+    else if (heading.includes("Custom")) {
+  const customSections = section.querySelectorAll(".customSection");
+
+  customSections.forEach(section => {
+    const secTitle = section.querySelector(".customTitle")?.value;
+    if (secTitle?.trim()) {
+      const h3 = document.createElement("h3");
+      h3.className = "text-lg font-bold mt-6 mb-4 text-gray-800";
+      h3.textContent = secTitle;
+      right.appendChild(h3);
+
+      const hr = document.createElement("hr");
+      hr.className = "mb-3 border-gray-400";
+      right.appendChild(hr);
+    }
+
+    const subBlocks = section.querySelectorAll(".subContainer > div");
+
+    subBlocks.forEach(block => {
+      const subTitle = block.querySelector(".customSubTitle")?.value;
+      const bullets = block.querySelectorAll(".customPoint");
+
+      if (subTitle?.trim()) {
+        const subTitleEl = document.createElement("p");
+        subTitleEl.className = "font-semibold text-sm mb-2";
+        subTitleEl.textContent = subTitle;
+        right.appendChild(subTitleEl);
+      }
+
+      bullets.forEach(b => {
+        if (b.value.trim()) {
+          const pt = document.createElement("p");
+          pt.textContent = `• ${b.value}`;
+          right.appendChild(pt);
+        }
+      });
+    });
+  });
+}
+
+  });
+
+  updateATSScore();
+}
+
+
+addEducation("10th Class, Unknown School, 2019-2020   ");
+addEducation("Class 12th - CBSE - 2022");
+addEducation("BTech - SAITM - 2022–2026");
+
+  
+
+
+
+    function addCustomSection() {
+  const container = document.getElementById("customSectionsContainer");
+
+  const sectionWrapper = document.createElement("div");
+  sectionWrapper.className = "sectionBlock customSection border border-gray-800 p-4 mb-4 rounded";
+
+  // Section Title (NO swap/remove buttons here)
+  const sectionTitle = document.createElement("input");
+  sectionTitle.className = "customTitle text-xl font-bold text-blue-300 bg-transparent outline-none w-full mb-2";
+  sectionTitle.placeholder = "EXPERIENCE / INTERNSHIP / VOLUNTEERING";
+  sectionWrapper.appendChild(sectionTitle);
+
+  // 📌 Subheading container
+  const subContainer = document.createElement("div");
+  subContainer.className = "subContainer";
+  sectionWrapper.appendChild(subContainer);
+
+  // ➕ Add Subheading Block
+  const addSubBtn = document.createElement("button");
+  addSubBtn.innerText = "➕ Add Subheading (e.g., Amazon)";
+  addSubBtn.className = "text-sm text-blue-400 hover:underline mt-2";
+  addSubBtn.onclick = () => {
+    const subBlock = document.createElement("div");
+    subBlock.className = "mb-3";
+
+    // Subheading Input
+    const subTitle = document.createElement("input");
+    subTitle.className = "customSubTitle w-full text-base font-semibold text-white bg-gray-800 p-2 rounded mb-2";
+    subTitle.placeholder = "Company / Role (e.g., Amazon)";
+    subBlock.appendChild(subTitle);
+
+    // First bullet input
+    const bullet = document.createElement("input");
+    bullet.className = "customPoint w-full p-2 mb-2 bg-gray-800 rounded placeholder-gray-400";
+    bullet.placeholder = "• Detail point";
+    subBlock.appendChild(bullet);
+
+    // ➕ Add More Points button
+    const moreBtn = document.createElement("button");
+    moreBtn.innerText = "➕ Add More Points";
+    moreBtn.className = "text-xs text-blue-400 hover:underline mb-2";
+    moreBtn.onclick = () => {
+      const newBullet = document.createElement("input");
+      newBullet.className = "customPoint w-full p-2 mb-2 bg-gray-800 rounded placeholder-gray-400";
+      newBullet.placeholder = "• Detail point";
+      newBullet.addEventListener("input", updatePreview);
+      subBlock.insertBefore(newBullet, moreBtn);
+    };
+    subBlock.appendChild(moreBtn);
+
+    subContainer.appendChild(subBlock);
+
+    // Update on typing
+    subTitle.addEventListener("input", updatePreview);
+    bullet.addEventListener("input", updatePreview);
+  };
+
+  // Add first subheading block by default
+  addSubBtn.click();
+  sectionWrapper.appendChild(addSubBtn);
+
+  container.appendChild(sectionWrapper);
+
+  sectionTitle.addEventListener("input", updatePreview);
+  updateATSScore();
+}
+
+
+
+
+
+  // ATS scoring
+  function updateATSScore() {
+  let score = 0;
+  const atsTips = document.getElementById("atsTips");
+  atsTips.innerHTML = "";
+
+  // 🔹 Basic info
+  if (inputs.fullName.value.trim()) score += 1;
+  else atsTips.innerHTML += "<li>Add your full name.</li>";
+
+  if (inputs.email.value.trim()) score += 3;
+  else atsTips.innerHTML += "<li>Add your email.</li>";
+
+  if (inputs.phone.value.trim()) score += 3;
+  else atsTips.innerHTML += "<li>Include your phone number.</li>";
+
+  if (inputs.location.value.trim()) score += 3;
+  else atsTips.innerHTML += "<li>Mention your location.</li>";
+
+  // 🔹 Education
+  const eduBlocks = document.querySelectorAll(".eduInput");
+  let eduScoreAdded = false;
+  eduBlocks.forEach(e => {
+    if (e.value.trim() && !eduScoreAdded) {
+      score += 15;
+      eduScoreAdded = true;
+    }
+  });
+  if (!eduScoreAdded) atsTips.innerHTML += "<li>Add at least one education entry.</li>";
+
+  // 🔹 Skills (2 points per valid skill pair)
+  const skillTitles = document.querySelectorAll(".skillTitle");
+  const skillDescs = document.querySelectorAll(".skillDesc");
+  let skillCount = 0;
+  for (let i = 0; i < skillTitles.length; i++) {
+    if (skillTitles[i].value.trim() && skillDescs[i].value.trim()) {
+      skillCount++;
+    }
+  }
+  if (skillCount > 0) {
+    score += skillCount * 4;
+  } else {
+    atsTips.innerHTML += "<li>Add your key skills with description.</li>";
+  }
+
+  // 🔹 Projects (5 points per project with at least 3 bullet points)
+  const projects = document.querySelectorAll(".projectBlock");
+  let validProjects = 0;
+  projects.forEach(project => {
+    const title = project.querySelector(".projectTitle")?.value.trim();
+    const bullets = project.querySelectorAll(".projectPoint");
+    let bulletCount = 0;
+    bullets.forEach(p => {
+      if (p.value.trim()) bulletCount++;
+    });
+    if (title && bulletCount >= 3) {
+      validProjects++;
+    }
+  });
+  if (validProjects > 0) {
+    score += validProjects * 5;
+  } else {
+    atsTips.innerHTML += "<li>Add at least one project with 3 bullet points.</li>";
+  }
+
+  // 🔹 Achievements (5 per bullet point)
+  const achs = document.querySelectorAll(".achievement");
+  let achCount = 0;
+  achs.forEach(a => {
+    if (a.value.trim()) achCount++;
+  });
+  if (achCount > 0) {
+    score += achCount * 5;
+  }
+
+  // 🔹 Experience / Internship → From custom sections titled "experience"
+  const customSections = document.querySelectorAll(".customSection");
+  let experienceFound = false;
+  customSections.forEach(section => {
+    const title = section.querySelector(".customTitle")?.value.toLowerCase();
+    if (title && title.includes("experience")) {
+      experienceFound = true;
+    }
+  });
+  if (experienceFound) {
+    score += 15;
+  } else {
+    atsTips.innerHTML += "<li>Add an 'Experience' section.</li>";
+  }
+
+  score = Math.min(score, 90);
+  document.getElementById("atsScore").textContent = score;
+}
+
+
+  // Add more skill input
+  function addSkill() {
+    const container = document.getElementById("skillsContainer");
+    const title = document.createElement("input");
+    title.className = "skillTitle w-full p-2 mb-2 bg-gray-800 rounded placeholder-gray-400";
+    title.placeholder = "Skill Title (e.g., Backend)";
+    const desc = document.createElement("input");
+    desc.className = "skillDesc w-full p-2 mb-4 bg-gray-800 rounded placeholder-gray-400";
+    desc.placeholder = "Description (e.g., REST API, SQL...)";
+    container.appendChild(title);
+    container.appendChild(desc);
+
+    title.addEventListener("input", updatePreview);
+    desc.addEventListener("input", updatePreview);
+  }
+
+  // Add more project points
+  function addProjectPoint() {
+    const container = document.getElementById("projectsContainer");
+    const point = document.createElement("input");
+    point.className = "projectPoint w-full p-2 mb-2 bg-gray-800 rounded placeholder-gray-400";
+    point.placeholder = "• Additional Project Point";
+    container.appendChild(point);
+    point.addEventListener("input", updatePreview);
+  }
+
+  // Add more achievements
+  function addAchievement() {
+    const container = document.getElementById("achievementsContainer");
+    const ach = document.createElement("input");
+    ach.className = "achievement w-full p-2 mb-2 bg-gray-800 rounded placeholder-gray-400";
+    ach.placeholder = "• Achievement or Certificate";
+    container.appendChild(ach);
+    ach.addEventListener("input", updatePreview);
+  }
+
+
+
+
+  function addProjectBlock() {
+  const container = document.getElementById("projectsContainer");
+
+  const projectBlock = document.createElement("div");
+  projectBlock.className = "projectBlock mb-4 border border-gray-700 p-3 rounded";
+
+  const title = document.createElement("input");
+  title.className = "projectTitle w-full p-2 mb-2 bg-gray-800 rounded placeholder-gray-400";
+  title.placeholder = "Project Title (e.g., Portfolio Website)";
+  projectBlock.appendChild(title);
+
+  const point = document.createElement("input");
+  point.className = "projectPoint w-full p-2 mb-2 bg-gray-800 rounded placeholder-gray-400";
+  point.placeholder = "• Bullet Point";
+  projectBlock.appendChild(point);
+
+  const addPointBtn = document.createElement("button");
+  addPointBtn.className = "text-xs text-blue-400 hover:underline mb-2";
+  addPointBtn.innerText = "➕ Add More Points";
+  addPointBtn.onclick = () => {
+    const newPoint = document.createElement("input");
+    newPoint.className = "projectPoint w-full p-2 mb-2 bg-gray-800 rounded placeholder-gray-400";
+    newPoint.placeholder = "• Bullet Point";
+    newPoint.addEventListener("input", updatePreview);
+    projectBlock.insertBefore(newPoint, addPointBtn);
+  };
+  projectBlock.appendChild(addPointBtn);
+
+  container.appendChild(projectBlock);
+
+  // Auto update on input
+  title.addEventListener("input", updatePreview);
+  point.addEventListener("input", updatePreview);
+}
+
+
+
+
+ [".skillTitle", ".skillDesc", ".projectTitle", ".projectPoint", ".achievement"].forEach(selector => {
+  const elements = document.querySelectorAll(selector);
+  elements.forEach(el => el.addEventListener("input", updatePreview));
+});
+
+
+
+
+
+
+  
+  // download with login alert
+  // ✅ AFTER Firebase initialized and DOM loaded
+// ✅ Always show login/signup modal on download
+// ✅ Always show login/signup modal on download (FIXED!)
+// ✅ Attach modal open AFTER DOM is ready
+document.addEventListener("DOMContentLoaded", () => {
+  const downloadBtn = document.getElementById("downloadBtn");
+  const loginModal = document.getElementById("loginModal");
+
+  if (downloadBtn && loginModal) {
+    downloadBtn.addEventListener("click", () => {
+      loginModal.classList.remove("hidden");
+    });
+  } else {
+    console.error("❌ downloadBtn or loginModal not found in DOM");
+  }
+
+  Object.values(inputs).forEach(input => {
+    input.addEventListener("input", updatePreview);
+  });
+
+  document.querySelectorAll(".skillTitle, .skillDesc, .achievement").forEach(input => {
+    input.addEventListener("input", updatePreview);
+  });
+
+});
+
+
+
+
+
+
+
+
+
+
+
+  // Initial render
+  updatePreview();
+
+
+
+
+
+  function addEducation(defaultValue = "") {
+  const container = document.getElementById("educationContainer");
+
+  const block = document.createElement("div");
+  block.className = "educationBlock mb-3 border border-gray-700 p-3 rounded";
+
+  const input = document.createElement("input");
+  input.className = "eduInput w-full p-2 mb-2 bg-gray-800 rounded placeholder-gray-400";
+  input.placeholder = "e.g., BTech in CSE with AIML, Unknown University, 2022- 2026  ";
+  input.value = defaultValue;
+  input.addEventListener("input", updatePreview);
+
+  const removeBtn = document.createElement("button");
+  removeBtn.innerText = "❌ Remove";
+  removeBtn.className = "text-xs text-red-400 hover:underline";
+  removeBtn.onclick = () => {
+    block.remove();
+    updatePreview();
+  };
+
+  block.appendChild(input);
+  block.appendChild(removeBtn);
+  container.appendChild(block);
+
+  updatePreview();
+}
+
+
+
+ 
+
+
+
+
+
+  function moveUp(btn) {
+  const block = btn.closest(".sectionBlock");
+  const container = block.parentElement;
+  if (block.previousElementSibling) {
+    container.insertBefore(block, block.previousElementSibling);
+    updatePreview(); // 🔄 Important!
+  }
+}
+
+function moveDown(btn) {
+  const block = btn.closest(".sectionBlock");
+  const container = block.parentElement;
+  if (block.nextElementSibling) {
+    container.insertBefore(block.nextElementSibling, block);
+    updatePreview(); // 🔄 Important!
+  }
+}
+
+
+
+const backBtn = document.getElementById("backBtn");
+if (backBtn) {
+  backBtn.addEventListener("click", () => {
+    window.location.href = "resume-home.html";
+  });
+}
+
+
+
+
+
+
+  // Your portfolio Firebase config
+const firebaseConfig = {
+  apiKey: "AIzaSyCpNphBnKMbqRq8Z95z_60x1-mnbyaWGlA",
+  authDomain: "myportfolioauth-41bbd.firebaseapp.com",
+  projectId: "myportfolioauth-41bbd",
+  appId: "1:835152618447:web:17d60e903b6a0ca6b7a8ba"
+};
+firebase.initializeApp(firebaseConfig);
+const auth = firebase.auth();
+
+
+
+
+
+
+
+
+
+
+
+function handleLogin() {
+  const email = document.getElementById("loginEmail").value.trim();
+  const password = document.getElementById("loginPassword").value;
+
+  if (!email || !password) {
+    alert("⚠️ Please enter both email and password.");
+    return;
+  }
+
+  auth.signInWithEmailAndPassword(email, password)
+    .then(() => {
+      alert("✅ Login successful! Resume is downloading...");
+      closeLoginModal();
+      setTimeout(() => {
+  updatePreview();  // make sure latest changes are reflected
+  window.print();   // only print resume section
+}, 300); // Small delay to ensure modal closes first
+    })
+    .catch((error) => {
+      alert("❌ Login failed: " + error.message);
+    });
+}
+
+function handleSignup() {
+  const email = document.getElementById("loginEmail").value.trim();
+  const password = document.getElementById("loginPassword").value;
+
+  if (!email || !password) {
+    alert("⚠️ Please enter both email and password.");
+    return;
+  }
+
+  auth.createUserWithEmailAndPassword(email, password)
+    .then(() => {
+      alert("✅ Signup successful! Resume is downloading...");
+      closeLoginModal();
+
+      // Only download the right-side resume area
+      setTimeout(() => {
+        const resume = document.getElementById("resumePreview");
+        const originalContent = document.body.innerHTML;
+
+        // Replace body with just resume
+        document.body.innerHTML = resume.outerHTML;
+        window.print();
+
+        // Restore original page after printing
+        document.body.innerHTML = originalContent;
+        location.reload(); // optional, to reload scripts and UI
+      }, 500);
+    })
+    .catch((error) => {
+      alert("❌ Signup failed: " + error.message);
+    });
+}
+
+
+
+function closeLoginModal() {
+  document.getElementById("loginModal").classList.add("hidden");
+}
+
+
+
+let isLoginMode = true;
+
+function toggleAuthMode() {
+  isLoginMode = !isLoginMode;
+
+  // Toggle title and button
+  document.getElementById("modalTitle").textContent = isLoginMode ? "Login" : "Sign Up";
+  document.getElementById("authActionBtn").textContent = isLoginMode ? "Login" : "Sign Up";
+  document.getElementById("authActionBtn").setAttribute("onclick", isLoginMode ? "handleLogin()" : "handleSignup()");
+
+  // Toggle input fields
+  document.getElementById("signupPhone").classList.toggle("hidden", isLoginMode);
+  document.getElementById("confirmPassword").classList.toggle("hidden", isLoginMode);
+
+  // Toggle text
+  document.getElementById("toggleText").textContent = isLoginMode ? "Don't have an account?" : "Already have an account?";
+  document.getElementById("toggleLink").textContent = isLoginMode ? "Sign Up" : "Login";
+}
+
+
+
+
+
+document.addEventListener("mouseup", function (e) {
+  const activeEl = document.activeElement;
+
+  if (
+    activeEl.tagName === "TEXTAREA" ||
+    (activeEl.tagName === "INPUT" && activeEl.type === "text")
+  ) {
+    const selection = window.getSelection().toString();
+    const start = activeEl.selectionStart;
+    const end = activeEl.selectionEnd;
+
+    if (start !== end) {
+      showLinkPopup(e.pageX, e.pageY, activeEl, start, end);
+    }
+  }
+});
+
+
+
+
+
+</script>
+
+
+
+</body>
+</html>
+
