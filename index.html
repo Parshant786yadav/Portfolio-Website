@@ -103,6 +103,31 @@
   gtag('js', new Date());
 
   gtag('config', 'G-TWS7K2M69C');
+  
+
+ @keyframes glowPulse {
+  0% {
+    text-shadow: 0 0 0px yellow;
+  }
+  50% {
+    text-shadow:
+      0 0 6px yellow,
+      0 0 12px yellow,
+      0 0 20px orange,
+      0 0 30px orange;
+  }
+  100% {
+    text-shadow: 0 0 0px yellow;
+  }
+}
+
+.create-resume-glow {
+  animation: glowPulse 1.8s infinite ease-in-out;
+  color: #facc15; /* Tailwind's yellow-400 */
+  font-weight: bold;
+}
+
+  
 </script>
 
 
@@ -128,6 +153,13 @@
   <li><a href="#education" class="nav-btn">Education</a></li>
   <li><a href="#leetcode" class="nav-btn">Leetcode</a></li>
   <li><a href="#github" class="nav-btn">GitHub</a></li>
+
+  <li>
+  <a href="resume-builder.html" class="nav-btn create-resume-glow text-yellow-400 font-semibold">
+    Create Resume
+  </a>
+</li>
+          
   <li><a href="#" class="button login-btn" id="loginBtn">Login / Signin</a></li>
 </ul>
 
@@ -155,6 +187,9 @@
     <li><a href="#education">Education</a></li>
     <li><a href="#leetcode">Leetcode</a></li>
     <li><a href="#github">GitHub</a></li>
+
+    <li><a href="resume-builder.html">Create Resume</a></li>
+    
     <li><a href="#" class="login-btn mobile-blue-btn">Login / Signin</a></li>
 
 
