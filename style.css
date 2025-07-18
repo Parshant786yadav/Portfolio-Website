@@ -2211,6 +2211,29 @@ input {
 
 
 
+/* 🚫 Prevent navbar from being scrollable */
+.navbar,
+.nav-wrap,
+.nav-container,
+.nav-links {
+  overflow: visible !important;
+  max-height: none !important;
+  height: auto !important;
+}
+
+/* Remove scrollbars if they were forced */
+.navbar::-webkit-scrollbar,
+.nav-wrap::-webkit-scrollbar,
+.nav-links::-webkit-scrollbar {
+  display: none;
+}
+
+/* Optional: Remove outline/focus glitches */
+*:focus {
+  outline: none !important;
+}
+
+
 
 
 
