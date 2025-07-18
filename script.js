@@ -505,7 +505,22 @@ if (logoutBtn && !logoutBtn.hasAttribute("listener")) {
 
 
 
-  
+
+
+
+  function toggleAppMenu() {
+    const menu = document.getElementById('appMenu');
+    menu.classList.toggle('hidden');
+  }
+
+  // 🔒 Close menu if clicked outside
+  document.addEventListener('click', function (event) {
+    const launcher = document.querySelector('.app-launcher');
+    const menu = document.getElementById('appMenu');
+    if (!launcher.contains(event.target)) {
+      menu.classList.add('hidden');
+    }
+  });
 
 
 
