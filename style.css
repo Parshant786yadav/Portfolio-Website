@@ -2237,3 +2237,67 @@ input {
 
 
 
+/* 🔳 Minimal Google-style launcher icon */
+
+.app-launcher {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+  border: none;
+  padding: 4px;
+  cursor: pointer;
+  height: 42px;
+
+  /* 👈 Move it slightly left from extreme right */
+  margin-right: 80px;
+  margin-left: 12px;
+}
+
+/* 📦 Icon inside launcher - now bigger */
+.grid-icon {
+  font-size: 25px; /* 👈 Increased size */
+  color: white;
+  transition: transform 0.2s ease;
+}
+
+.grid-icon:hover {
+  color: #facc15;
+  transform: rotate(90deg);
+}
+
+
+
+
+/* Dropdown menu for apps */
+.app-dropdown {
+  position: absolute;
+  top: 45px;
+  right: 0;
+  background-color: #1e1e1e;
+  border-radius: 8px;
+  padding: 10px;
+  min-width: 200px;
+  border: 1px solid #333;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  z-index: 999;
+}
+
+/* App links inside the dropdown */
+.app-dropdown a {
+  color: #fff;
+  text-decoration: none;
+  padding: 8px 12px;
+  border-radius: 4px;
+}
+
+.app-dropdown a:hover {
+  background-color: #333;
+  color: #facc15;
+}
+
+
+
