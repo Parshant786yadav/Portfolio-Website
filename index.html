@@ -7,7 +7,7 @@
   <title>Prashant | Tech Portfolio</title>
   <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-app.js"></script>
 <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-firestore.js"></script>
- 
+  <!-- Add this instead in <head> -->
 <link
   rel="stylesheet"
   href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
@@ -15,8 +15,7 @@
 
 
 
-  <link rel="stylesheet" href="style.css?v=1.3" />
-
+  <link rel="stylesheet" href="style.css?v=2.1">
 
   <style>
 
@@ -31,12 +30,12 @@
 
   .logo {
     justify-self: start;
-    margin-left: 80px;  
+    margin-left: 80px; /* ✅ This moves ONLY the logo to the right */
   }
 
   .nav-links {
     display: flex;
-    justify-content: center;  
+    justify-content: center;  /* ✅ Center nav links */
     gap: 20px;
   }
 
@@ -60,18 +59,18 @@
 }
 @media screen and (min-width: 769px) {
   .navbar {
-    margin-top: 10px;
+    margin-top: 10px; /* ✅ Pushes navbar slightly downward */
   }
 }
 
 
 @media screen and (min-width: 769px) {
   .nav-links .button {
-    padding: 8px 16px !important;       
-    font-size: 14px !important;       
+    padding: 8px 16px !important;       /* ✅ Slightly bigger */
+    font-size: 14px !important;         /* ✅ Clear, but not huge */
     line-height: 1.3 !important;
     height: auto !important;
-    max-height: 42px !important;       
+    max-height: 42px !important;        /* ✅ Still below scroll threshold */
     white-space: nowrap !important;
     display: inline-flex !important;
     align-items: center;
@@ -93,7 +92,7 @@
 @media screen and (min-width: 769px) {
   .nav-links li:not(:last-child) {
     position: relative;
-    top: 5px; 
+    top: 5px; /* ✅ Only shifts nav buttons like Home, About... */
   }
 }
 
@@ -118,7 +117,7 @@
 
 .create-resume-glow {
   animation: glowPulse 1.8s infinite ease-in-out;
-  color: #facc15; 
+  color: #facc15; /* Tailwind's yellow-400 */
   font-weight: bold;
 }
 
@@ -746,9 +745,13 @@ I'm always eager to learn more about AI and implement it creatively in my projec
 
       <div class="separator">or</div>
 
-      <button class="btn google" disabled>🔒 Continue with Google (Disabled)</button>
+     <button class="btn google" id="google-signin-btn">🔓 Continue with Google</button>
+
+
     </div>
   </div>
+<div id="loginPopup" class="popup hidden"></div>
+
 
 
 
@@ -757,6 +760,8 @@ I'm always eager to learn more about AI and implement it creatively in my projec
 <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-auth-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-database-compat.js"></script>
+
 
 
 <script src="script.js"></script>
