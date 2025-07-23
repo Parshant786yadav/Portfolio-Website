@@ -602,4 +602,117 @@ async function trackAndDisplayViewCount() {
 trackAndDisplayViewCount();
 
 
+firebase.initializeApp(firebaseConfig);
+
+  // ✅ Google Sign-In Logic
+  const provider = new firebase.auth.GoogleAuthProvider();
+
+  document.getElementById("google-signin-btn").addEventListener("click", function () {
+  const provider = new firebase.auth.GoogleAuthProvider();
+
+  firebase.auth().signInWithPopup(provider)
+    .then((result) => {
+      console.log("Signed in:", result.user.displayName);
+
+      // Hide auth modal if present
+      const modal = document.getElementById("authModal");
+      if (modal) modal.classList.add("hidden");
+
+      // ✅ Show success popup
+      showLoginPopup("✅ Successfully Logged In", false);
+
+      // ⏳ Redirect after 2 seconds
+      setTimeout(() => {
+        window.location.href = "dashboard.html";
+      }, 2000);
+    })
+    .catch((error) => {
+      console.error("Login error:", error.message);
+
+      // ❌ Show failure popup
+      showLoginPopup("❌ Login Failed", true);
+    });
+});
+
+// ✅ Reusable function to show popup
+function showLoginPopup(message, isError) {
+  const popup = document.getElementById("loginPopup");
+  popup.textContent = message;
+  popup.classList.remove("hidden");
+  popup.classList.add("show");
+  popup.classList.toggle("error", isError);
+
+  setTimeout(() => {
+    popup.classList.remove("show");
+    setTimeout(() => popup.classList.add("hidden"), 300); // fade out delay
+  }, 2000);
+}
+
+
+
+firebase.auth().onAuthStateChanged((user) => {
+  const path = window.location.pathname;
+
+  if (user) {
+    // ✅ Show navbar links ONLY on dashboard.html
+    if (path.includes("dashboard.html")) {
+      dashboardLink.style.display = "block";
+      logoutBtn.style.display = "block";
+      loginBtn.style.display = "none";
+    }
+
+    // ✅ If on index.html and user is logged in, redirect immediately
+    if (path.includes("index.html")) {
+      setTimeout(() => {
+        window.location.href = "dashboard.html";
+      }, 500); // small delay for popup or animation
+    }
+  } else {
+    // User not logged in: show login/signup buttons
+    dashboardLink.style.display = "none";
+    logoutBtn.style.display = "none";
+    loginBtn.style.display = "block";
+  }
+});
+
+
+  
+const currentPath = window.location.pathname;
+
+if (user) {
+  // ✅ Show Dashboard/Logout only on dashboard.html
+  if (currentPath.includes("dashboard.html")) {
+    dashboardLink.style.display = "block";
+    logoutBtn.style.display = "block";
+    loginBtn.style.display = "none";
+  }
+}
+
+firebase.auth().signInWithPopup(provider)
+  .then((result) => {
+    // ✅ Hide modal immediately
+    document.getElementById("authModal").classList.add("hidden");
+
+    // ✅ Redirect almost immediately (within 100ms)
+    setTimeout(() => {
+      window.location.href = "dashboard.html";
+    }, 100);
+  });
+
+  firebase.auth().signInWithPopup(provider)
+  .then((result) => {
+    document.getElementById("authModal").classList.add("hidden");
+
+    // Show popup first
+    const popup = document.getElementById("success-popup");
+    popup.style.display = "block";
+
+    // ✅ Redirect quickly, before navbar updates
+    setTimeout(() => {
+      window.location.href = "dashboard.html";
+    }, 500); // Shorter delay
+  });
+
+
+
 
