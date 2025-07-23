@@ -2359,3 +2359,10 @@ input {
     border-radius: 8px;
   }
 }
+
+
+@media (max-width: 768px) {
+  .grid-icon {
+    margin-right: 30px; /* Push it left from right edge */
+  }
+}
