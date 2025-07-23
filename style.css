@@ -2361,8 +2361,24 @@ input {
 }
 
 
-@media (max-width: 768px) {
+/* Desktop (default) — keep it on the right */
+.grid-icon {
+  position: absolute;
+  right: 10px;
+  top: 15px;
+  font-size: 22px;
+  color: white;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+/* Mobile: Shift to LEFT */
+@media only screen and (max-width: 768px) {
   .grid-icon {
-    margin-right: 30px; /* Push it left from right edge */
+    left: -50px;     /* ✅ push to left */
+    right: auto;    /* ✅ cancel right positioning */
   }
 }
+
+
+
