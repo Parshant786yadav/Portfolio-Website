@@ -205,7 +205,7 @@ h2 {
 }
 
 #changing-text {
-  display: inline;  
+  display: inline;  /* ✅ Keep it on the same line */
   color: #d946ef;
   font-weight: 600;
   border-right: 2px solid white;
@@ -240,7 +240,7 @@ h2 {
   border-radius: 50%;
   border: 4px solid #ffffff;
   box-shadow: 0 0 20px rgba(88, 166, 255, 0.3);
-  margin-top: -100px; /*  move image upward */
+  margin-top: -100px; /* 👈 move image upward */
   margin-left: -200px;
   margin-right: -100px;
 
@@ -311,8 +311,8 @@ h2 {
     flex-direction: column;
     align-items: flex-start;
     padding: 10px;
-    overflow-x: auto; 
-    width: 100vw;      
+    overflow-x: auto; /* ✅ ensure container allows scroll */
+    width: 100vw;      /* ✅ full width */
   }
 
   .nav-links {
@@ -328,7 +328,7 @@ h2 {
 
   .nav-links li {
     display: inline-block;
-    flex: 0 0 auto; 
+    flex: 0 0 auto; /* ✅ prevent shrinking */
     white-space: nowrap;
   }
 
@@ -353,7 +353,7 @@ h2 {
   }
 }
 html, body {
-  overflow-x: hidden; 
+  overflow-x: hidden;  /* prevent page scroll */
 }
 
 .nav-links {
@@ -390,7 +390,7 @@ html, body {
   box-shadow: 0 0 20px rgba(0,0,0,0.4);
   display: none;
   flex-direction: column;
-  align-items: center;    
+  align-items: center;    /* ✅ Center horizontally */
   text-align: center;
 }
 
@@ -438,7 +438,7 @@ html, body {
   display: flex;
   align-items: center;
   gap: 12px;
-  margin-left: auto; 
+  margin-left: auto; /* ✅ pushes to right */
 }
 
 
@@ -446,7 +446,7 @@ html, body {
 
 
 
- 
+/* From Uiverse.io by Damithkumara */ 
 
 
 
@@ -464,7 +464,7 @@ html, body {
   z-index: 1;
 }
 
- 
+/* From Uiverse.io by mrhyddenn */ 
 .nav-links li .button {
   position: relative;
   padding: 10px 12px;
@@ -569,10 +569,10 @@ html, body {
   overflow: hidden;
   background: transparent;
   margin-top: 20px;
-  position: fixed;         
+  position: fixed;         /* ✅ Fixed at bottom */
   bottom: 0;
   left: 0;
-  height: 30px;           
+  height: 30px;            /* Your original height */
   z-index: 9999;
 }
 
@@ -580,21 +580,21 @@ html, body {
   position: absolute;
   white-space: nowrap;
   display: inline-block;
-  color: #ff5858;          
-  font-size: 1.1rem;       
+  color: #ff5858;           /* 🔥 Your color */
+  font-size: 1.1rem;        /* ✅ Your font size */
   text-shadow: 
     0 0 5px #ff5858, 
-    0 0 10px #b62020;      
+    0 0 10px #b62020;       /* ✅ Your glowing red-pink shadow */
   animation: scroll-left 17s linear infinite;
-  padding-right: 50px;   
+  padding-right: 50px;     /* ✅ Smooth looping */
 }
 
 @keyframes scroll-left {
   0% {
-    transform: translateX(100vw);  
+    transform: translateX(100vw);  /* Start off-screen right */
   }
   100% {
-    transform: translateX(-100%);  
+    transform: translateX(-100%);  /* Scroll off-screen left */
   }
 }
 
@@ -604,11 +604,11 @@ html, body {
 
 .left {
   position: relative;
-  z-index: 1;
+  z-index: 1; /* keep it below the ticker */
 }
 
 
-
+/* Home Section Background */
 #home {
   background-image: url('');
   background-size: cover;
@@ -2211,6 +2211,11 @@ input {
 
 
 
+
+
+
+
+
 /* 🚫 Prevent navbar from being scrollable */
 .navbar,
 .nav-wrap,
@@ -2237,6 +2242,15 @@ input {
 
 
 
+
+
+
+
+
+
+
+
+
 /* 🔳 Minimal Google-style launcher icon */
 
 .app-launcher {
@@ -2250,14 +2264,14 @@ input {
   cursor: pointer;
   height: 42px;
 
-  /* 👈 Move it slightly left from extreme right */
+  
   margin-right: 80px;
   margin-left: 12px;
 }
 
-/* 📦 Icon inside launcher - now bigger */
+
 .grid-icon {
-  font-size: 25px; /* 👈 Increased size */
+  font-size: 25px; 
   color: white;
   transition: transform 0.2s ease;
 }
@@ -2270,7 +2284,7 @@ input {
 
 
 
-/* Dropdown menu for apps */
+
 .app-dropdown {
   position: absolute;
   top: 45px;
@@ -2286,7 +2300,7 @@ input {
   z-index: 999;
 }
 
-/* App links inside the dropdown */
+
 .app-dropdown a {
   color: #fff;
   text-decoration: none;
@@ -2298,6 +2312,10 @@ input {
   background-color: #333;
   color: #facc15;
 }
+
+
+
+
 
 
 
@@ -2341,4 +2359,3 @@ input {
     border-radius: 8px;
   }
 }
-
