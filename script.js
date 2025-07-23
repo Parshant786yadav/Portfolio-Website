@@ -505,6 +505,8 @@ if (logoutBtn && !logoutBtn.hasAttribute("listener")) {
 
 
 
+  
+
 
 
 
@@ -526,12 +528,10 @@ if (logoutBtn && !logoutBtn.hasAttribute("listener")) {
 
 
 
-
-
-  // VIEW COUNT
+  // ✅ Reference to visit document
   const counterRef = db.collection("visits").doc("portfolio");
 
-  
+  // ✅ Get & update count
   counterRef.get().then((doc) => {
     if (doc.exists) {
       const current = doc.data().count || 0;
@@ -541,7 +541,7 @@ if (logoutBtn && !logoutBtn.hasAttribute("listener")) {
     }
   });
 
- 
+  // ✅ Show briefly, then hide
   counterRef.onSnapshot((doc) => {
     if (doc.exists) {
       const count = doc.data().count;
@@ -558,17 +558,21 @@ if (logoutBtn && !logoutBtn.hasAttribute("listener")) {
 
 
 
+
+
+ 
+
 const viewDocRef = db.collection("analytics").doc("visitCount");
 
 async function trackAndDisplayViewCount() {
   try {
-    
+    // Increment in Firestore
     await viewDocRef.set(
       { count: firebase.firestore.FieldValue.increment(1) },
       { merge: true }
     );
 
-   
+    // Get updated value
     const docSnap = await viewDocRef.get();
     const count = docSnap.data().count;
 
@@ -578,12 +582,12 @@ async function trackAndDisplayViewCount() {
     viewNum.innerText = count;
     viewDiv.style.display = "block";
 
-    
+    // Reset animation
     viewDiv.classList.remove("visit-counter");
     void viewDiv.offsetWidth; // force reflow
     viewDiv.classList.add("visit-counter");
 
-   
+    // Auto-hide after 2.5s
     setTimeout(() => {
       viewDiv.style.opacity = "0";
       setTimeout(() => {
@@ -599,10 +603,3 @@ trackAndDisplayViewCount();
 
 
 
-
-
-
-
-
-
-  
