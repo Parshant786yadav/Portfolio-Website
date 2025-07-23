@@ -528,6 +528,79 @@ if (logoutBtn && !logoutBtn.hasAttribute("listener")) {
 
 
 
+  // VIEW COUNT
+  const counterRef = db.collection("visits").doc("portfolio");
+
+  
+  counterRef.get().then((doc) => {
+    if (doc.exists) {
+      const current = doc.data().count || 0;
+      counterRef.update({ count: current + 1 });
+    } else {
+      counterRef.set({ count: 501 }); // or your starting number
+    }
+  });
+
+ 
+  counterRef.onSnapshot((doc) => {
+    if (doc.exists) {
+      const count = doc.data().count;
+      const viewDiv = document.getElementById("visitCount");
+      viewDiv.innerText = `👁️ Total Views: ${count}`;
+      viewDiv.style.display = "block";
+
+      // Auto-hide after 2 seconds
+      setTimeout(() => {
+        viewDiv.style.display = "none";
+      }, 2000);
+    }
+  });
+
+
+
+const viewDocRef = db.collection("analytics").doc("visitCount");
+
+async function trackAndDisplayViewCount() {
+  try {
+    
+    await viewDocRef.set(
+      { count: firebase.firestore.FieldValue.increment(1) },
+      { merge: true }
+    );
+
+   
+    const docSnap = await viewDocRef.get();
+    const count = docSnap.data().count;
+
+    const viewDiv = document.getElementById("visitCount");
+    const viewNum = document.getElementById("viewNumber");
+
+    viewNum.innerText = count;
+    viewDiv.style.display = "block";
+
+    
+    viewDiv.classList.remove("visit-counter");
+    void viewDiv.offsetWidth; // force reflow
+    viewDiv.classList.add("visit-counter");
+
+   
+    setTimeout(() => {
+      viewDiv.style.opacity = "0";
+      setTimeout(() => {
+        viewDiv.style.display = "none";
+      }, 500);
+    }, 2500);
+  } catch (err) {
+    console.error("View counter failed:", err);
+  }
+}
+
+trackAndDisplayViewCount();
+
+
+
+
+
 
 
 
