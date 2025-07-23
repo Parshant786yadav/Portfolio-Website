@@ -205,7 +205,7 @@ h2 {
 }
 
 #changing-text {
-  display: inline;  /* ✅ Keep it on the same line */
+  display: inline;  
   color: #d946ef;
   font-weight: 600;
   border-right: 2px solid white;
@@ -240,7 +240,7 @@ h2 {
   border-radius: 50%;
   border: 4px solid #ffffff;
   box-shadow: 0 0 20px rgba(88, 166, 255, 0.3);
-  margin-top: -100px; /* 👈 move image upward */
+  margin-top: -100px; /*  move image upward */
   margin-left: -200px;
   margin-right: -100px;
 
@@ -311,8 +311,8 @@ h2 {
     flex-direction: column;
     align-items: flex-start;
     padding: 10px;
-    overflow-x: auto; /* ✅ ensure container allows scroll */
-    width: 100vw;      /* ✅ full width */
+    overflow-x: auto; 
+    width: 100vw;      
   }
 
   .nav-links {
@@ -328,7 +328,7 @@ h2 {
 
   .nav-links li {
     display: inline-block;
-    flex: 0 0 auto; /* ✅ prevent shrinking */
+    flex: 0 0 auto; 
     white-space: nowrap;
   }
 
@@ -353,7 +353,7 @@ h2 {
   }
 }
 html, body {
-  overflow-x: hidden;  /* prevent page scroll */
+  overflow-x: hidden; 
 }
 
 .nav-links {
@@ -390,7 +390,7 @@ html, body {
   box-shadow: 0 0 20px rgba(0,0,0,0.4);
   display: none;
   flex-direction: column;
-  align-items: center;    /* ✅ Center horizontally */
+  align-items: center;    
   text-align: center;
 }
 
@@ -438,7 +438,7 @@ html, body {
   display: flex;
   align-items: center;
   gap: 12px;
-  margin-left: auto; /* ✅ pushes to right */
+  margin-left: auto; 
 }
 
 
@@ -446,7 +446,7 @@ html, body {
 
 
 
-/* From Uiverse.io by Damithkumara */ 
+ 
 
 
 
@@ -464,7 +464,7 @@ html, body {
   z-index: 1;
 }
 
-/* From Uiverse.io by mrhyddenn */ 
+ 
 .nav-links li .button {
   position: relative;
   padding: 10px 12px;
@@ -569,10 +569,10 @@ html, body {
   overflow: hidden;
   background: transparent;
   margin-top: 20px;
-  position: fixed;         /* ✅ Fixed at bottom */
+  position: fixed;         
   bottom: 0;
   left: 0;
-  height: 30px;            /* Your original height */
+  height: 30px;           
   z-index: 9999;
 }
 
@@ -580,21 +580,21 @@ html, body {
   position: absolute;
   white-space: nowrap;
   display: inline-block;
-  color: #ff5858;           /* 🔥 Your color */
-  font-size: 1.1rem;        /* ✅ Your font size */
+  color: #ff5858;          
+  font-size: 1.1rem;       
   text-shadow: 
     0 0 5px #ff5858, 
-    0 0 10px #b62020;       /* ✅ Your glowing red-pink shadow */
+    0 0 10px #b62020;      
   animation: scroll-left 17s linear infinite;
-  padding-right: 50px;     /* ✅ Smooth looping */
+  padding-right: 50px;   
 }
 
 @keyframes scroll-left {
   0% {
-    transform: translateX(100vw);  /* Start off-screen right */
+    transform: translateX(100vw);  
   }
   100% {
-    transform: translateX(-100%);  /* Scroll off-screen left */
+    transform: translateX(-100%);  
   }
 }
 
@@ -604,11 +604,11 @@ html, body {
 
 .left {
   position: relative;
-  z-index: 1; /* keep it below the ticker */
+  z-index: 1;
 }
 
 
-/* Home Section Background */
+
 #home {
   background-image: url('');
   background-size: cover;
@@ -2300,4 +2300,45 @@ input {
 }
 
 
+
+
+
+.visit-counter {
+  position: fixed;
+  top: 65px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: linear-gradient(135deg, #1f1f1f, #2c2c2c);
+  color: #facc15; /* Yellow text */
+  padding: 6px 16px;
+  font-size: 13px;
+  font-family: monospace;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(255, 255, 0, 0.25);
+  z-index: 9999;
+  opacity: 0;
+  transition: opacity 0.4s ease, transform 0.4s ease;
+  animation: slideDownFade 0.5s ease forwards;
+}
+
+
+@keyframes slideDownFade {
+  from {
+    transform: translate(-50%, -20px);
+    opacity: 0;
+  }
+  to {
+    transform: translate(-50%, 0);
+    opacity: 1;
+  }
+}
+
+
+@media only screen and (max-width: 600px) {
+  .visit-counter {
+    font-size: 10px;
+    padding: 4px 10px;
+    border-radius: 8px;
+  }
+}
 
