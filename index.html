@@ -7,7 +7,7 @@
   <title>Prashant | Tech Portfolio</title>
   <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-app.js"></script>
 <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-firestore.js"></script>
-  <!-- Add this instead in <head> -->
+ 
 <link
   rel="stylesheet"
   href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
@@ -30,12 +30,12 @@
 
   .logo {
     justify-self: start;
-    margin-left: 80px; /* ✅ This moves ONLY the logo to the right */
+    margin-left: 80px;  
   }
 
   .nav-links {
     display: flex;
-    justify-content: center;  /* ✅ Center nav links */
+    justify-content: center;  
     gap: 20px;
   }
 
@@ -59,18 +59,18 @@
 }
 @media screen and (min-width: 769px) {
   .navbar {
-    margin-top: 10px; /* ✅ Pushes navbar slightly downward */
+    margin-top: 10px;
   }
 }
 
 
 @media screen and (min-width: 769px) {
   .nav-links .button {
-    padding: 8px 16px !important;       /* ✅ Slightly bigger */
-    font-size: 14px !important;         /* ✅ Clear, but not huge */
+    padding: 8px 16px !important;       
+    font-size: 14px !important;       
     line-height: 1.3 !important;
     height: auto !important;
-    max-height: 42px !important;        /* ✅ Still below scroll threshold */
+    max-height: 42px !important;       
     white-space: nowrap !important;
     display: inline-flex !important;
     align-items: center;
@@ -92,7 +92,7 @@
 @media screen and (min-width: 769px) {
   .nav-links li:not(:last-child) {
     position: relative;
-    top: 5px; /* ✅ Only shifts nav buttons like Home, About... */
+    top: 5px; 
   }
 }
 
@@ -117,7 +117,7 @@
 
 .create-resume-glow {
   animation: glowPulse 1.8s infinite ease-in-out;
-  color: #facc15; /* Tailwind's yellow-400 */
+  color: #facc15; 
   font-weight: bold;
 }
 
