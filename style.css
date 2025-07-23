@@ -2378,7 +2378,7 @@ input {
     position: fixed;
     left: 50%;
     transform: translateX(-50%);
-    top: 15px;
+    top: 22px;
     font-size: 22px;
     right: auto;
     z-index: 9999;
