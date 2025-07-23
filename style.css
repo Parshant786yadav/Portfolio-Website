@@ -2361,7 +2361,7 @@ input {
 }
 
 
-/* Desktop (default) — keep it on the right */
+
 .grid-icon {
   position: absolute;
   right: 10px;
@@ -2372,11 +2372,42 @@ input {
   transition: all 0.3s ease;
 }
 
-/* Mobile: Shift to LEFT */
+
 @media only screen and (max-width: 768px) {
   .grid-icon {
-    left: -50px;     /* ✅ push to left */
-    right: auto;    /* ✅ cancel right positioning */
+    position: fixed;
+    left: 50%;
+    transform: translateX(-50%);
+    top: 15px;
+    font-size: 22px;
+    right: auto;
+    z-index: 9999;
+  }
+}
+
+
+
+
+.profile-pic {
+  width: 300px;
+  height: 300px;
+  border-radius: 50%;
+  object-fit: cover;
+  display: block;
+  margin: 0 auto;
+}
+
+
+@media only screen and (max-width: 768px) {
+  .profile-pic {
+    width: 240px !important;
+    height: 240px !important;
+    min-width: 180px;
+    min-height: 180px;
+    object-fit: cover;
+    margin: 80px auto 20px auto;
+    display: block;
+    flex-shrink: 0;
   }
 }
 
