@@ -2413,3 +2413,64 @@ input {
 
 
 
+@media only screen and (min-width: 391px) and (max-width: 500px) {
+ 
+
+  .profile-pic {
+    width: 200px !important;
+    height: 200px !important;
+    margin-top: 6px;
+    margin-bottom: 6px;
+  }
+
+  .greeting {
+    font-size: 0.5rem;
+    padding: 3px 8px;
+    margin: 2px 0;
+    border-radius: 12px;
+  }
+
+  .greeting .wave {
+    font-size: 0.75rem;
+  }
+
+  .name-heading {
+    font-size: 1.25rem !important;
+    margin-top: 3px;
+  }
+
+  h1 {
+    font-size: 2rem !important;
+    margin-top: 4px;
+  }
+
+  .tagline {
+    font-size: 0.75rem;
+    margin-top: 2px;
+  }
+
+  .contact-info {
+    font-size: 0.7rem;
+    margin: 1px 0;
+  }
+
+  .contact-icons i {
+    font-size: 14px;
+    margin: 0 3px;
+  }
+
+  .cta-text,
+  .view-count-alert {
+    font-size: 0.65rem;
+    padding: 0.3rem 0.5rem;
+    margin-top: 4px;
+  }
+
+  .hero-section {
+    padding-top: 10px;
+    padding-bottom: 6px;
+  }
+}
+
+
+
