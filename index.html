@@ -200,11 +200,13 @@
   <!-- 🟦 App Launcher Icon (Google-style) -->
   
 <div class="app-launcher" onclick="toggleAppMenu()" title="My Apps">
-  <i class="fas fa-th grid-icon"></i>
+  <span id="app-icon"><i class="fas fa-th grid-icon"></i></span>
+  <span id="app-text" style="display:none; font-weight:bold; color:#ffcc00;">New Apps</span>
+
   <div id="appMenu" class="app-dropdown hidden">
-    <a href="https://resumebuilder.parshantyadav.com" target="_blank">🧾 Resume Builder</a>
-    <a href="https://hirewise.parshantyadav.com" target="_blank">📑 HireWise</a>
-    <a href="https://tools.parshantyadav.com" target="_blank">🛠️ AI Tools (Coming soon)</a>
+    <a href="https://resume.parshantyadav.com" target="_blank">🧾 Resume Builder</a>
+    <a href="https://found.parshantyadav.com" target="_blank">📍 Lost & Found</a>
+    <a href="https://tools.parshantyadav.com" target="_blank">🛠️ AI Tools (Coming)</a>
   </div>
 </div>
 
@@ -766,10 +768,31 @@ I'm always eager to learn more about AI and implement it creatively in my projec
 
 <script src="script.js"></script>
 
-   
+
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+  const icon = document.getElementById('app-icon');
+  const text = document.getElementById('app-text');
+
+  setInterval(() => {
+    // Show "New Apps" with blink
+    icon.style.display = 'none';
+    text.style.display = 'inline';
+    text.classList.add('blink-once');
+
+    // Switch back after blink ends (1s)
+    setTimeout(() => {
+      text.classList.remove('blink-once');
+      text.style.display = 'none';
+      icon.style.display = 'inline';
+    }, 1000);
+  }, 5000); // every 5 seconds
+});
+</script>
 
 </body>
 </html>
+
 
 
 
