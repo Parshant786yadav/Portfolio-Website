@@ -84,6 +84,38 @@
 }
 
 
+@media (min-width: 769px) and (max-width: 1400px) {
+  .home-content .left {
+    padding-left: 100px;
+  }
+  .home-content .right {
+    padding-right: 100px;
+  }
+  .profile-pic {
+    width: 220px;
+    height: 220px;
+  }
+}
+
+
+
+
+
+
+
+@media (min-width: 769px) and (max-width: 1400px) {
+  .nav-links {
+    flex-wrap: wrap;       /* allow wrapping to second line if needed */
+    gap: 15px;              /* reduce spacing between links */
+    justify-content: center;/* center align if wrapped */
+  }
+  .nav-links li a {
+    font-size: 0.9rem;      /* slightly smaller font */
+    padding: 5px 8px;       /* reduce button padding */
+  }
+}
+
+
 
 
 </style
@@ -109,7 +141,6 @@
   <li><a href="#certificates" class="nav-btn">Certificates</a></li>
   <li><a href="#education" class="nav-btn">Education</a></li>
   <li><a href="#leetcode" class="nav-btn">Leetcode</a></li>
-  <li><a href="#github" class="nav-btn">GitHub</a></li>
   <li><a href="free_certificate.html" class="nav-btn blink-new">Free Certificates<sup>NEW</sup></a></li>
   <li><a href="roadmaps.html" class="nav-btn blink-new">Roadmaps<sup>NEW</sup></a></li>
   <li><a href="resources.html" class="nav-btn blink-new">Resources<sup>NEW</sup></a></li>
@@ -119,7 +150,6 @@
 
 
         <div class="actions">
-  <div class="dark-toggle">🌙</div>
   <div class="hamburger" id="hamburger">☰</div>
 </div>
           
@@ -666,3 +696,4 @@ I'm always eager to learn more about AI and implement it creatively in my projec
 
 </body>
 </html>
+
