@@ -115,7 +115,12 @@
   }
 }
 
-
+/* Hide if screen width is less than 1203px OR height is less than 683px */
+@media (max-width: 1337px), (max-height: 683px) {
+  .app-launcher {
+    display: none !important;
+  }
+}
 
 
 </style
@@ -146,10 +151,20 @@
   <li><a href="resources.html" class="nav-btn blink-new">Resources<sup>NEW</sup></a></li>
   <li><a href="#" class="button logout-btn">Logout</a></li>
 </ul>
-
-
-
         <div class="actions">
+  <!-- 🟦 App Launcher Icon (Google-style) -->
+  
+<div class="app-launcher" onclick="toggleAppMenu()" title="My Apps">
+  <span id="app-icon"><i class="fas fa-th grid-icon"></i></span>
+  <span id="app-text" style="display:none; font-weight:bold; color:#ffcc00;">New Apps</span>
+
+  <div id="appMenu" class="app-dropdown hidden">
+    <a href="https://resumebuilder.parshantyadav.com" target="_blank">🧾 Resume Builder</a>
+    <a href="https://hirewise.parshantyadav.com" target="_blank">📑 HireWise</a>
+    <a href="https://tools.parshantyadav.com" target="_blank">🛠️ AI Tools (Coming)</a>
+  </div>
+  </div>
+
   <div class="hamburger" id="hamburger">☰</div>
 </div>
           
@@ -696,4 +711,5 @@ I'm always eager to learn more about AI and implement it creatively in my projec
 
 </body>
 </html>
+
 
