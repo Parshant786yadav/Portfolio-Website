@@ -105,12 +105,12 @@ h2 {
   font-size: 1.2rem;
   font-weight: 900;
   color: white;
-  background: linear-gradient(135deg, #58a6ff 0%, #004e92 100%);
+  
   padding: 8px 16px;
   border-radius: 12px;
   font-family: 'Poppins', sans-serif;
-  animation: blink 1.7s infinite ease-in-out;
-  box-shadow: 0 0 15px rgba(88, 166, 255, 0.3);
+  
+ 
   transition: all 0.3s ease;
 }
 
@@ -723,7 +723,7 @@ html, body {
   font-size: 1.rem;
   font-weight: bold;
   color: white;
-  background-color: #3b82f6;
+ 
   padding: 6px 10px;
   border-radius: 10px;
 }
@@ -2649,3 +2649,4 @@ input {
 .blink-once {
   animation: blink-once 1s ease-in-out;
 }
+
