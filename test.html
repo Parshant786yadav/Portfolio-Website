@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Gemini Test</title>
+</head>
+<body>
+  <h1>Gemini API Test</h1>
+  <input id="msg" placeholder="Type your question..." />
+  <button onclick="send()">Send</button>
+  <p id="res"></p>
+
+  <script>
+    async function send() {
+      const message = document.getElementById("msg").value;
+      try {
+        const res = await fetch("https://chat-skqgszo5sa-uc.a.run.app", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify({ message })
+        });
+
+        const data = await res.json();
+        document.getElementById("res").innerText = data.reply || JSON.stringify(data);
+      } catch (err) {
+        document.getElementById("res").innerText = "Error: " + err;
+      }
+    }
+  </script>
+</body>
+</html>

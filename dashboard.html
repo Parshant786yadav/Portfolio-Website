@@ -127,6 +127,31 @@
   width: auto; /* keeps the aspect ratio */
 }
 
+
+
+
+
+
+
+
+
+@media (max-width: 768px) {
+  #skills {
+    margin-top: -100px
+  }
+}
+
+@media (max-width: 768px) {
+  .about-section {
+    margin-top: 0.5px
+  }
+}
+
+@media screen and (max-width: 430px) { 
+  #skills {
+    margin-top: -150px
+  }
+}
     
 </style
 
@@ -350,7 +375,7 @@
   <!-- About Section -->
   <section id="about" class="about-section">
   <div class="about-container">
-    <h2 class="about-title">👋 About <span>Me</span></h2>
+    <h2 class="about-title"> About Me</h2>
 
     <p class="about-intro">"Web development? That’s my warm-up. I thrive on solving DSA challenges and diving deep into the world of AI and ML models.".</p>
 
@@ -510,20 +535,22 @@ I'm always eager to learn more about AI and implement it creatively in my projec
   </section>
 
   <!-- Leetcode Section -->
-  <!-- Leetcode Section -->
-<!-- LeetCode Section -->
 <section id="leetcode" class="section leetcode-section">
   <h2>LeetCode</h2>
   
-  <div class="leetcode-card">
+  <div class="leetcode-card" style="text-align: center;">
     <a href="https://leetcode.com/parshant786yadav" target="_blank">
-      <img src="images/leetcode black theme.png" alt="LeetCode Profile" class="leetcode-avatar" />
+      <!-- Dynamic LeetCode Card -->
+      <img src="https://leetcard.jacoblin.cool/parshant786yadav?theme=dark&ext=heatmap&hide=ranking,contest" 
+     alt="LeetCode Stats" 
+     class="leetcode-avatar" 
+     style="border-radius:12px; box-shadow:0 0 15px rgba(0,255,150,0.5);" />
+
     </a> <br>
 
-    <p class="leetcode-info">
-      I’ve solved 100+ DSA problems on LeetCode and earned multiple badges.<br>
-      My journey reflects consistency, passion, and problem-solving growth.<br>
-      Always eager to take on new coding challenges!
+    <p class="leetcode-info"> I’ve solved 150+ DSA problems on LeetCode and earned multiple badges.
+      <br> My journey reflects consistency, passion, and problem-solving growth.
+      <br> Always eager to take on new coding challenges!
     </p> <br><br>
 
     <a href="https://leetcode.com/parshant786yadav" class="leetcode-link" target="_blank">

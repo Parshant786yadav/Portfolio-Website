@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Welcome</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <style>
+    body, html {
+      margin: 0;
+      padding: 0;
+      background: #000;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-family: 'Segoe UI', sans-serif;
+      overflow: hidden;
+    }
+
+    .welcome-container {
+      text-align: center;
+      visibility: hidden; /* 👈 Hide everything at start */
+    }
+
+    .welcome-text {
+      font-size: 2.5rem;
+      font-weight: bold;
+      letter-spacing: 1px;
+      background: linear-gradient(to right, #00f5ff, #ff00cc);
+      background-clip: text;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      opacity: 0;
+      transform: translateX(-100%);
+    }
+
+    .animate-slide-in {
+      animation: slideInLeft 1.5s ease forwards;
+    }
+
+    @keyframes slideInLeft {
+      to {
+        opacity: 1;
+        transform: translateX(0);
+      }
+    }
+
+    .sub-text {
+      font-size: 1.1rem;
+      color: #888;
+      margin-top: 12px;
+      opacity: 0;
+      animation: fadeIn 1s ease forwards;
+      animation-delay: 1.5s;
+    }
+
+    .show-container {
+      visibility: visible;
+    }
+
+    @keyframes fadeIn {
+      to {
+        opacity: 1;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="welcome-container" id="welcomeContainer">
+    <div id="welcomeMessage" class="welcome-text">...</div>
+    
+  </div>
+
+  <!-- Firebase SDK -->
+  <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-auth.js"></script>
+
+  <!-- Firebase Config -->
+  <script>
+    const firebaseConfig = {
+      apiKey: "AIzaSyCpNphBnKMbqRq8Z95z_60x1-mnbyaWGlA",
+      authDomain: "myportfolioauth-41bbd.firebaseapp.com",
+      projectId: "myportfolioauth-41bbd",
+      storageBucket: "myportfolioauth-41bbd.appspot.com",
+      messagingSenderId: "835152618447",
+      appId: "1:835152618447:web:17d60e903b6a0ca6b7a8ba"
+    };
+    firebase.initializeApp(firebaseConfig);
+  </script>
+
+  <!-- Welcome Logic -->
+  <script>
+    firebase.auth().onAuthStateChanged((user) => {
+      if (user) {
+        const msg = document.getElementById('welcomeMessage');
+        const container = document.getElementById('welcomeContainer');
+
+        msg.textContent = `Welcome, ${user.email}`;
+        container.classList.add('show-container'); // 👈 make visible
+        msg.classList.add('animate-slide-in');     // 👈 start animation immediately
+
+        setTimeout(() => {
+          window.location.href = 'dashboard.html';
+        }, 3000);
+      } else {
+        window.location.href = 'index.html';
+      }
+    });
+  </script>
+</body>
+</html>
