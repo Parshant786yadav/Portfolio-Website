@@ -955,32 +955,32 @@ ul {
 
 
 /* About Section Layout */
+/* About Section */
 .about-section {
-  padding: 80px 20px;
+  padding: 60px 20px;
   background: linear-gradient(135deg, #1f1c2c, #928dab);
   display: flex;
   justify-content: center;
   align-items: center;
   min-height: 100vh;
   color: white;
+  text-align: center;
 }
 
 /* Container */
 .about-container {
   background: rgba(255, 255, 255, 0.05);
   backdrop-filter: blur(8px);
-  border-radius: 20px;
-  padding: 50px 30px;
-  max-width: 850px;
-  text-align: center;
-  box-shadow: 0 0 20px rgba(0, 0, 0, 0.4);
-  animation: fadeInUp 1.2s ease-in-out;
+  border-radius: 18px;
+  padding: 40px 25px;
+  max-width: 700px;   /* smaller width, so text doesn’t stretch */
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.4);
 }
 
 /* Title */
 .about-title {
-  font-size: 3rem;
-  margin-bottom: 20px;
+  font-size: 2.5rem;
+  margin-bottom: 15px;
 }
 .about-title span {
   background: linear-gradient(to right, #ff758c, #ff7eb3);
@@ -988,71 +988,43 @@ ul {
   -webkit-text-fill-color: transparent;
 }
 
-/* Intro text */
+/* Intro */
 .about-intro {
-  font-size: 1.3rem;
+  font-size: 1.1rem;
   font-style: italic;
   color: #ddd;
-  margin-bottom: 30px;
-  animation: fadeIn 1.5s ease-in;
+  margin-bottom: 20px;
+  line-height: 1.6;
 }
 
-/* Detailed paragraph */
+/* Details */
 .about-details {
-  font-size: 1.1rem;
-  line-height: 1.8;
+  font-size: 1.05rem;
+  line-height: 1.7;
   color: #e0e0e0;
-  margin-bottom: 35px;
-  animation: fadeIn 2s ease-in;
+  margin-bottom: 30px;
+  max-width: 600px;   /* shrink text width more */
+  margin-left: auto;
+  margin-right: auto;
 }
 
-/* Highlighted keywords */
+/* Highlight */
 .highlight {
   color: #ff9de2;
   font-weight: 600;
 }
 
-/* Button */
-.about-btn {
-  background: linear-gradient(90deg, #00d2ff, #3a47d5);
-  padding: 14px 28px;
-  color: white;
-  text-decoration: none;
-  border-radius: 30px;
-  font-weight: bold;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-}
-.about-btn:hover {
-  transform: scale(1.05);
-  box-shadow: 0 6px 16px rgba(0, 210, 255, 0.4);
-}
-
-/* Animations */
-@keyframes fadeInUp {
-  0% {
-    opacity: 0;
-    transform: translateY(40px);
-  }
-  100% {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-@keyframes fadeIn {
-  from { opacity: 0; }
-  to { opacity: 1; }
-}
-
 /* Responsive */
 @media (max-width: 768px) {
   .about-title {
-    font-size: 2.2rem;
+    font-size: 2rem;
   }
   .about-intro, .about-details {
-    font-size: 1rem;
+    font-size: 0.90rem;
+    line-height: 1.5;
   }
 }
+
 
 
 #skills {
@@ -1848,9 +1820,8 @@ input {
   border-radius: 8px;
   font-weight: bold;
   display: inline-block;
-  text-align: center;
+  text-align: center !important;
   border: none;
-  width: 100%;         /* Optional: full width */
   text-decoration: none;
   margin-left: 20px;
 }
@@ -2740,27 +2711,28 @@ input {
   cursor: pointer;
 }
 
-
+/* Typing indicator */
 #ai-typing {
   font-style: italic;
   font-size: 12px;
   color: #888;
   margin-top: 5px;
-  display: none; 
+  display: none;
 }
 /* Mobile view adjustments */
 @media (max-width: 600px) {
   #ai-toggle {
-    padding: 8px 12px;  
+    padding: 8px 12px;   
     font-size: 8px;     
-    bottom: 30px;      
+    bottom: 30px;        
   }
 
   #ai-panel {
     bottom: 120px;      
-    width: 280px;        
+    width: 280px;       
   }
 }
+
 @media (max-width: 768px) {
   #ai-toggle {
     right: 10px;         
@@ -2775,3 +2747,102 @@ input {
   max-width: 90vw;
   max-height: 70vh;
 }
+
+.leetcode-info {
+  font-size: 16px;
+  line-height: 1.6;
+  text-align: center;
+  max-width: 90%;
+  margin: 10px auto;
+  word-wrap: break-word;
+}
+
+
+@media (max-width: 768px) {
+  .leetcode-info {
+    font-size: 14px;       
+    line-height: 1.8;      
+    text-align: left;      
+    padding: 0 15px;       
+    max-width: 100%; 
+    margin-top: -20px;
+  }
+}
+
+/* Hide only the last skill on mobile screens */
+@media (max-width: 768px) {
+  .skills-grid .skill-icon:last-child {
+    display: none;
+  }
+}
+@media (max-width: 768px) {
+  .leetcode-link {
+    font-size: 9px;  
+    margin-top: -40px;
+  }
+}
+
+@media (max-width: 768px) {
+  .github-section {
+    margin-top: -160px;
+  }
+}
+
+@media (max-width: 768px) {
+  .leetcode-section {
+    margin-top: -100px;
+  }
+}
+
+@media (max-width: 768px) {
+  .github-button {
+    margin-top: 20px;
+    font-size: 9px;
+  }
+}
+
+
+@media (max-width: 768px) {
+  .contact-section {
+    margin-top: -120px;
+  }
+}
+
+@media (max-width: 768px) {
+  .footer {
+    margin-top: -10px;
+  }
+}
+
+@media (max-width: 768px) {
+  .contact-section p {
+    text-align: center;
+  }
+}
+
+#skills {
+  margin-top: -120px;
+}
+
+.about-section {
+  margin-top: -200px;
+}
+
+@media (max-width: 768px) {
+  .skills {
+    margin-top: -200px;
+  }
+}
+
+@media (max-width: 768px) {
+  .about-section {
+    margin-top: -280px;
+  }
+}
+
+@media screen and (max-width: 430px) {  
+  #skills {
+    margin-top: -200px; 
+  }
+}
+
