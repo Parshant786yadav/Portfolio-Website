@@ -3074,6 +3074,13 @@ input {
   }
 }
 
+@media (max-width: 600px) {
+  #ai-instructions {
+    bottom: 300px;   /* 👈 move DOWN (adjust as needed) */
+  }
+}
+
+
 
 
 #ai-instructions {
@@ -3110,3 +3117,19 @@ input {
   filter: blur(2px);
 }
 
+@media (max-width: 600px) {
+  #ai-instructions {
+    width: calc(100% - 48px);  /* narrower */
+    max-height: 45vh;          /* shorter height */
+    font-size: 13px;           /* slightly smaller text */
+    border-radius: 12px;
+  }
+
+  .ai-instructions-body {
+    padding: 12px;
+  }
+
+  .ai-instructions-body li {
+    line-height: 1.4;
+  }
+}
