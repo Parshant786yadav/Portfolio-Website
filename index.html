@@ -40,7 +40,8 @@
 
   .logo {
     justify-self: start;
-    margin-left: 80px; 
+    /* align-items: center; */
+    margin-left: 30px; 
   }
 
   .nav-links {
@@ -158,6 +159,52 @@
   height: 40px; 
   width: auto; 
 }
+
+@media only screen and (max-width: 600px) {
+  .app-launcher {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  #app-text {
+    text-align: center;
+    margin: 0 auto;
+  }
+}
+
+
+@media (max-width: 600px) {
+  .actions {
+    margin-left: 0;              /* ❌ remove auto push */
+    width: 100%;
+    justify-content: center;     /* ✅ center children */
+  }
+}
+@media (max-width: 600px) {
+  .app-launcher {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: fit-content;
+  }
+}
+@media (max-width: 600px) {
+  #app-text {
+    display: none !important;
+  }
+}
+
+@media (max-width: 600px) {
+  .app-dropdown {
+    left: 50%;
+    transform: translateX(-50%);
+    right: auto;
+  }
+}
+
+
 
 
 
@@ -867,7 +914,7 @@ document.addEventListener("DOMContentLoaded", function () {
   if (icon && text) {
     setInterval(() => {
       icon.style.display = 'none';
-      text.style.display = 'inline';
+      text.style.display = 'inline-block';
       text.classList.add('blink-once');
 
       setTimeout(() => {
@@ -1014,6 +1061,10 @@ document.addEventListener("click", (e) => {
     }, 4000);
   }
 });
+
+
+
+
 
 
 </script>

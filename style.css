@@ -125,7 +125,7 @@ h2 {
 .nav-links li a {
   color: #c9d1d9;
   text-decoration: none;
-  font-size: 1rem;
+  font-size: 0.9rem;
   position: relative;
 }
 
@@ -315,6 +315,7 @@ h2 {
   }
 
   .nav-links {
+    
     display: flex !important;
     flex-direction: row !important;
     overflow-x: auto;
@@ -324,6 +325,9 @@ h2 {
     padding: 10px 0;
     margin: 0;
   }
+
+  
+
 
   .nav-links li {
     display: inline-block;
@@ -687,6 +691,13 @@ html, body {
   transition: all 0.4s ease;
   background-color: transparent;
 }
+
+.nav-container {
+  max-width: 94%; 
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
 
 /* Container inside navbar */
 .nav-container {
@@ -2235,9 +2246,18 @@ input {
   height: 42px;
 
   /* 👈 Move it slightly left from extreme right */
-  margin-right: 80px;
+  margin-right: 150px;
   margin-left: 12px;
 }
+
+@media only screen and (max-width: 600px) {
+  .app-text {
+    display: flex;
+    justify-content: center;
+  }
+}
+
+
 
 /* 📦 Icon inside launcher - now bigger */
 .grid-icon {
@@ -2340,7 +2360,7 @@ input {
 /* Desktop view (default) */
 .grid-icon {
   position: absolute;
-  right: 10px;
+  right: -25px;
   top: 15px;
   font-size: 22px;
   color: white;
@@ -2935,4 +2955,15 @@ input {
   font-weight: 500;
   white-space: nowrap;
 }
+
+#app-text {
+  font-size: 13px;   /* adjust as needed */
+}
+
+
+
+
+
+
+
 
