@@ -459,19 +459,41 @@
 
 
 <button id="ai-toggle">Chat Me 🤖</button>
+
+<!-- Chat Panel -->
 <div id="ai-panel" aria-hidden="true">
   <div id="ai-header">
     <div>Chat Me 🤖</div>
-    <button id="ai-mode" title="Toggle mode">Mode: Site</button>
+    <button id="ai-mode" title="Instructions">ℹ️</button>
   </div>
+
   <div id="ai-body"></div>
-  <!-- Typing indicator -->
   <div id="ai-typing">Chat Me is typing...</div>
+
   <div id="ai-inputbar">
     <input id="ai-input" placeholder="Type a message..." />
     <button id="ai-send">Send</button>
   </div>
 </div>
+
+<!-- Instructions Panel (SEPARATE FLOATING PANEL) -->
+<div id="ai-instructions" aria-hidden="true">
+  <div class="ai-header">
+    <div>How to use Chat Me 🤖</div>
+      </div>
+
+  <div class="ai-instructions-body">
+    <ul>
+      <li><strong>1.</strong> It only knows about me, my projects, skills, etc.</li>
+      <li><strong>2.</strong> Try to ask questions in short like – 12th marks, college name, skills, etc.</li>
+      <li><strong>3.</strong> Responses may take a few seconds.</li>
+      <li><strong>4.</strong> Conversations are not stored permanently.</li>
+    </ul>
+  </div>
+</div>
+
+
+ 
 
 
 
@@ -925,143 +947,169 @@ document.addEventListener("DOMContentLoaded", function () {
     }, 5000);
   }
 
-  // ---- AI Chat Panel ----
-  const toggle = document.getElementById("ai-toggle");
-  const panel  = document.getElementById("ai-panel");
-  const body   = document.getElementById("ai-body");
-  const input  = document.getElementById("ai-input");
-  const send   = document.getElementById("ai-send");
-  const modeBtn= document.getElementById("ai-mode");
-  const typingIndicator = document.getElementById("ai-typing");
-  // Close panel when clicking outside
+// ---- AI Chat Panel ----
+const toggle = document.getElementById("ai-toggle");
+const panel  = document.getElementById("ai-panel");
+const body   = document.getElementById("ai-body");
+const input  = document.getElementById("ai-input");
+const send   = document.getElementById("ai-send");
+const typingIndicator = document.getElementById("ai-typing");
+
+const instructionsBtn = document.getElementById("ai-mode");
+const instructionsPanel = document.getElementById("ai-instructions");
+
+
+if (!toggle || !panel || !body || !input || !send) return;
+
+let open = false;
+const history = [];
+const AI_URL = "https://personal-ml-chatbot.onrender.com/chat";
+
+/* ---------- UTIL ---------- */
+const scrollBottom = () => {
+  body.scrollTo({ top: body.scrollHeight, behavior: "smooth" });
+};
+
+const addBubble = (text, who) => {
+  const b = document.createElement("div");
+  b.className = `ai-bubble ${who === "user" ? "ai-user" : "ai-bot"}`;
+  b.textContent = text;
+  body.appendChild(b);
+  scrollBottom();
+};
+
+/* ---------- INSTRUCTIONS ---------- */
+
+// Manual open
+instructionsBtn.addEventListener("click", (e) => {
+  e.stopPropagation();
+  instructionsPanel.classList.add("open");
+});
+
+
+
+// Close instructions when clicking outside
 document.addEventListener("click", (e) => {
-  if (!panel.contains(e.target) && !toggle.contains(e.target)) {
-    open = false;
+  if (
+    instructionsPanel.classList.contains("open") &&
+    !instructionsPanel.contains(e.target) &&
+    !instructionsBtn.contains(e.target)
+  ) {
+    instructionsPanel.classList.remove("open");
+  }
+});
+
+/* ---------- PANEL OPEN / CLOSE ---------- */
+const openPanel = () => {
+  open = true;
+  panel.style.display = "flex";
+  panel.style.opacity = "1";
+  panel.style.transform = "translateY(0)";
+  panel.setAttribute("aria-hidden", "false");
+
+  // 🔥 AUTO OPEN INSTRUCTIONS
+  instructionsPanel.classList.add("open");
+
+  // ✅ Focus input ONLY on desktop
+  if (window.innerWidth > 768) {
+    input.focus();
+  }
+};
+
+
+const closePanel = () => {
+  open = false;
+  panel.style.opacity = "0";
+  panel.style.transform = "translateY(10px)";
+  panel.setAttribute("aria-hidden", "true");
+
+  // Close instructions too
+  instructionsPanel.classList.remove("open");
+
+  setTimeout(() => {
     panel.style.display = "none";
-    panel.setAttribute("aria-hidden", "true");
+  }, 200);
+};
+
+toggle.addEventListener("click", (e) => {
+  e.stopPropagation();
+  open ? closePanel() : openPanel();
+});
+
+// Close chat when clicking outside
+document.addEventListener("click", (e) => {
+  if (open && !panel.contains(e.target) && !toggle.contains(e.target)) {
+    closePanel();
   }
 });
 
-
-  if (!toggle || !panel || !body || !input || !send || !modeBtn) return;
-
-  let open = false;
-  let mode = "site";
-  const history = [];
-
-  const addBubble = (text, who) => {
-    const b = document.createElement("div");
-    b.className = "ai-bubble " + (who === "user" ? "ai-user" : "ai-bot");
-    b.textContent = text;
-    body.appendChild(b);
-    body.scrollTop = body.scrollHeight;
-  };
-
-  const AI_URL = "https://personal-ml-chatbot.onrender.com/chat";
-
-  async function sendMessage(msg, addToHistory = false) {
-    const payload = { message: msg };
-    if (addToHistory) {
-      payload.history = history;
-      payload.mode = mode;
-    }
-
-    const res = await fetch(AI_URL, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(payload)
-    });
-
-    if (!res.ok) throw new Error("Server error: " + res.status);
-
-    const text = await res.text();
-    if (!text) return "No reply.";
-
-    try {
-      const data = JSON.parse(text);
-      return data.reply || "No reply.";
-    } catch {
-      return text; 
-    }
-  }
-
-  const sendMsg = async () => {
-    const textVal = input.value.trim();
-    if (!textVal) return;
-    input.value = "";
-    addBubble(textVal, "user");
-
-    try {
-      if (typingIndicator) typingIndicator.style.display = "block";
-
-      const reply = await sendMessage(textVal, true);
-
-      if (typingIndicator) typingIndicator.style.display = "none";
-
-      addBubble(reply, "bot");
-
-      // keep short history
-      history.push({ role: "user", content: textVal });
-      history.push({ role: "assistant", content: reply });
-      if (history.length > 12) history.splice(0, history.length - 12);
-    } catch (err) {
-      if (typingIndicator) typingIndicator.style.display = "none";
-      console.error("Error sending message:", err);
-      addBubble("Error: " + err.message, "bot");
-    }
-  };
-
-  toggle.addEventListener("click", () => {
-    open = !open;
-    panel.style.display = open ? "flex" : "none";
-    panel.setAttribute("aria-hidden", String(!open));
-    if (open) input.focus();
-  });
-
-  send.addEventListener("click", sendMsg);
-  input.addEventListener("keydown", e => {
-    if (e.key === "Enter") sendMsg();
-  });
-
-  modeBtn.addEventListener("click", () => {
-    mode = mode === "site" ? "general" : "site";
-    modeBtn.textContent = "Mode: " + (mode === "site" ? "Site" : "General");
-  });
-
-  // Optional: external send button
-  const sendBtn = document.getElementById("sendBtn");
-  const userMsg = document.getElementById("userMsg");
-  const replyBox = document.getElementById("replyBox");
-
-  if (sendBtn && userMsg && replyBox) {
-    sendBtn.addEventListener("click", async () => {
-      const msg = userMsg.value.trim();
-      if (!msg) return;
-      userMsg.value = "";
-
-      try {
-        const reply = await sendMessage(msg);
-        replyBox.innerText = reply;
-      } catch (err) {
-        replyBox.innerText = "Error: " + err.message;
-      }
-    });
-
-    userMsg.addEventListener("keydown", e => {
-      if (e.key === "Enter") sendBtn.click();
-    });
-  }
-
-  // Jumping AI icon
-  const aiIcon = document.getElementById("ai-toggle");
-  if (aiIcon) {
-    setInterval(() => {
-      aiIcon.classList.add("jump");
-      setTimeout(() => aiIcon.classList.remove("jump"), 600);
-    }, 4000);
-  }
+/* ---------- AUTO CLOSE INSTRUCTIONS ON TYPING ---------- */
+input.addEventListener("input", () => {
+  instructionsPanel.classList.remove("open");
 });
 
+/* ---------- API ---------- */
+async function sendMessage(msg, addToHistory = false) {
+  const payload = { message: msg };
+  if (addToHistory) payload.history = history;
+
+  const res = await fetch(AI_URL, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(payload)
+  });
+
+  if (!res.ok) throw new Error("Server error");
+
+  const text = await res.text();
+  try {
+    return JSON.parse(text).reply || text;
+  } catch {
+    return text;
+  }
+}
+
+/* ---------- SEND MESSAGE ---------- */
+const sendMsg = async () => {
+  const textVal = input.value.trim();
+  if (!textVal) return;
+
+  // Ensure instructions are closed
+  instructionsPanel.classList.remove("open");
+
+  input.value = "";
+  addBubble(textVal, "user");
+
+  typingIndicator.style.display = "block";
+  scrollBottom();
+
+  try {
+    const reply = await sendMessage(textVal, true);
+    typingIndicator.style.display = "none";
+    addBubble(reply, "bot");
+
+    history.push({ role: "user", content: textVal });
+    history.push({ role: "assistant", content: reply });
+    if (history.length > 12) history.splice(0, history.length - 12);
+
+  } catch (err) {
+    typingIndicator.style.display = "none";
+    addBubble("⚠️ Something went wrong. Try again.", "bot");
+    console.error(err);
+  }
+};
+
+send.addEventListener("click", sendMsg);
+input.addEventListener("keydown", (e) => {
+  if (e.key === "Enter") sendMsg();
+});
+
+/* ---------- JUMPING AI ICON ---------- */
+setInterval(() => {
+  toggle.classList.add("jump");
+  setTimeout(() => toggle.classList.remove("jump"), 600);
+}, 4000);
+});
 
 
 
