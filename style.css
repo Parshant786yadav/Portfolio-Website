@@ -3133,3 +3133,8 @@ input {
     line-height: 1.4;
   }
 }
+@media (max-width: 600px) {
+  #ai-input {
+    font-size: 16px;   /* 👈 stops mobile zoom */
+  }
+}

@@ -1019,21 +1019,25 @@ const openPanel = () => {
 
 const closePanel = () => {
   open = false;
+
+  // 👇 FORCE keyboard to close
+  input.blur();
+
   panel.style.opacity = "0";
   panel.style.transform = "translateY(10px)";
   panel.setAttribute("aria-hidden", "true");
-
-  // Close instructions too
-  instructionsPanel.classList.remove("open");
 
   setTimeout(() => {
     panel.style.display = "none";
   }, 200);
 };
-
 toggle.addEventListener("click", (e) => {
   e.stopPropagation();
-  open ? closePanel() : openPanel();
+  if (open) {
+    closePanel();
+  } else {
+    openPanel();
+  }
 });
 
 // Close chat when clicking outside
