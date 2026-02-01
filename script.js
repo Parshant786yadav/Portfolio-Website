@@ -26,10 +26,10 @@ faders.forEach(fader => {
   appearOnScroll.observe(fader);
 });
 
-// Scroll reveal: content appears quickly after section enters view
+// Scroll reveal: same on desktop + mobile (content appears quickly after section enters view)
 const REVEAL_DELAY_MS = 80;
 const scrollRevealEls = document.querySelectorAll('.scroll-reveal');
-const scrollRevealOptions = { threshold: 0.15, rootMargin: '0px 0px -40px 0px' };
+const scrollRevealOptions = { threshold: 0.12, rootMargin: '0px 0px -30px 0px' };
 
 const scrollRevealObserver = new IntersectionObserver(function(entries) {
   entries.forEach(entry => {
@@ -46,14 +46,16 @@ scrollRevealEls.forEach(function(el) {
   scrollRevealObserver.observe(el);
 });
 
-// Smooth scroll for anchor links
+// Smooth scroll for anchor links (desktop + mobile)
 const navLinks = document.querySelectorAll('a[href^="#"]');
 
 navLinks.forEach(link => {
   link.addEventListener('click', function(e) {
+    const href = this.getAttribute('href');
+    if (href === '#') return;
     e.preventDefault();
-    const target = document.querySelector(this.getAttribute('href'));
-    target.scrollIntoView({ behavior: 'smooth' });
+    const target = document.querySelector(href);
+    if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
   });
 });
 

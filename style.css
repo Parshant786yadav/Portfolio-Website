@@ -41,16 +41,36 @@ h2 {
   position: relative;
 }
 
-/* Scroll reveal: fast appearance when section enters view */
+/* Scroll reveal: fast appearance when section enters view (desktop + mobile) */
 .scroll-reveal {
   opacity: 0;
   transform: translateY(16px);
   transition: opacity 0.25s ease-out, transform 0.25s ease-out;
+  will-change: transform;
 }
 
 .scroll-reveal.revealed {
   opacity: 1;
   transform: translateY(0);
+  will-change: auto;
+}
+
+/* Smooth scroll + scroll reveal: same behavior on mobile */
+@media (max-width: 768px), (hover: none) {
+  html,
+  body {
+    scroll-behavior: smooth;
+    -webkit-overflow-scrolling: touch;
+  }
+  .scroll-reveal {
+    opacity: 0;
+    transform: translateY(16px);
+    transition: opacity 0.25s ease-out, transform 0.25s ease-out;
+  }
+  .scroll-reveal.revealed {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 .greeting {
