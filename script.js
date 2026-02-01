@@ -26,6 +26,26 @@ faders.forEach(fader => {
   appearOnScroll.observe(fader);
 });
 
+// Scroll reveal: content appears quickly after section enters view
+const REVEAL_DELAY_MS = 80;
+const scrollRevealEls = document.querySelectorAll('.scroll-reveal');
+const scrollRevealOptions = { threshold: 0.15, rootMargin: '0px 0px -40px 0px' };
+
+const scrollRevealObserver = new IntersectionObserver(function(entries) {
+  entries.forEach(entry => {
+    if (!entry.isIntersecting) return;
+    const el = entry.target;
+    setTimeout(function() {
+      el.classList.add('revealed');
+      scrollRevealObserver.unobserve(el);
+    }, REVEAL_DELAY_MS);
+  });
+}, scrollRevealOptions);
+
+scrollRevealEls.forEach(function(el) {
+  scrollRevealObserver.observe(el);
+});
+
 // Smooth scroll for anchor links
 const navLinks = document.querySelectorAll('a[href^="#"]');
 

@@ -1,40 +1,72 @@
 /* style.css */
 
+/* Custom cursor: different when visiting the site */
+html {
+  cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='%2358a6ff' stroke-width='2' stroke-linecap='round'%3E%3Cpath d='M5 3l14 9-6 6-3-7-5-8z'/%3E%3C/svg%3E") 6 4, auto;
+  scroll-behavior: smooth;
+  overflow-x: hidden;
+  box-sizing: border-box;
+}
+
+a, button, [role="button"], .nav-btn, .button, .btn, input[type="submit"], input[type="button"], .login-btn, .skill-icon, .github-card, .leetcode-link {
+  cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='28' height='28' viewBox='0 0 24 24' fill='%2358a6ff' stroke='%231f6feb' stroke-width='1.5'%3E%3Cpath d='M5 3l14 9-6 6-3-7-5-8z'/%3E%3C/svg%3E") 6 4, pointer;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: inherit;
+}
+
 body {
   margin: 0;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   background: #0d1117;
   color: #c9d1d9;
   scroll-behavior: smooth;
+  font-size: clamp(14px, 1.5vw + 8px, 16px);
 }
 
 .section {
-  padding: 80px 10%;
+  padding: clamp(40px, 8vw, 80px) clamp(5%, 10vw, 10%);
   position: relative;
+  box-sizing: border-box;
 }
 
 h2 {
-  font-size: 2.5rem;
+  font-size: clamp(1.5rem, 4vw, 2.5rem);
   color: #58a6ff;
   text-align: center;
-  margin-bottom: 40px;
+  margin-bottom: clamp(24px, 4vw, 40px);
   position: relative;
+}
+
+/* Scroll reveal: fast appearance when section enters view */
+.scroll-reveal {
+  opacity: 0;
+  transform: translateY(16px);
+  transition: opacity 0.25s ease-out, transform 0.25s ease-out;
+}
+
+.scroll-reveal.revealed {
+  opacity: 1;
+  transform: translateY(0);
 }
 
 .greeting {
   display: inline-flex;
   align-items: center;
-  padding: 6px 16px;
+  padding: clamp(4px, 1vw, 6px) clamp(12px, 2vw, 16px);
   background: linear-gradient(270deg, #14213d, #1e3a8a, #0f172a);
   background-size: 600% 600%;
   animation: backgroundBlink 6s ease infinite;
   color: #74b9ff;
   font-weight: 600;
-  font-size: 14px;
+  font-size: clamp(12px, 1.2vw + 8px, 14px);
   border-radius: 999px;
   box-shadow: 0 0 8px rgba(116, 185, 255, 0.2);
-  margin-top: 25px;
-  margin-left: 25px;
+  margin-top: clamp(12px, 2vw, 25px);
+  margin-left: clamp(12px, 2vw, 25px);
 }
 
 @keyframes backgroundBlink {
@@ -76,15 +108,17 @@ h2 {
 .navbar {
   position: fixed;
   width: 100%;
+  max-width: 100vw;
   top: 0;
   left: 0;
   background: #161b22;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 15px 10%;
+  padding: clamp(10px, 1.5vw, 15px) clamp(5%, 10vw, 10%);
   z-index: 1000;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+  box-sizing: border-box;
 }
 
 @keyframes blink {
@@ -125,7 +159,7 @@ h2 {
 .nav-links li a {
   color: #c9d1d9;
   text-decoration: none;
-  font-size: 0.9rem;
+  font-size: clamp(0.8rem, 1vw, 0.9rem);
   position: relative;
 }
 
@@ -165,7 +199,7 @@ h2 {
 }
 
 .name {
-  font-size: 3rem;
+  font-size: clamp(1.75rem, 5vw, 3rem);
   background: linear-gradient(to right, #58a6ff, #d946ef);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
@@ -188,9 +222,10 @@ h2 {
 .btn {
   background: #58a6ff;
   color: white;
-  padding: 10px 20px;
+  padding: clamp(8px, 1vw, 10px) clamp(14px, 2vw, 20px);
   border-radius: 6px;
   text-decoration: none;
+  font-size: clamp(0.85rem, 1vw, 1rem);
   transition: background 0.3s ease;
 }
 
@@ -199,8 +234,8 @@ h2 {
 }
 
 .typing-text {
-  font-size: 1.5rem;
-  margin-top: 10px;
+  font-size: clamp(1rem, 2vw + 8px, 1.5rem);
+  margin-top: clamp(6px, 1vw, 10px);
 }
 
 #changing-text {
@@ -798,9 +833,12 @@ html, body {
 }
 
 .container {
-  max-width: 1200px;
+  max-width: 100%;
+  width: 100%;
   margin: 0 auto;
-  padding: 0 20px;
+  padding: 0 clamp(12px, 2vw, 20px);
+  box-sizing: border-box;
+  overflow-x: hidden;
 }
 @media (max-width: 768px) {
   .navbar {
@@ -967,7 +1005,7 @@ ul {
 /* About Section Layout */
 /* About Section */
 .about-section {
-  padding: 60px 20px;
+  padding: clamp(40px, 6vw, 60px) clamp(16px, 3vw, 20px);
   background: linear-gradient(135deg, #1f1c2c, #928dab);
   display: flex;
   justify-content: center;
@@ -975,6 +1013,7 @@ ul {
   min-height: 100vh;
   color: white;
   text-align: center;
+  box-sizing: border-box;
 }
 
 /* Container */
@@ -982,15 +1021,16 @@ ul {
   background: rgba(255, 255, 255, 0.05);
   backdrop-filter: blur(8px);
   border-radius: 18px;
-  padding: 40px 25px;
-  max-width: 700px;   /* smaller width, so text doesn’t stretch */
+  padding: clamp(24px, 4vw, 40px) clamp(16px, 3vw, 25px);
+  max-width: min(700px, 95vw);
+  box-sizing: border-box;   /* smaller width, so text doesn’t stretch */
   box-shadow: 0 0 15px rgba(0, 0, 0, 0.4);
 }
 
 /* Title */
 .about-title {
-  font-size: 2.5rem;
-  margin-bottom: 15px;
+  font-size: clamp(1.5rem, 4vw, 2.5rem);
+  margin-bottom: clamp(10px, 2vw, 15px);
 }
 .about-title span {
   background: linear-gradient(to right, #ff758c, #ff7eb3);
@@ -1000,20 +1040,20 @@ ul {
 
 /* Intro */
 .about-intro {
-  font-size: 1.1rem;
+  font-size: clamp(0.9rem, 1.5vw + 6px, 1.1rem);
   font-style: italic;
   color: #ddd;
-  margin-bottom: 20px;
+  margin-bottom: clamp(12px, 2vw, 20px);
   line-height: 1.6;
 }
 
 /* Details */
 .about-details {
-  font-size: 1.05rem;
+  font-size: clamp(0.85rem, 1.2vw + 6px, 1.05rem);
   line-height: 1.7;
   color: #e0e0e0;
-  margin-bottom: 30px;
-  max-width: 600px;   /* shrink text width more */
+  margin-bottom: clamp(20px, 3vw, 30px);
+  max-width: min(600px, 95vw);
   margin-left: auto;
   margin-right: auto;
 }
@@ -1024,13 +1064,9 @@ ul {
   font-weight: 600;
 }
 
-/* Responsive */
+/* Responsive - fluid typography handles small screens */
 @media (max-width: 768px) {
-  .about-title {
-    font-size: 2rem;
-  }
   .about-intro, .about-details {
-    font-size: 0.90rem;
     line-height: 1.5;
   }
 }
@@ -1039,15 +1075,16 @@ ul {
 
 #skills {
   text-align: center;
-  padding: 60px 20px;
+  padding: clamp(40px, 6vw, 60px) clamp(16px, 3vw, 20px);
+  box-sizing: border-box;
 }
 
 .skills-grid {
   display: grid;
   grid-template-columns: repeat(5, 1fr);
-  gap: 30px;
+  gap: clamp(16px, 3vw, 30px);
   justify-items: center;
-  margin-top: 30px;
+  margin-top: clamp(20px, 3vw, 30px);
 }
 
 .skill-icon {
@@ -1072,7 +1109,12 @@ ul {
   box-shadow: 0 12px 24px rgba(0, 0, 0, 0.4);
 }
 
-/* Responsive */
+/* Skills: 5 per row on large screens, fewer on small */
+@media (max-width: 900px) {
+  .skills-grid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
 @media (max-width: 768px) {
   .skills-grid {
     grid-template-columns: repeat(3, 1fr);
@@ -1325,19 +1367,21 @@ ul {
 
 /* Glass effect background + layout */
 .contact-section {
-  padding: 70px 20px;
+  padding: clamp(40px, 7vw, 70px) clamp(16px, 3vw, 20px);
   display: flex;
   justify-content: center;
   align-items: center;
+  box-sizing: border-box;
 }
 
 .contact-container {
   display: flex;
   flex-wrap: wrap;
-  gap: 40px;
-  max-width: 1200px;
+  gap: clamp(24px, 4vw, 40px);
+  max-width: min(1200px, 100%);
   width: 100%;
   justify-content: center;
+  box-sizing: border-box;
 }
 
 .glass-card {
@@ -1609,14 +1653,18 @@ ul {
   display: none !important;
 }
 
+/* Login popup: compact width (same as before) */
+#authModal .auth-container,
 .auth-container {
   background: #161b22;
-  padding: 30px 40px;
+  padding: 28px 40px;
   border-radius: 12px;
-  width: 300px;
+  width: 420px;
+  max-width: 92vw;
   text-align: center;
   box-shadow: 0 0 20px rgba(255, 255, 255, 0.1);
   margin: auto;
+  flex-shrink: 0;
 }
 
 #authModal {
@@ -2866,13 +2914,14 @@ input {
 }
 
 .experience-section {
-  padding: 60px 20px;
+  padding: clamp(40px, 6vw, 60px) clamp(16px, 3vw, 20px);
   text-align: center;
+  box-sizing: border-box;
 }
 
 .experience-section h2 {
-  font-size: 2.5rem;
-  margin-bottom: 50px;
+  font-size: clamp(1.5rem, 4vw, 2.5rem);
+  margin-bottom: clamp(30px, 5vw, 50px);
   background: linear-gradient(45deg, #60a5fa, #a78bfa);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
@@ -2881,9 +2930,9 @@ input {
 .timeline {
   position: relative;
   margin: 0 auto;
-  padding-left: 30px;
+  padding-left: clamp(20px, 3vw, 30px);
   border-left: 3px solid rgba(255, 255, 255, 0.2);
-  max-width: 700px;
+  max-width: min(700px, 95vw);
   text-align: left;
 }
 
@@ -2916,7 +2965,7 @@ input {
 }
 
 .role {
-  font-size: 1.2rem;
+  font-size: clamp(1rem, 1.5vw + 6px, 1.2rem);
   font-weight: 600;
   margin-bottom: 5px;
 }
@@ -2929,13 +2978,13 @@ input {
 
 .duration {
   display: block;
-  font-size: 0.9rem;
+  font-size: clamp(0.8rem, 1vw + 4px, 0.9rem);
   color: #a1a1aa;
   margin-bottom: 15px;
 }
 
 .timeline-content p {
-  font-size: 0.95rem;
+  font-size: clamp(0.85rem, 1vw + 4px, 0.95rem);
   line-height: 1.6;
   margin-bottom: 15px;
 }
