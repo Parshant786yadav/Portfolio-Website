@@ -46,6 +46,36 @@ scrollRevealEls.forEach(function(el) {
   scrollRevealObserver.observe(el);
 });
 
+// Stagger parent: when parent enters view, add .revealed so stagger-child animations run
+const staggerParents = document.querySelectorAll('.stagger-parent');
+const staggerOptions = { threshold: 0.15, rootMargin: '0px 0px -40px 0px' };
+const staggerObserver = new IntersectionObserver(function(entries) {
+  entries.forEach(entry => {
+    if (!entry.isIntersecting) return;
+    entry.target.classList.add('revealed');
+    staggerObserver.unobserve(entry.target);
+  });
+}, staggerOptions);
+staggerParents.forEach(el => staggerObserver.observe(el));
+
+// Section titles and single-element reveal (animate-on-scroll, timeline, edu, leetcode)
+const animateOnScrollEls = document.querySelectorAll('.animate-on-scroll, .timeline-item, .edu-entry, .leetcode-card');
+const animateOptions = { threshold: 0.18, rootMargin: '0px 0px -50px 0px' };
+const animateObserver = new IntersectionObserver(function(entries) {
+  entries.forEach(entry => {
+    if (!entry.isIntersecting) return;
+    const el = entry.target;
+    if (el.classList.contains('timeline-item')) {
+      const index = Array.from(el.parentElement.children).indexOf(el);
+      setTimeout(() => el.classList.add('revealed'), index * 120);
+    } else {
+      el.classList.add('revealed');
+    }
+    animateObserver.unobserve(el);
+  });
+}, animateOptions);
+animateOnScrollEls.forEach(el => animateObserver.observe(el));
+
 // Smooth scroll for anchor links (desktop + mobile)
 const navLinks = document.querySelectorAll('a[href^="#"]');
 

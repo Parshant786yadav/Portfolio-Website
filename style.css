@@ -183,15 +183,6 @@ h2 {
   position: relative;
 }
 
-.nav-links li a:hover::after {
-  content: '';
-  width: 100%;
-  height: 2px;
-  background: #58a6ff;
-  position: absolute;
-  bottom: -4px;
-  left: 0;
-}
 
 .project-btn {
   background: #238636;
@@ -525,21 +516,29 @@ html, body {
 /* From Uiverse.io by mrhyddenn */ 
 .nav-links li .button {
   position: relative;
-  padding: 10px 12px;
-  border-radius: 7px;
-  border: 1px solid rgb(61, 106, 255);
-  font-size: 14px;
+  padding: 6px 10px;
+  border-radius: 6px;
+  border: 2px solid rgb(61, 106, 255);
+  font-size: 13px;
   text-transform: none;
   font-weight: 600;
-  letter-spacing: 2px;
+  letter-spacing: 1px;
   background: transparent;
   color: #fff;
-  overflow: hidden;
+  overflow: visible;
   box-shadow: 0 0 0 0 transparent;
   -webkit-transition: all 0.2s ease-in;
   -moz-transition: all 0.2s ease-in;
   transition: all 0.2s ease-in;
+  line-height: 1.3;
 }
+.nav-links li .button.login-btn,
+.nav-links li .button.logout-btn,
+.nav-links li .button#logoutBtn,
+.nav-links li #logoutBtn.button {
+  box-shadow: 0 0 14px rgba(61, 106, 255, 0.55), 0 3px 10px rgba(61, 106, 255, 0.35), 0 2px 0 0 rgba(61, 106, 255, 0.7), inset 0 -1px 0 rgba(61, 106, 255, 0.5);
+}
+
 
 .nav-links li .button:focus {
   outline: none;
@@ -809,7 +808,15 @@ html, body {
 }
 
 .nav-links a:hover {
-  border-bottom: 2px solid #3b82f6;
+  color: #58a6ff;
+  text-decoration: none;
+  border-bottom: none;
+}
+.nav-links li a {
+  border-bottom: none !important;
+}
+.nav-links li a:hover::after {
+  display: none !important;
 }
 
 /* Right-side actions */
@@ -1977,11 +1984,11 @@ input {
 
 
 
-/* 🔵 Styled logout button */
+/* 🔵 Styled logout button - visible border/shadow on all sides including bottom */
 .blue-logout {
   background-color: #3b82f6;    /* Blue */
   color: white;
-  padding: 12px 20px;
+  padding: 10px 18px;
   border-radius: 8px;
   font-weight: bold;
   text-align: center;
@@ -1990,7 +1997,8 @@ input {
   transition: background-color 0.3s ease;
   width: 100%;                  /* ✅ Full width */
   box-sizing: border-box;
-  border: none;
+  border: 2px solid rgba(59, 130, 246, 1);
+  box-shadow: 0 0 14px rgba(61, 106, 255, 0.55), 0 3px 10px rgba(61, 106, 255, 0.35), inset 0 -1px 0 rgba(59, 130, 246, 0.5);
 }
 
 .blue-logout:hover {
@@ -2064,15 +2072,18 @@ input {
     text-align: center;
   }
 
-  /* 🔵 Keep blue style for Logout button */
+  /* 🔵 Keep blue style for Logout button - visible bottom border */
   .mobile-nav-links .logout-btn {
     background-color: #3b82f6 !important;
     color: white !important;
-    padding: 12px 20px !important;
+    padding: 10px 18px !important;
     border-radius: 8px !important;
     font-weight: bold;
     margin-top: 10px;
+    margin-bottom: 4px;
     display: block;
+    border: 2px solid rgba(59, 130, 246, 1) !important;
+    box-shadow: 0 0 14px rgba(61, 106, 255, 0.55), 0 3px 10px rgba(61, 106, 255, 0.35), inset 0 -1px 0 rgba(59, 130, 246, 0.5) !important;
     width: 100%;
     text-align: center;
   }
@@ -2302,6 +2313,7 @@ input {
 
 /* 🔳 Minimal Google-style launcher icon */
 
+/* Fixed width so icon/text toggle doesn't shift nav links */
 .app-launcher {
   position: relative;
   display: flex;
@@ -2312,10 +2324,35 @@ input {
   padding: 4px;
   cursor: pointer;
   height: 42px;
-
-  /* 👈 Move it slightly left from extreme right */
+  min-width: 90px;   /* Reserve space for "New Apps" so layout stays stable */
+  width: 90px;
   margin-right: 150px;
   margin-left: 12px;
+}
+.app-launcher #app-icon,
+.app-launcher #app-text {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  /* Same space so icon/text toggle never shifts nav */
+}
+.app-launcher #app-text {
+  opacity: 0;
+  pointer-events: none;
+  white-space: nowrap;
+}
+.app-launcher.show-text #app-icon {
+  opacity: 0;
+  pointer-events: none;
+}
+.app-launcher.show-text #app-text {
+  opacity: 1;
+  pointer-events: auto;
 }
 
 @media only screen and (max-width: 600px) {
@@ -2425,8 +2462,8 @@ input {
 
 
 
-/* Desktop view (default) */
-.grid-icon {
+/* Desktop view (default) - only when NOT inside app-launcher */
+.nav-container .grid-icon {
   position: absolute;
   right: -25px;
   top: 15px;
@@ -2434,6 +2471,13 @@ input {
   color: white;
   cursor: pointer;
   transition: all 0.3s ease;
+}
+/* Keep icon in same place as "New Apps" text when inside app-launcher */
+.app-launcher .grid-icon {
+  position: static;
+  right: auto;
+  top: auto;
+  margin: 0;
 }
 
 /* Mobile view: fixed top center */
@@ -2718,12 +2762,27 @@ input {
   box-shadow: 0 8px 24px rgba(0,0,0,.15);
   cursor: pointer;
   z-index: 9999;
-  transition: transform 0.3s ease; /* for jump animation */
+  background: #fff;
+  color: #1a1a1a;
+  font-weight: 600;
+  font-size: 14px;
+  --ai-walk-x: 0px;
+  --ai-walk-y: 0px;
+  transform: translate(var(--ai-walk-x), var(--ai-walk-y));
+  transition: transform 1s cubic-bezier(0.34, 1.2, 0.64, 1), box-shadow 0.3s ease;
+}
+
+/* Walk-to-center animation (smooth one-time intro) */
+#ai-toggle.ai-walk-center {
+  transition: transform 1s cubic-bezier(0.34, 1.2, 0.64, 1), box-shadow 0.4s ease, background 0.3s ease;
+}
+#ai-toggle.ai-walk-back {
+  transition: transform 1s cubic-bezier(0.34, 1.2, 0.64, 1), box-shadow 0.4s ease, background 0.3s ease;
 }
 
 /* Jump animation */
 #ai-toggle.jump {
-  transform: translateY(-15px);
+  transform: translate(var(--ai-walk-x), calc(var(--ai-walk-y) - 15px));
 }
 
 #ai-panel {
@@ -2912,7 +2971,7 @@ input {
 }
 
 .about-section {
-  margin-top: -200px;
+  margin-top: 80px;
 }
 
 @media (max-width: 768px) {
@@ -2923,7 +2982,7 @@ input {
 
 @media (max-width: 768px) {
   .about-section {
-    margin-top: -280px;
+    margin-top: 60px;
   }
 }
 
@@ -3206,4 +3265,412 @@ input {
   #ai-input {
     font-size: 16px;   /* 👈 stops mobile zoom */
   }
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   FULL WEBSITE ANIMATIONS — Scroll, Hover, Entrance
+   ═══════════════════════════════════════════════════════════════ */
+:root {
+  --anim-duration: 0.5s;
+  --anim-duration-slow: 0.7s;
+  --anim-ease: cubic-bezier(0.4, 0, 0.2, 1);
+  --anim-ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --anim-ease-bounce: cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+/* —— Hero / Home entrance animations —— */
+.home-content .greeting {
+  opacity: 0;
+  transform: translateY(-20px);
+  animation: heroFadeUp 0.8s var(--anim-ease-out) 0.2s forwards;
+}
+.home-content .name {
+  opacity: 0;
+  transform: translateY(20px);
+  animation: heroFadeUp 0.8s var(--anim-ease-out) 0.4s forwards;
+}
+.home-content .typing-text {
+  opacity: 0;
+  transform: translateY(15px);
+  animation: heroFadeUp 0.7s var(--anim-ease-out) 0.7s forwards;
+}
+.home-content .contact {
+  opacity: 0;
+  animation: heroFadeIn 0.6s ease-out forwards;
+}
+.home-content .left .contact:nth-of-type(1) { animation-delay: 0.9s; }
+.home-content .left .contact:nth-of-type(2) { animation-delay: 1s; }
+.home-content .left .contact:nth-of-type(3) { animation-delay: 1.1s; }
+.home-content .example-2 {
+  opacity: 0;
+  transform: translateY(15px);
+  animation: heroFadeUp 0.6s var(--anim-ease-out) 1.2s forwards;
+}
+.home-content .scroll-ticker {
+  opacity: 0;
+  animation: heroFadeIn 0.6s ease-out 1.4s forwards;
+}
+@keyframes heroFadeUp {
+  to { opacity: 1; transform: translateY(0); }
+}
+@keyframes heroFadeIn {
+  to { opacity: 1; }
+}
+
+/* Profile pic: float-in then continuous subtle float */
+.right .profile-pic {
+  opacity: 0;
+  transform: scale(0.9) translateX(30px);
+  animation: profileEntrance 1s var(--anim-ease-out) 0.5s forwards, floatSoft 4s ease-in-out 1.5s infinite;
+}
+@keyframes profileEntrance {
+  to { opacity: 1; transform: scale(1) translateX(0); }
+}
+@keyframes floatSoft {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-12px); }
+}
+
+/* —— Section titles: gradient shift + scale on scroll —— */
+h2.animate-on-scroll {
+  opacity: 0;
+  transform: scale(0.95) translateY(20px);
+  transition: opacity 0.6s var(--anim-ease-out), transform 0.6s var(--anim-ease-out), background-position 3s ease;
+  background-size: 200% auto;
+}
+h2.animate-on-scroll.revealed {
+  opacity: 1;
+  transform: scale(1) translateY(0);
+}
+.experience-section h2,
+#skills h2,
+#certificates h2,
+#education h2,
+#leetcode h2,
+#github h2 {
+  transition: transform 0.4s var(--anim-ease), color 0.3s ease;
+}
+.experience-section h2:hover,
+#skills h2:hover,
+#certificates h2:hover,
+#education h2:hover,
+#leetcode h2:hover,
+#github h2:hover {
+  transform: scale(1.03);
+}
+
+/* —— Scroll reveal variants: left, right, scale, stagger —— */
+.reveal-left {
+  opacity: 0;
+  transform: translateX(-50px);
+  transition: opacity 0.6s var(--anim-ease-out), transform 0.6s var(--anim-ease-out);
+}
+.reveal-left.revealed { opacity: 1; transform: translateX(0); }
+
+.reveal-right {
+  opacity: 0;
+  transform: translateX(50px);
+  transition: opacity 0.6s var(--anim-ease-out), transform 0.6s var(--anim-ease-out);
+}
+.reveal-right.revealed { opacity: 1; transform: translateX(0); }
+
+.reveal-scale {
+  opacity: 0;
+  transform: scale(0.92);
+  transition: opacity 0.5s var(--anim-ease-out), transform 0.5s var(--anim-ease-out);
+}
+.reveal-scale.revealed { opacity: 1; transform: scale(1); }
+
+/* Staggered children: parent gets .stagger-parent, children get .stagger-child */
+.stagger-parent .stagger-child {
+  opacity: 0;
+  transform: translateY(25px);
+  transition: opacity 0.45s var(--anim-ease-out), transform 0.45s var(--anim-ease-out);
+}
+.stagger-parent.revealed .stagger-child {
+  opacity: 1;
+  transform: translateY(0);
+}
+.stagger-parent .stagger-child:nth-child(1) { transition-delay: 0.05s; }
+.stagger-parent .stagger-child:nth-child(2) { transition-delay: 0.1s; }
+.stagger-parent .stagger-child:nth-child(3) { transition-delay: 0.15s; }
+.stagger-parent .stagger-child:nth-child(4) { transition-delay: 0.2s; }
+.stagger-parent .stagger-child:nth-child(5) { transition-delay: 0.25s; }
+.stagger-parent .stagger-child:nth-child(6) { transition-delay: 0.3s; }
+.stagger-parent .stagger-child:nth-child(7) { transition-delay: 0.35s; }
+.stagger-parent .stagger-child:nth-child(8) { transition-delay: 0.4s; }
+.stagger-parent .stagger-child:nth-child(9) { transition-delay: 0.45s; }
+.stagger-parent .stagger-child:nth-child(10) { transition-delay: 0.5s; }
+.stagger-parent .stagger-child:nth-child(11) { transition-delay: 0.55s; }
+.stagger-parent .stagger-child:nth-child(12) { transition-delay: 0.6s; }
+.stagger-parent .stagger-child:nth-child(13) { transition-delay: 0.65s; }
+.stagger-parent .stagger-child:nth-child(14) { transition-delay: 0.7s; }
+.stagger-parent .stagger-child:nth-child(15) { transition-delay: 0.75s; }
+.stagger-parent .stagger-child:nth-child(16) { transition-delay: 0.8s; }
+.stagger-parent .stagger-child:nth-child(n+17) { transition-delay: 0.85s; }
+
+/* —— Navbar: logo & links hover —— */
+.logo a {
+  display: inline-block;
+  transition: transform 0.3s var(--anim-ease);
+}
+.logo a:hover {
+  transform: scale(1.08) rotate(-3deg);
+}
+.nav-links li a.nav-btn {
+  position: relative;
+  transition: color 0.3s ease, letter-spacing 0.3s ease;
+}
+
+/* —— Buttons: lift + glow on hover —— */
+.nav-links li .button,
+.btn,
+.contact-form button,
+.github-button,
+.leetcode-link,
+#submitBtn,
+.btn.google {
+  transition: transform 0.25s var(--anim-ease), box-shadow 0.3s ease, background 0.3s ease;
+}
+.nav-links li .button:hover,
+.btn:hover,
+.contact-form button:hover,
+.github-button:hover,
+.leetcode-link:hover {
+  transform: translateY(-3px);
+}
+.contact-form button:hover {
+  box-shadow: 0 6px 20px rgba(0, 255, 255, 0.5);
+}
+.github-button:hover,
+.leetcode-link:hover {
+  box-shadow: 0 8px 25px rgba(0, 255, 200, 0.4);
+}
+
+/* —— Skills grid: bounce + glow on hover —— */
+.skill-icon {
+  transition: transform 0.35s var(--anim-ease-bounce), box-shadow 0.35s ease, background 0.3s ease;
+}
+.skill-icon:hover {
+  transform: scale(1.15) rotate(5deg);
+  box-shadow: 0 14px 35px rgba(110, 142, 251, 0.5), 0 0 25px rgba(167, 119, 227, 0.4);
+}
+
+/* —— Timeline: dot pulse + content lift —— */
+.timeline-item {
+  opacity: 0;
+  transform: translateX(-20px);
+  transition: opacity 0.5s var(--anim-ease-out), transform 0.5s var(--anim-ease-out);
+}
+.timeline-item.revealed {
+  opacity: 1;
+  transform: translateX(0);
+}
+.timeline-dot {
+  transition: transform 0.3s var(--anim-ease), box-shadow 0.3s ease;
+}
+.timeline-item:hover .timeline-dot {
+  transform: scale(1.3);
+  box-shadow: 0 0 20px rgba(96, 165, 250, 0.8);
+}
+.timeline-content {
+  transition: transform 0.35s var(--anim-ease), box-shadow 0.35s ease, border-color 0.3s ease;
+}
+.timeline-content:hover {
+  transform: translateY(-8px) translateX(5px);
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.35);
+}
+.tag {
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+.timeline-content:hover .tag {
+  transform: scale(1.05);
+}
+
+/* —— Certificates slider: slide transition + hover glow —— */
+.certificate-slider {
+  transition: box-shadow 0.4s ease, transform 0.3s ease;
+}
+.certificate-slider:hover {
+  box-shadow: 0 0 35px rgba(0, 194, 255, 0.4), 0 0 60px rgba(111, 0, 255, 0.2);
+  transform: scale(1.02);
+}
+.certificate-slide img {
+  transition: transform 0.4s var(--anim-ease);
+}
+.certificate-slide:hover img {
+  transform: scale(1.02);
+}
+
+/* —— Education entries: card lift + border glow —— */
+.edu-entry {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.5s var(--anim-ease-out), transform 0.5s var(--anim-ease-out), box-shadow 0.3s ease, background 0.3s ease;
+}
+.edu-entry.revealed {
+  opacity: 1;
+  transform: translateY(0);
+}
+.edu-entry:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 12px 28px rgba(79, 172, 254, 0.25);
+}
+
+/* —— LeetCode card: entrance + hover —— */
+.leetcode-card {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 0.6s var(--anim-ease-out), transform 0.6s var(--anim-ease-out);
+}
+.leetcode-card.revealed {
+  opacity: 1;
+  transform: translateY(0);
+}
+.leetcode-avatar {
+  transition: transform 0.4s var(--anim-ease), box-shadow 0.4s ease;
+}
+.leetcode-card:hover .leetcode-avatar {
+  transform: scale(1.04);
+  box-shadow: 0 0 30px rgba(40, 167, 69, 0.7);
+}
+
+/* —— GitHub cards: 3D tilt + glow —— */
+.github-card {
+  transition: transform 0.4s var(--anim-ease), box-shadow 0.4s ease, border-color 0.3s ease;
+}
+.github-card:hover {
+  transform: scale(1.05) translateY(-8px);
+  box-shadow: 0 20px 40px rgba(0, 247, 255, 0.2), 0 0 30px rgba(0, 247, 255, 0.15);
+  border-color: #00f7ff;
+}
+.github-title {
+  transition: color 0.3s ease, text-shadow 0.3s ease;
+}
+.github-card:hover .github-title {
+  color: #00f7ff;
+  text-shadow: 0 0 12px rgba(0, 247, 255, 0.5);
+}
+
+/* —— Contact section: glass cards + input focus —— */
+.glass-card {
+  transition: transform 0.4s var(--anim-ease), box-shadow 0.4s ease, border-color 0.3s ease;
+}
+.glass-card:hover {
+  transform: scale(1.03) translateY(-5px);
+  box-shadow: 0 0 35px rgba(0, 255, 255, 0.25);
+}
+.contact-form input,
+.contact-form textarea {
+  transition: border-color 0.3s ease, box-shadow 0.3s ease, transform 0.2s ease;
+}
+.contact-form input:focus,
+.contact-form textarea:focus {
+  transform: scale(1.01);
+}
+
+/* —— Footer: link underline + icon bounce —— */
+.footer-nav a {
+  transition: color 0.3s ease, text-shadow 0.3s ease;
+}
+.footer-nav a::after {
+  content: '';
+  display: block;
+  width: 0;
+  height: 2px;
+  background: linear-gradient(90deg, #00ffff, #58a6ff);
+  transition: width 0.3s var(--anim-ease);
+  margin-top: 2px;
+}
+.footer-nav a:hover::after {
+  width: 100%;
+}
+.footer-socials a {
+  transition: transform 0.3s var(--anim-ease-bounce), color 0.3s ease;
+}
+.footer-socials a:hover {
+  transform: scale(1.25) translateY(-4px);
+}
+
+/* —— Mobile menu: slide down —— */
+.mobile-menu {
+  animation: mobileMenuIn 0.35s var(--anim-ease-out);
+}
+@keyframes mobileMenuIn {
+  from {
+    opacity: 0;
+    transform: translateY(-15px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+.mobile-nav-links li {
+  opacity: 0;
+  animation: mobileLinkIn 0.4s var(--anim-ease-out) forwards;
+}
+.mobile-nav-links li:nth-child(1) { animation-delay: 0.05s; }
+.mobile-nav-links li:nth-child(2) { animation-delay: 0.1s; }
+.mobile-nav-links li:nth-child(3) { animation-delay: 0.15s; }
+.mobile-nav-links li:nth-child(4) { animation-delay: 0.2s; }
+.mobile-nav-links li:nth-child(5) { animation-delay: 0.25s; }
+.mobile-nav-links li:nth-child(6) { animation-delay: 0.3s; }
+.mobile-nav-links li:nth-child(7) { animation-delay: 0.35s; }
+.mobile-nav-links li:nth-child(8) { animation-delay: 0.4s; }
+.mobile-nav-links li:nth-child(9) { animation-delay: 0.45s; }
+.mobile-nav-links li:nth-child(10) { animation-delay: 0.5s; }
+.mobile-nav-links li:nth-child(n+11) { animation-delay: 0.55s; }
+@keyframes mobileLinkIn {
+  to { opacity: 1; }
+}
+
+/* —— Scroll-triggered section title (used by JS) —— */
+.animate-on-scroll { }
+
+/* —— About section card —— */
+.about-container {
+  transition: transform 0.4s var(--anim-ease), box-shadow 0.4s ease;
+}
+.about-container:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3);
+}
+
+/* —— App launcher / dropdown —— */
+.app-launcher {
+  transition: transform 0.25s var(--anim-ease);
+}
+.app-launcher:hover {
+  transform: scale(1.1);
+}
+.app-dropdown a {
+  transition: background 0.2s ease, transform 0.2s ease, padding-left 0.2s ease;
+}
+.app-dropdown a:hover {
+  padding-left: 18px;
+  transform: translateX(4px);
+}
+
+/* —— Hamburger —— */
+.hamburger {
+  transition: transform 0.3s var(--anim-ease), background 0.3s ease;
+}
+.hamburger:hover {
+  transform: scale(1.1) rotate(90deg);
+}
+
+/* —— AI Chat toggle (hover + walk intro text) —— */
+#ai-toggle:hover {
+  transform: translate(var(--ai-walk-x), var(--ai-walk-y)) scale(1.08);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
+}
+#ai-toggle .ai-toggle-talk-text {
+  display: none;
+}
+#ai-toggle.ai-walk-center.ai-show-talk .ai-toggle-default-text {
+  display: none;
+}
+#ai-toggle.ai-walk-center.ai-show-talk .ai-toggle-talk-text {
+  display: inline;
 }
