@@ -2480,18 +2480,37 @@ input {
   margin: 0;
 }
 
-/* Mobile view: fixed top center */
+/* Mobile view: toggle centered in nav, hamburger visible (not cut off) */
 @media only screen and (max-width: 768px) {
-  .grid-icon {
-    position: fixed;
+  .nav-container {
+    position: relative;
+    justify-content: space-between;
+    padding-left: 12px;
+    padding-right: 14px;
+  }
+  .app-launcher {
+    position: absolute;
     left: 50%;
     transform: translateX(-50%);
-    top: 22px;
-    font-size: 22px;
-    right: auto;
-    z-index: 9999;
+    margin: 0;
+    width: 44px;
+    min-width: 44px;
   }
-}
+  .app-launcher .grid-icon {
+    position: static;
+    margin: 0;
+  }
+  .grid-icon {
+    font-size: 22px;
+  }
+  .actions {
+    margin-left: 0;
+  }
+  /* .hamburger {
+    margin-right: -208px;
+    flex-shrink: 1;
+  }*/
+} 
 
 
 
@@ -2982,7 +3001,7 @@ input {
 
 @media (max-width: 768px) {
   .about-section {
-    margin-top: 60px;
+    margin-top: -300px;
   }
 }
 
