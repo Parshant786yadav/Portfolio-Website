@@ -1,0 +1,10 @@
+{
+  "name": "portfolio-website",
+  "private": true,
+  "scripts": {
+    "optimize-image": "node optimize-image.js"
+  },
+  "devDependencies": {
+    "sharp": "^0.33.0"
+  }
+}

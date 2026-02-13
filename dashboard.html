@@ -6,7 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="description" content="Parshant - Tech Portfolio. B.Tech CSE (AI &amp; ML), skills, certificates, and projects." />
   <title>Prashant | Tech Portfolio</title>
-  <link rel="preload" as="image" href="wedding_image_crop.JPEG" />
+  <link rel="preload" as="image" href="/wedding_image_crop.JPEG" />
   <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" as="style" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" media="print" onload="this.media='all'" />
   <noscript><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" /></noscript>
@@ -83,6 +83,16 @@
   }
 }
 
+/* Ensure dashboard profile pic is always visible after login */
+.home-content .right .profile-pic {
+  opacity: 1 !important;
+  transform: scale(1) translateX(0);
+  animation: none;
+}
+.home-content .right {
+  display: flex !important;
+  visibility: visible !important;
+}
 
 @media (min-width: 769px) and (max-width: 1400px) {
   .home-content .left {
@@ -363,11 +373,8 @@
       </div>
 
       <div class="right">
-        
-        
-        
-          <img src="wedding_image_crop.JPEG" alt="Prashant Yadav" class="profile-pic" width="300" height="300" loading="eager" fetchpriority="high" decoding="async" />
-        
+          <!-- Profile pic: root path so it loads when opening dashboard.html (e.g. Live Server) -->
+          <img src="/wedding_image_crop.JPEG" alt="Prashant Yadav" class="profile-pic" width="300" height="300" loading="eager" fetchpriority="high" decoding="async" />
       </div>
 
     </div>
@@ -742,8 +749,11 @@ I'm always eager to learn more about AI and implement it creatively in my projec
 <script defer src="https://www.gstatic.com/firebasejs/10.12.0/firebase-auth-compat.js"></script>
 <script defer src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>
 <script defer src="script.js"></script>
-
-   
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+  if ("serviceWorker" in navigator) navigator.serviceWorker.register("/sw.js").catch(function () {});
+});
+</script>
 
 </body>
 </html>

@@ -465,11 +465,7 @@
       </div>
 
       <div class="right">
-        
-        
           <img src="parshant pic white crop.JPEG" alt="Parshant Yadav" class="profile-pic" width="300" height="300" loading="eager" fetchpriority="high" decoding="async">
-
-        
       </div>
 
     </div>
@@ -957,6 +953,10 @@
 
 <script>
 document.addEventListener("DOMContentLoaded", function () {
+  // Service worker for efficient cache lifetimes (mobile performance)
+  if ("serviceWorker" in navigator) {
+    navigator.serviceWorker.register("/sw.js").catch(function () {});
+  }
   // ---- Blinking New Apps (class toggle keeps nav layout stable) ----
   const appLauncher = document.querySelector('.app-launcher');
   const icon = document.getElementById('app-icon');
