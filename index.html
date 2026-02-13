@@ -465,7 +465,9 @@
       </div>
 
       <div class="right">
-          <img src="parshant pic white crop.JPEG" alt="Parshant Yadav" class="profile-pic" width="300" height="300" loading="eager" fetchpriority="high" decoding="async">
+          <span class="profile-pic-placeholder">
+            <img src="parshant pic white crop.JPEG" alt="Parshant Yadav" class="profile-pic" width="300" height="300" loading="eager" fetchpriority="high" decoding="async">
+          </span>
       </div>
 
     </div>
@@ -957,6 +959,12 @@ document.addEventListener("DOMContentLoaded", function () {
   if ("serviceWorker" in navigator) {
     navigator.serviceWorker.register("/sw.js").catch(function () {});
   }
+  (function () {
+    var img = document.querySelector(".right .profile-pic");
+    if (!img) return;
+    function show() { img.classList.add("profile-pic-loaded"); }
+    if (img.complete) show(); else img.addEventListener("load", show);
+  })();
   // ---- Blinking New Apps (class toggle keeps nav layout stable) ----
   const appLauncher = document.querySelector('.app-launcher');
   const icon = document.getElementById('app-icon');
