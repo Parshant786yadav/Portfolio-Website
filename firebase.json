@@ -3,43 +3,31 @@
     {
       "source": "functions",
       "codebase": "default",
-      "ignore": [
-        "node_modules",
-        ".git",
-        "firebase-debug.log",
-        "firebase-debug.*.log",
-        "*.local"
-      ]
+      "ignore": ["node_modules", ".git", "firebase-debug.log", "firebase-debug.*.log", "*.local"]
     }
   ],
   "hosting": {
     "public": ".",
-    "ignore": [
-      "firebase.json",
-      "**/.*",
-      "**/node_modules/**"
-    ],
+    "ignore": ["firebase.json", "**/.*", "**/node_modules/**"],
     "rewrites": [
+      {"source": "/api/chat", "function": "chat"},
+      {"source": "**", "destination": "/index.html"}
+    ],
+    "headers": [
       {
-        "source": "/api/chat",
-        "function": "chat"
+        "source": "**/*.@(jpg|jpeg|png|gif|ico|css|js|webp|woff2|woff)",
+        "headers": [{"key": "Cache-Control", "value": "public, max-age=31536000, immutable"}]
       },
       {
         "source": "**",
-        "destination": "/index.html"
+        "headers": [{"key": "Cache-Control", "value": "public, max-age=3600"}]
       }
     ]
   },
   "emulators": {
-    "functions": {
-      "port": 5001
-    },
-    "hosting": {
-      "port": 5000
-    },
-    "ui": {
-      "enabled": true
-    },
+    "functions": {"port": 5001},
+    "hosting": {"port": 5000},
+    "ui": {"enabled": true},
     "singleProjectMode": true
   }
 }
