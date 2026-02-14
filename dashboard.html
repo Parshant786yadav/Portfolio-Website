@@ -13,7 +13,8 @@
 
 
 
-  <link rel="stylesheet" href="style.css" />
+  <link rel="preload" href="style.css?v=4.5" as="style" />
+  <link rel="stylesheet" href="style.css?v=4.5">
 
 
   <style>
@@ -99,6 +100,21 @@ body.dashboard-profile-ready .profile-pic-placeholder .profile-pic {
   opacity: 1 !important;
 }
 
+/* Dashboard only: center profile pic on mobile */
+@media (max-width: 768px) {
+  .home-content .right {
+    justify-content: center !important;
+    align-items: center !important;
+    width: 100%;
+  }
+  .profile-pic-placeholder {
+    margin-left: auto !important;
+    margin-right: auto !important;
+    margin-top: 0 !important;
+    margin-bottom: 0 !important;
+  }
+}
+
 @media (min-width: 769px) and (max-width: 1400px) {
   .home-content .left {
     padding-left: 100px;
@@ -172,7 +188,37 @@ body.dashboard-profile-ready .profile-pic-placeholder .profile-pic {
     margin-top: -150px
   }
 }
-    
+
+/* Dashboard mobile: GitHub section visible on real devices + no nav overflow */
+@media (max-width: 768px) {
+  #github,
+  .github-section {
+    margin-top: 0 !important;
+    visibility: visible !important;
+    display: block !important;
+    min-height: 1px;
+    padding-top: 40px;
+    padding-bottom: 40px;
+    scroll-margin-top: 70px;
+  }
+  .navbar,
+  .nav-container {
+    overflow-x: hidden !important;
+    max-width: 100vw;
+  }
+  #loggedInFeatures,
+  .nav-links#loggedInFeatures {
+    display: none !important;
+  }
+  .hamburger {
+    display: block !important;
+  }
+  .nav-container {
+    flex-wrap: nowrap;
+    justify-content: space-between;
+  }
+}
+
 </style>
 
 
