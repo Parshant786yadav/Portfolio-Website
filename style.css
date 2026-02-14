@@ -287,7 +287,7 @@ h2 {
   box-shadow: none;
   margin-top: -100px;
   margin-left: -200px;
-  margin-right: -100px;
+  margin-right: -170px;
 }
 
 
@@ -2178,7 +2178,7 @@ input {
     border-radius: 50px;
   }
   .right .profile-pic {
-    margin-top: -10px; /* Move image upward */
+    margin-top: -5px !important; /* Move image upward */
   }
 
 }
@@ -2192,7 +2192,7 @@ input {
 
   .right .profile-pic {
     position: relative;
-    top: -30px;          /* Move image upward */
+    top: -10px;          /* Move image upward */
     margin-bottom: -20px; /* Pull text closer if needed */
   }
 
@@ -2211,7 +2211,7 @@ input {
     margin: 0 auto;
     display: block;
     position: relative;
-    top: -30px;
+    top: -10px;
   }
 }
 
@@ -3343,7 +3343,7 @@ input {
   height: 420px;
   border-radius: 50%;
   overflow: hidden;
-  flex-shrink: 0;
+  
 }
 /* Hero profile pic: same size, shape & position on both index and dashboard (#home) */
 #home .home-content .right {
@@ -3358,7 +3358,7 @@ input {
   border-radius: 50%;
   border: none;
   box-shadow: none;
-  margin-top: -100px;
+  margin-top: -50px;
   margin-left: -200px;
   margin-right: -100px;
   flex-shrink: 0;
@@ -3369,7 +3369,7 @@ input {
   inset: 0;
   z-index: 0;
   border-radius: 50%;
-  background: radial-gradient(ellipse at center, #1e293b 0%, #0f172a 100%);
+  
 }
 .profile-pic-placeholder .profile-pic {
   position: absolute;
@@ -3407,7 +3407,7 @@ input {
     width: 340px;
     height: 340px;
     margin: 0 auto;
-    margin-top: -10px;
+    margin-top: -7px;
     border: none;
     box-shadow: none;
   }
