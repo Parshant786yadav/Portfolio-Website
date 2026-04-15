@@ -1,0 +1,6 @@
+User-agent: *
+Disallow: /functions/
+Disallow: /images/
+Disallow: /README.md
+
+Sitemap: https://parshantyadav.com/sitemap.xml
