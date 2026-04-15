@@ -1,14 +1,13 @@
 const { onRequest } = require("firebase-functions/v2/https");
 const { defineSecret } = require("firebase-functions/params");
 const logger = require("firebase-functions/logger");
-const { GoogleGenerativeAI } = require("@google/generative-ai");
 const cors = require("cors")({ origin: true });
 
 // ✅ Attach the secret
-const GEMINI_API_KEY = defineSecret("GEMINI_API_KEY");
+const DOCUMIND_API_KEY = defineSecret("DOCUMIND_API_KEY");
 
 exports.chat = onRequest(
-  { region: "us-central1", secrets: [GEMINI_API_KEY] },
+  { region: "us-central1", secrets: [DOCUMIND_API_KEY] },
   async (req, res) => {
     cors(req, res, async () => {
       if (req.method === "OPTIONS") return res.status(204).send("");
@@ -19,18 +18,31 @@ exports.chat = onRequest(
         }
 
         const body = typeof req.body === "string" ? JSON.parse(req.body) : req.body;
-        const { message } = body || {};
+        const { message, history } = body || {};
 
         if (!message || typeof message !== "string") {
           return res.status(400).json({ error: "Missing 'message' string" });
         }
 
-        // ✅ Use the secret
-        const genAI = new GoogleGenerativeAI(GEMINI_API_KEY.value());
-        const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
+        // ✅ Call your custom Documind API
+        const documindRes = await fetch("https://documind.parshantyadav.com/api/v1/chat", {
+          method: "POST",
+          headers: {
+            "Authorization": "Bearer " + DOCUMIND_API_KEY.value(),
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify({
+            message: message,
+            history: history || []
+          })
+        });
 
-        const result = await model.generateContent(message);
-        const reply = result.response.text();
+        if (!documindRes.ok) {
+          throw new Error("Documind API returned status " + documindRes.status);
+        }
+
+        const data = await documindRes.json();
+        const reply = data.reply;
 
         return res.status(200).json({ reply });
       } catch (e) {
