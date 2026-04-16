@@ -1,5 +1,5 @@
 // Service worker: long-lived cache for static assets (fixes "Use efficient cache lifetimes" on mobile)
-const CACHE_NAME = 'portfolio-v1';
+const CACHE_NAME = 'portfolio-v2';
 const LONG_CACHE = 31536000; // 1 year in seconds (immutable-like)
 
 const STATIC_ASSETS = [
@@ -50,15 +50,18 @@ self.addEventListener('fetch', (e) => {
 
   if (isStaticAsset(url)) {
     e.respondWith(
-      caches.open(CACHE_NAME).then((cache) =>
-        cache.match(e.request).then((cached) => {
-          if (cached) return cached;
-          return fetch(e.request).then((res) => {
-            if (res.ok) cache.put(e.request, res.clone());
+      fetch(e.request)
+        .then((res) => {
+          // Network first: if success, update cache and return fresh response
+          return caches.open(CACHE_NAME).then((cache) => {
+            cache.put(e.request, res.clone());
             return res;
           });
         })
-      )
+        .catch(() => {
+          // Fallback to cache if offline
+          return caches.match(e.request);
+        })
     );
   }
 });
