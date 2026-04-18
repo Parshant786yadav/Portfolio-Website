@@ -13,35 +13,45 @@
       display: flex;
       justify-content: center;
       align-items: center;
-      font-family: 'Segoe UI', sans-serif;
-      overflow: hidden;
+      font-family: 'Segoe UI', system-ui, sans-serif;
+      overflow-x: hidden;
+      overflow-y: auto;
     }
 
     .welcome-container {
       text-align: center;
-      visibility: hidden; /* 👈 Hide everything at start */
+      visibility: hidden;
+      width: min(92vw, 34rem);
+      padding: 1.5rem 1rem;
+      box-sizing: border-box;
     }
 
     .welcome-text {
-      font-size: 2.5rem;
-      font-weight: bold;
-      letter-spacing: 1px;
+      font-size: clamp(1.6rem, 4.5vw, 2.45rem);
+      font-weight: 700;
+      letter-spacing: 0.02em;
+      line-height: 1.3;
       background: linear-gradient(to right, #00f5ff, #ff00cc);
       background-clip: text;
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
+      color: transparent;
       opacity: 0;
-      transform: translateX(-100%);
+      transform: translate3d(-28px, 0, 0);
+      display: inline-block;
+      max-width: 100%;
+      word-wrap: break-word;
+      overflow-wrap: anywhere;
     }
 
     .animate-slide-in {
-      animation: slideInLeft 1.5s ease forwards;
+      animation: slideInWelcome 1.05s cubic-bezier(0.22, 1, 0.36, 1) forwards;
     }
 
-    @keyframes slideInLeft {
+    @keyframes slideInWelcome {
       to {
         opacity: 1;
-        transform: translateX(0);
+        transform: translate3d(0, 0, 0);
       }
     }
 
@@ -90,16 +100,37 @@
 
   <!-- Welcome Logic -->
   <script>
+    function firstNameFromEmail(email) {
+      if (!email) return 'Friend';
+      var local = String(email).split('@')[0] || '';
+      var letters = local.match(/^[a-zA-Z]+/);
+      if (letters) {
+        var s = letters[0];
+        return s.charAt(0).toUpperCase() + s.slice(1).toLowerCase();
+      }
+      var parts = local.split(/[._-]+/).filter(Boolean);
+      for (var i = 0; i < parts.length; i++) {
+        var m = parts[i].match(/[a-zA-Z]+/);
+        if (m) {
+          var t = m[0];
+          return t.charAt(0).toUpperCase() + t.slice(1).toLowerCase();
+        }
+      }
+      if (local.length) return local.charAt(0).toUpperCase() + local.slice(1).toLowerCase();
+      return 'Friend';
+    }
+
     firebase.auth().onAuthStateChanged((user) => {
       if (user) {
-        const msg = document.getElementById('welcomeMessage');
-        const container = document.getElementById('welcomeContainer');
+        var msg = document.getElementById('welcomeMessage');
+        var container = document.getElementById('welcomeContainer');
+        var name = firstNameFromEmail(user.email);
 
-        msg.textContent = `Welcome, ${user.email}`;
-        container.classList.add('show-container'); // 👈 make visible
-        msg.classList.add('animate-slide-in');     // 👈 start animation immediately
+        msg.textContent = 'Welcome, ' + name;
+        container.classList.add('show-container');
+        msg.classList.add('animate-slide-in');
 
-        setTimeout(() => {
+        setTimeout(function () {
           window.location.href = 'dashboard.html';
         }, 3000);
       } else {

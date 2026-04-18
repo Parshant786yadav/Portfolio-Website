@@ -212,19 +212,12 @@
       width: auto;
     }
 
-
-
-
-    @media only screen and (max-width: 768px) {
-      .hamburger {
-        margin-right: -208px;
-        flex-shrink: 1;
-      }
+    .logo img.logo-img-profile {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      object-fit: cover;
     }
-
-
-
-
 
 
 
@@ -234,42 +227,14 @@
         display: flex;
         flex-direction: column;
         align-items: center;
-      }
-
-      #app-text {
-        text-align: center;
-        margin: 0 auto;
-      }
-    }
-
-
-    @media (max-width: 600px) {
-      .actions {
-        margin-left: 0;
-        /* ❌ remove auto push */
-        width: 100%;
-        justify-content: center;
-        /* ✅ center children */
-      }
-    }
-
-    @media (max-width: 600px) {
-      .app-launcher {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
         justify-content: center;
         width: fit-content;
       }
-    }
 
-    @media (max-width: 600px) {
       #app-text {
         display: none !important;
       }
-    }
 
-    @media (max-width: 600px) {
       .app-dropdown {
         left: 50%;
         transform: translateX(-50%);
@@ -277,9 +242,8 @@
       }
     }
 
-
     .right {
-      margin-top: -90px;
+      margin-top: -20px;
     }
   </style>
 
@@ -292,13 +256,20 @@
 
     <canvas id="stars"></canvas>
 
+    <!-- Scroll-driven profile → navbar (clone; GSAP updates position in script.js) -->
+    <div id="profile-scroll-fly" aria-hidden="true">
+      <img id="profile-scroll-fly-img" alt="" width="120" height="120" decoding="async" />
+    </div>
+
     <!-- Header / Home Section -->
     <section id="home" class="section home">
       <nav class="navbar" id="navbar">
         <div class="nav-container">
           <div class="logo">
-            <a href="#" onclick="location.reload(); return false;" title="Refresh page"><img src="logoooo.png"
-                alt="My Logo" width="120" height="40" decoding="async"></a>
+            <a href="#" onclick="location.reload(); return false;" title="Refresh page" class="logo-home-link">
+              <img class="logo-img-brand" src="logoooo.png" alt="My Logo" width="120" height="40" decoding="async">
+              <img class="logo-img-profile" src="" alt="" width="40" height="40" decoding="async" hidden>
+            </a>
           </div>
 
           <ul class="nav-links" id="defaultNav">
@@ -348,8 +319,7 @@
                   title="HireWise - AI Powered Resume Screening & ATS Tool">📑 HireWise</a>
                 <a href="https://resumebuilder.parshantyadav.com" target="_blank"
                   title="Resume Builder - Create professional resumes online">🧾 Resume Builder</a>
-                <a href="https://tools.parshantyadav.com" target="_blank"
-                  title="AI Tools - More Artificial Intelligence tools coming soon">🛠️ AI Tools (Coming)</a>
+                
               </div>
             </div>
 
@@ -492,386 +462,347 @@
     </section>
 
 
-    <button id="ai-toggle" type="button"><span class="ai-toggle-default-text">Chat Me 🤖</span><span
-        class="ai-toggle-talk-text" aria-hidden="true">Talk to me</span></button>
-
-    <!-- Chat Panel -->
-    <div id="ai-panel" aria-hidden="true">
-      <div id="ai-header">
-        <div>Chat Me 🤖</div>
-        <button id="ai-mode" title="Instructions">ℹ️</button>
-      </div>
-
-      <div id="ai-body"></div>
-      <div id="ai-typing">Chat Me is typing...</div>
-
-      <div id="ai-inputbar">
-        <input id="ai-input" placeholder="Type a message..." />
-        <button id="ai-send">Send</button>
-      </div>
-    </div>
-
-    <!-- Instructions Panel (SEPARATE FLOATING PANEL) -->
-    <div id="ai-instructions" aria-hidden="true">
-      <div class="ai-header">
-        <div>How to use Chat Me 🤖</div>
-      </div>
-
-      <div class="ai-instructions-body">
-        <ul>
-          <li><strong>1.</strong> It only knows about me, my projects, skills, etc.</li>
-          <li><strong>2.</strong> Try to ask questions in short like – 12th marks, college name, skills, etc.</li>
-          <li><strong>3.</strong> Responses may take a few seconds.</li>
-          <li><strong>4.</strong> Conversations are not stored permanently.</li>
-        </ul>
-      </div>
-    </div>
 
 
 
 
+    <!-- Storytelling Container -->
+    <div id="story-container">
 
+      <section id="about" class="about-section story-section">
+        <div class="about-container scroll-reveal">
+          <h2 class="about-title"> About Me</h2>
 
+          <p class="about-intro">
+            "Web development is my warm-up. I love solving DSA challenges and exploring AI & ML."
+          </p>
 
-    <section id="about" class="about-section">
-      <div class="about-container scroll-reveal">
-        <h2 class="about-title animate-on-scroll"> About Me</h2>
-
-        <p class="about-intro">
-          "Web development is my warm-up. I love solving DSA challenges and exploring AI & ML."
-        </p>
-
-        <p class="about-details">
-          Hi! I am <span class="highlight">Parshant Yadav</span>, a B.Tech CSE student specializing in Artificial
-          Intelligence & Machine Learning.
-          Based in Gurgaon, India, I am passionate about engineering real-world software projects, solving algorithmic
-          challenges, and exploring scalable cloud technologies.
-          With robust hands-on experience in <span class="highlight">Python</span>, <span class="highlight">Data
-            Structures & Algorithms (DSA)</span>, <span class="highlight">Full Stack Web Development</span>, and
-          building intelligent <span class="highlight">AI/ML models</span>, I thrive on turning complex ideas into
-          working, high-performance solutions.
-          Currently, I am sharpening my expertise by building innovative AI tools like DocuMind, conquering advanced
-          LeetCode problems, and mastering modern web frameworks.
-        </p>
-      </div>
-    </section>
-
-
-
-
-    <!-- Skills Section -->
-    <section id="skills">
-      <div class="scroll-reveal stagger-parent">
-        <h2 class="animate-on-scroll">Skills</h2>
-        <div class="skills-grid">
-          <div class="skill-icon stagger-child">
-            <img src="images/html.png" alt="HTML" width="48" height="48" loading="lazy" decoding="async">
-            <div class="tooltip">HTML</div>
-          </div>
-          <div class="skill-icon stagger-child">
-            <img src="images/css.png" alt="CSS" width="48" height="48" loading="lazy" decoding="async">
-            <div class="tooltip">CSS</div>
-          </div>
-          <div class="skill-icon stagger-child">
-            <img src="images/javascript.png" alt="JavaScript" width="48" height="48" loading="lazy" decoding="async">
-            <div class="tooltip">JavaScript</div>
-          </div>
-          <div class="skill-icon stagger-child">
-            <img src="images/c.png" alt="C" width="48" height="48" loading="lazy" decoding="async">
-            <div class="tooltip">C</div>
-          </div>
-          <div class="skill-icon stagger-child">
-            <img src="images/vs code.png" alt="VS Code" width="48" height="48" loading="lazy" decoding="async">
-            <div class="tooltip">VS Code</div>
-          </div>
-
-          <div class="skill-icon stagger-child">
-            <img src="images/python.png" alt="Python" width="48" height="48" loading="lazy" decoding="async">
-            <div class="tooltip">Python</div>
-          </div>
-          <div class="skill-icon stagger-child">
-            <img src="images/java.png" alt="Java" width="48" height="48" loading="lazy" decoding="async">
-            <div class="tooltip">Java</div>
-          </div>
-          <div class="skill-icon stagger-child">
-            <img src="images/git.png" alt="Git" width="48" height="48" loading="lazy" decoding="async">
-            <div class="tooltip">Git</div>
-          </div>
-          <div class="skill-icon stagger-child">
-            <img src="images/github.png" alt="GitHub" width="48" height="48" loading="lazy" decoding="async">
-            <div class="tooltip">GitHub</div>
-          </div>
-          <div class="skill-icon stagger-child">
-            <img src="images/firebase.png" alt="Firebase" width="48" height="48" loading="lazy" decoding="async">
-            <div class="tooltip">Firebase</div>
-          </div>
-
-          <div class="skill-icon stagger-child">
-            <img src="images/tailwin css.png" alt="Tailwind CSS" width="48" height="48" loading="lazy" decoding="async">
-            <div class="tooltip">Tailwind CSS</div>
-          </div>
-          <div class="skill-icon stagger-child">
-            <img src="images/typescript.png" alt="TypeScript" width="48" height="48" loading="lazy" decoding="async">
-            <div class="tooltip">TypeScript</div>
-          </div>
-          <div class="skill-icon stagger-child">
-            <img src="images/pycharm.png" alt="PyCharm" width="48" height="48" loading="lazy" decoding="async">
-            <div class="tooltip">PyCharm</div>
-          </div>
-          <div class="skill-icon stagger-child">
-            <img src="images/mysql.png" alt="MySQL" width="48" height="48" loading="lazy" decoding="async">
-            <div class="tooltip">MySQL</div>
-          </div>
-          <div class="skill-icon stagger-child">
-            <img src="images/c++.png" alt="C++" width="48" height="48" loading="lazy" decoding="async">
-            <div class="tooltip">C++</div>
-          </div>
+          <p class="about-details">
+            Hi! I am <span class="highlight">Parshant Yadav</span>, a B.Tech CSE student specializing in Artificial
+            Intelligence & Machine Learning.
+            Based in Gurgaon, India, I am passionate about engineering real-world software projects, solving algorithmic
+            challenges, and exploring scalable cloud technologies.
+            With robust hands-on experience in <span class="highlight">Python</span>, <span class="highlight">Data
+              Structures & Algorithms (DSA)</span>, <span class="highlight">Full Stack Web Development</span>, and
+            building intelligent <span class="highlight">AI/ML models</span>, I thrive on turning complex ideas into
+            working, high-performance solutions.
+            Currently, I am sharpening my expertise by building innovative AI tools like DocuMind, conquering advanced
+            LeetCode problems, and mastering modern web frameworks.
+          </p>
         </div>
-      </div>
-    </section>
+      </section>
 
 
 
-    <!--  Experience Sectionn -->
-    <section class="experience-section" id="experience">
-      <div class="scroll-reveal">
-        <h2 class="animate-on-scroll">Experience</h2>
-        <div class="timeline">
 
-          <div class="timeline-item">
-            <div class="timeline-dot"></div>
-            <div class="timeline-content">
-              <h3 class="role"> Software QA Engineer Intern</h3>
-              <span class="company">NxCar (on-site)</span>
-              <span class="duration">Aug 2025 - current</span>
-              <p>
-                Optimized backend logic and debugged performance issues in collaboration with developers.
-              </p>
-              <div class="tags">
-                <span class="tag">Python</span>
-                <span class="tag">Frontend</span>
-                <span class="tag">Backend</span>
-                <span class="tag">API's</span>
-                <span class="tag">MYSQL</span>
-              </div>
+      <!-- Skills Section -->
+      <section id="skills" class="story-section section">
+        <div class="scroll-reveal stagger-parent">
+          <h2>Skills</h2>
+          <div class="skills-grid">
+            <div class="skill-icon stagger-child">
+              <img src="images/html.png" alt="HTML" width="48" height="48" loading="lazy" decoding="async">
+              <div class="tooltip">HTML</div>
+            </div>
+            <div class="skill-icon stagger-child">
+              <img src="images/css.png" alt="CSS" width="48" height="48" loading="lazy" decoding="async">
+              <div class="tooltip">CSS</div>
+            </div>
+            <div class="skill-icon stagger-child">
+              <img src="images/javascript.png" alt="JavaScript" width="48" height="48" loading="lazy" decoding="async">
+              <div class="tooltip">JavaScript</div>
+            </div>
+            <div class="skill-icon stagger-child">
+              <img src="images/c.png" alt="C" width="48" height="48" loading="lazy" decoding="async">
+              <div class="tooltip">C</div>
+            </div>
+            <div class="skill-icon stagger-child">
+              <img src="images/vs code.png" alt="VS Code" width="48" height="48" loading="lazy" decoding="async">
+              <div class="tooltip">VS Code</div>
+            </div>
+
+            <div class="skill-icon stagger-child">
+              <img src="images/python.png" alt="Python" width="48" height="48" loading="lazy" decoding="async">
+              <div class="tooltip">Python</div>
+            </div>
+            <div class="skill-icon stagger-child">
+              <img src="images/java.png" alt="Java" width="48" height="48" loading="lazy" decoding="async">
+              <div class="tooltip">Java</div>
+            </div>
+            <div class="skill-icon stagger-child">
+              <img src="images/git.png" alt="Git" width="48" height="48" loading="lazy" decoding="async">
+              <div class="tooltip">Git</div>
+            </div>
+            <div class="skill-icon stagger-child">
+              <img src="images/github.png" alt="GitHub" width="48" height="48" loading="lazy" decoding="async">
+              <div class="tooltip">GitHub</div>
+            </div>
+            <div class="skill-icon stagger-child">
+              <img src="images/firebase.png" alt="Firebase" width="48" height="48" loading="lazy" decoding="async">
+              <div class="tooltip">Firebase</div>
+            </div>
+
+            <div class="skill-icon stagger-child">
+              <img src="images/tailwin css.png" alt="Tailwind CSS" width="48" height="48" loading="lazy"
+                decoding="async">
+              <div class="tooltip">Tailwind CSS</div>
+            </div>
+            <div class="skill-icon stagger-child">
+              <img src="images/typescript.png" alt="TypeScript" width="48" height="48" loading="lazy" decoding="async">
+              <div class="tooltip">TypeScript</div>
+            </div>
+            <div class="skill-icon stagger-child">
+              <img src="images/pycharm.png" alt="PyCharm" width="48" height="48" loading="lazy" decoding="async">
+              <div class="tooltip">PyCharm</div>
+            </div>
+            <div class="skill-icon stagger-child">
+              <img src="images/mysql.png" alt="MySQL" width="48" height="48" loading="lazy" decoding="async">
+              <div class="tooltip">MySQL</div>
+            </div>
+            <div class="skill-icon stagger-child">
+              <img src="images/c++.png" alt="C++" width="48" height="48" loading="lazy" decoding="async">
+              <div class="tooltip">C++</div>
             </div>
           </div>
+        </div>
+      </section>
 
-          <div class="timeline-item">
-            <div class="timeline-dot"></div>
-            <div class="timeline-content">
-              <h3 class="role"> Artificial Intelligence Intern</h3>
-              <span class="company">IBM (Remote)</span>
-              <span class="duration">July 2025 - Aug 2025</span>
-              <p>
-                Worked on AI-based solutions using Python and IBM Cloud tools to solve real-world business problems
-              </p>
-              <div class="tags">
-                <span class="tag">Python</span>
-                <span class="tag">NLP</span>
-                <span class="tag">Cloud tools</span>
+
+
+      <!--  Experience Sectionn -->
+      <section class="experience-section story-section section" id="experience">
+        <div class="scroll-reveal">
+          <h2>Experience</h2>
+          <div class="timeline">
+
+            <div class="timeline-item">
+              <div class="timeline-dot"></div>
+              <div class="timeline-content">
+                <h3 class="role"> Software QA Engineer Intern</h3>
+                <span class="company">NxCar (on-site)</span>
+                <span class="duration">Aug 2025 - current</span>
+                <p>
+                  Optimized backend logic and debugged performance issues in collaboration with developers.
+                </p>
+                <div class="tags">
+                  <span class="tag">Python</span>
+                  <span class="tag">Frontend</span>
+                  <span class="tag">Backend</span>
+                  <span class="tag">API's</span>
+                  <span class="tag">MYSQL</span>
+                </div>
               </div>
             </div>
-          </div>
 
-          <div class="timeline-item">
-            <div class="timeline-dot"></div>
-            <div class="timeline-content">
-              <h3 class="role">Freelance Web Dev</h3>
-              <span class="company">Self-employed</span>
-              <span class="duration">Aug 2024 - July 2025</span>
-              <p>
-                Created responsive websites for clients with modern UI/UX principles.
-                Focused on speed and mobile-friendliness.
-              </p>
-              <div class="tags">
-                <span class="tag">HTML</span>
-                <span class="tag">CSS</span>
-                <span class="tag">JavaScript</span>
-                <span class="tag">React.js</span>
-                <span class="tag">Node.js</span>
-                <span class="tag">API's</span>
-                <span class="tag">Firebase</span>
-                <span class="tag">SQL</span>
+            <div class="timeline-item">
+              <div class="timeline-dot"></div>
+              <div class="timeline-content">
+                <h3 class="role"> Artificial Intelligence Intern</h3>
+                <span class="company">IBM (Remote)</span>
+                <span class="duration">July 2025 - Aug 2025</span>
+                <p>
+                  Worked on AI-based solutions using Python and IBM Cloud tools to solve real-world business problems
+                </p>
+                <div class="tags">
+                  <span class="tag">Python</span>
+                  <span class="tag">NLP</span>
+                  <span class="tag">Cloud tools</span>
+                </div>
               </div>
             </div>
+
+            <div class="timeline-item">
+              <div class="timeline-dot"></div>
+              <div class="timeline-content">
+                <h3 class="role">Freelance Web Dev</h3>
+                <span class="company">Self-employed</span>
+                <span class="duration">Aug 2024 - July 2025</span>
+                <p>
+                  Created responsive websites for clients with modern UI/UX principles.
+                  Focused on speed and mobile-friendliness.
+                </p>
+                <div class="tags">
+                  <span class="tag">HTML</span>
+                  <span class="tag">CSS</span>
+                  <span class="tag">JavaScript</span>
+                  <span class="tag">React.js</span>
+                  <span class="tag">Node.js</span>
+                  <span class="tag">API's</span>
+                  <span class="tag">Firebase</span>
+                  <span class="tag">SQL</span>
+                </div>
+              </div>
+            </div>
+
           </div>
-
         </div>
-      </div>
-    </section>
+      </section>
 
 
 
 
-    <!-- Certificates Section -->
-    <section id="certificates" class="certificates-section">
-      <div class="scroll-reveal">
-        <h2 class="animate-on-scroll">Certificates</h2>
-        <div class="certificate-slider">
+      <!-- Certificates Section -->
+      <section id="certificates" class="certificates-section story-section section">
+        <div class="scroll-reveal">
+          <h2>Certificates</h2>
+          <div class="certificate-slider">
 
-          <div class="certificate-slide active">
-            <a href="https://coursera.org/verify/4LCPNYZJLWYG " target="_blank">
-              <img src="images/AI certificate.png" alt="Certificate 1" width="320" height="240" loading="lazy"
-                decoding="async">
+            <div class="certificate-slide active">
+              <a href="https://coursera.org/verify/4LCPNYZJLWYG " target="_blank">
+                <img src="images/AI certificate.png" alt="Certificate 1" width="320" height="240" loading="lazy"
+                  decoding="async">
+              </a>
+            </div>
+
+            <div class="certificate-slide">
+              <a href="https://example.com/web-dev-certificate" target="_blank">
+                <img src="images/Web dev certificate.jpg" alt="Certificate 2" width="320" height="240" loading="lazy"
+                  decoding="async">
+              </a>
+            </div>
+
+            <div class="certificate-slide">
+              <a href="https://coursera.org/verify/AKRB3YPHL2PZ " target="_blank">
+                <img src="images/Technical fundamental certificate.png" alt="Certificate 3" width="320" height="240"
+                  loading="lazy" decoding="async">
+              </a>
+            </div>
+
+            <div class="certificate-slide">
+              <a href="https://example.com/python-hackerrank" target="_blank">
+                <img src="images/Python Hackerrank certificate.jpg" alt="Certificate 4" width="320" height="240"
+                  loading="lazy" decoding="async">
+              </a>
+            </div>
+
+
+
+            <div class="certificate-slide">
+              <a href="https://coursera.org/verify/4LCPNYZJLWYG " target="_blank">
+                <img src="images/AI certificate.png" alt="Certificate 6" width="320" height="240" loading="lazy"
+                  decoding="async">
+              </a>
+            </div>
+
+          </div>
+        </div>
+      </section>
+
+
+
+      <!-- Education Section -->
+      <section id="education" class="section education story-section">
+        <div class="scroll-reveal">
+          <h2>Education</h2>
+          <div class="edu-entry">
+            <h3>B.Tech in CSE (AI & ML)</h3>
+            <p>MDU University, 2022–2026 | Score: 8 cgpa +</p>
+          </div>
+          <div class="edu-entry">
+            <h3>Senior Secondary (XII)</h3>
+            <p>RPS School, 2020–2022 | Score: 83%</p>
+          </div>
+          <div class="edu-entry">
+            <h3>Secondary (X)</h3>
+            <p>Suraj School, 2018–2020 | Score: 76.6%</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Leetcode Section -->
+      <section id="leetcode" class="section leetcode-section story-section">
+        <div class="scroll-reveal">
+          <h2>LeetCode</h2>
+
+          <div class="leetcode-card" style="text-align: center;">
+            <a href="https://leetcode.com/parshant786yadav" target="_blank">
+
+              <img src="https://leetcard.jacoblin.cool/parshant786yadav?theme=dark&ext=heatmap&hide=ranking,contest"
+                alt="LeetCode Stats" class="leetcode-avatar" width="400" height="200" loading="lazy" decoding="async"
+                style="border-radius:12px; box-shadow:0 0 15px rgba(0,255,150,0.5);" />
+
+            </a>
+
+            <p class="leetcode-info"> I’ve solved 200+ DSA problems on LeetCode and earned multiple badges.
+              <br> My journey reflects consistency, passion, and problem-solving growth.
+              <br> Always eager to take on new coding challenges!
+            </p>
+
+            <a href="https://leetcode.com/parshant786yadav" class="leetcode-link" target="_blank">
+              🔗 Click here to visit my LeetCode Profile
             </a>
           </div>
-
-          <div class="certificate-slide">
-            <a href="https://example.com/web-dev-certificate" target="_blank">
-              <img src="images/Web dev certificate.jpg" alt="Certificate 2" width="320" height="240" loading="lazy"
-                decoding="async">
-            </a>
-          </div>
-
-          <div class="certificate-slide">
-            <a href="https://coursera.org/verify/AKRB3YPHL2PZ " target="_blank">
-              <img src="images/Technical fundamental certificate.png" alt="Certificate 3" width="320" height="240"
-                loading="lazy" decoding="async">
-            </a>
-          </div>
-
-          <div class="certificate-slide">
-            <a href="https://example.com/python-hackerrank" target="_blank">
-              <img src="images/Python Hackerrank certificate.jpg" alt="Certificate 4" width="320" height="240"
-                loading="lazy" decoding="async">
-            </a>
-          </div>
-
-
-
-          <div class="certificate-slide">
-            <a href="https://coursera.org/verify/4LCPNYZJLWYG " target="_blank">
-              <img src="images/AI certificate.png" alt="Certificate 6" width="320" height="240" loading="lazy"
-                decoding="async">
-            </a>
-          </div>
-
         </div>
-      </div>
-    </section>
+      </section>
 
-
-
-    <!-- Education Section -->
-    <section id="education" class="section education">
-      <div class="scroll-reveal">
-        <h2 class="animate-on-scroll">Education</h2>
-        <div class="edu-entry">
-          <h3>B.Tech in CSE (AI & ML)</h3>
-          <p>MDU University, 2022–2026 | Score: 8 cgpa +</p>
-        </div>
-        <div class="edu-entry">
-          <h3>Senior Secondary (XII)</h3>
-          <p>RPS School, 2020–2022 | Score: 83%</p>
-        </div>
-        <div class="edu-entry">
-          <h3>Secondary (X)</h3>
-          <p>Suraj School, 2018–2020 | Score: 76.6%</p>
-        </div>
-      </div>
-    </section>
-
-    <!-- Leetcode Section -->
-    <section id="leetcode" class="section leetcode-section">
-      <div class="scroll-reveal">
-        <h2 class="animate-on-scroll">LeetCode</h2>
-
-        <div class="leetcode-card" style="text-align: center;">
-          <a href="https://leetcode.com/parshant786yadav" target="_blank">
-
-            <img src="https://leetcard.jacoblin.cool/parshant786yadav?theme=dark&ext=heatmap&hide=ranking,contest"
-              alt="LeetCode Stats" class="leetcode-avatar" width="400" height="200" loading="lazy" decoding="async"
-              style="border-radius:12px; box-shadow:0 0 15px rgba(0,255,150,0.5);" />
-
-          </a> <br>
-
-          <p class="leetcode-info"> I’ve solved 150+ DSA problems on LeetCode and earned multiple badges.
-            <br> My journey reflects consistency, passion, and problem-solving growth.
-            <br> Always eager to take on new coding challenges!
-          </p> <br><br>
-
-          <a href="https://leetcode.com/parshant786yadav" class="leetcode-link" target="_blank">
-            🔗 Click here to visit my LeetCode Profile
-          </a>
-        </div>
-      </div>
-    </section>
-
-
-    <br><br><br><br><br><br>
-
-
-
-    <!-- GitHub Section -->
-    <section id="github" class="github-section">
-      <div class="scroll-reveal">
-        <h2 class="animate-on-scroll">GitHub</h2>
-        <div class="github-grid">
-          <div class="github-card"
-            data-hovertext="• Built an Advanced RAG Architecture using FastAPI (Python), generating Hugging Face embeddings for accurate vector searches.
+      <!-- GitHub Section -->
+      <section id="github" class="github-section story-section section">
+        <div class="scroll-reveal">
+          <h2>GitHub</h2>
+          <div class="github-grid">
+            <div class="github-card"
+              data-hovertext="• Built an Advanced RAG Architecture using FastAPI (Python), generating Hugging Face embeddings for accurate vector searches.
 • Integrated lightning-fast LLM inference via Groq API (Llama-3.3-70b) with intelligent SSE streaming for real-time responses.
 • Architected a cloud-native database using Supabase (PostgreSQL/Storage) and implemented secure passwordless OTP logins.
 • Engineered secure embeddable API capabilities with hashed keys, enabling custom document-knowledge chatbot integrations.">
-            <a href="https://github.com/parshant786yadav" target="_blank" class="github-title"
-              title="DocuMind Backend Source Code">DocuMind - AI Chatbot</a>
-            <p class="github-description"> Advanced RAG-based AI Document Chatbot & PDF Assistant..<br><span
-                style="color: #4dff00;">( Hover For Details )</span></p>
-            <div class="github-meta">
-              <span>FastAPI / Python</span>
-              <div class="stats">
-                ⭐⭐⭐⭐
+              <a href="https://github.com/parshant786yadav" target="_blank" class="github-title"
+                title="DocuMind Backend Source Code">DocuMind - AI Chatbot</a>
+              <p class="github-description"> Advanced RAG-based AI Document Chatbot & PDF Assistant..<br><span
+                  style="color: #4dff00;">( Hover For Details )</span></p>
+              <div class="github-meta">
+                <span>FastAPI / Python</span>
+                <div class="stats">
+                  ⭐⭐⭐⭐
+                </div>
               </div>
             </div>
-          </div>
 
-          <div class="github-card" data-hovertext="• Developed an AI-powered resume screening tool using Python and NLP.                                                                                                                       
+            <div class="github-card" data-hovertext="• Developed an AI-powered resume screening tool using Python and NLP.                                                                                                                       
 • Extracted and analyzed resume data for automated candidate shortlisting.                                                                                                                 
 • Optimized keyword matching algorithms, reducing manual screening time by 60%.                                                                                                   
 • Implemented structured text processing to improve accuracy in candidate ranking. ">
-            <a href="https://github.com/parshant786yadav/Resume-Screening-App" target="_blank" class="github-title"
-              title="HireWise Source Code">HireWise</a>
-            <p class="github-description"><span style="color: #4dff00;">( Hover For Details )</span></p>
-            <div class="github-meta">
-              <span>NLP</span>
-              <div class="stats">
-                ⭐⭐
+              <a href="https://github.com/parshant786yadav/Resume-Screening-App" target="_blank" class="github-title"
+                title="HireWise Source Code">HireWise</a>
+              <p class="github-description"><span style="color: #4dff00;">( Hover For Details )</span></p>
+              <div class="github-meta">
+                <span>NLP</span>
+                <div class="stats">
+                  ⭐⭐
+                </div>
               </div>
             </div>
-          </div>
 
-          <div class="github-card"
-            data-hovertext="• Engineered an interactive AI-driven portfolio hub featuring a custom, context-aware chatbot to answer visitor queries in real-time.
+            <div class="github-card"
+              data-hovertext="• Engineered an interactive AI-driven portfolio hub featuring a custom, context-aware chatbot to answer visitor queries in real-time.
 • Integrated responsive serverless architecture via Firebase to securely handle scalable AI inferences and dynamic messaging.
 • Designed a premium, high-performance UI featuring intelligent micro-animations, fast load optimization, and adaptive layouts.
 • Seamlessly bridged modern full-stack web infrastructure with deep-learning NLP components and custom AI platform API integrations.">
-            <a href="https://github.com/parshant786yadav" target="_blank" class="github-title"
-              title="AI-Powered Portfolio Source Code">AI-Powered Tech Portfolio</a>
-            <p class="github-description"><span style="color: #4dff00;">( Hover For Details )</span></p>
-            <div class="github-meta">
-              <span>AI / Full Stack</span>
-              <div class="stats">
-                ⭐⭐⭐⭐
+              <a href="https://github.com/parshant786yadav" target="_blank" class="github-title"
+                title="AI-Powered Portfolio Source Code">AI-Powered Tech Portfolio</a>
+              <p class="github-description"><span style="color: #4dff00;">( Hover For Details )</span></p>
+              <div class="github-meta">
+                <span>AI / Full Stack</span>
+                <div class="stats">
+                  ⭐⭐⭐⭐
+                </div>
               </div>
             </div>
           </div>
-        </div> <br><br>
-        <p class="github-info-text">
-          These are some of my featured projects — click on any project card to explore more details including what the
-          project is about, its key features, and the complete source code.
-        </p>
+          <p class="github-info-text" style="margin-top: 40px;">
+            These are some of my featured projects — click on any project card to explore more details including what
+            the
+            project is about, its key features, and the complete source code.
+          </p>
 
-        <a href="http://github.com/parshant786yadav" target="_blank" class="github-button">
-          🚀 Click here to visit my GitHub Profile
-        </a>
-      </div>
-    </section>
+          <a href="http://github.com/parshant786yadav" target="_blank" class="github-button">
+            🚀 Click here to visit my GitHub Profile
+          </a>
+        </div>
+      </section>
 
-    <br><br><br><br><br><br>
-
+    </div><!-- End Story Container -->
 
     <!--                                       get in touch                                  -->
-
 
     <section class="contact-section">
       <div class="contact-container scroll-reveal">
@@ -976,12 +907,48 @@
   </div>
   <div id="loginPopup" class="popup hidden"></div>
 
+  <button id="ai-toggle" type="button"><span class="ai-toggle-default-text">Chat Me 🤖</span><span
+      class="ai-toggle-talk-text" aria-hidden="true">Talk to me</span></button>
+
+  <!-- Instructions above chat (mock layout); stack is shown when chat opens -->
+  <div id="ai-floating-stack" aria-hidden="true" hidden>
+    <div id="ai-instructions" aria-hidden="true">
+      <div class="ai-instructions-mock-header">How to use Chat Me 🤖</div>
+      <div class="ai-instructions-mock-body">
+        <ol class="ai-instructions-mock-list">
+          <li>It only knows about me, my projects, skills, etc.</li>
+          <li>Try to ask questions in short like – 12th marks, college name, skills, etc.</li>
+          <li>Responses may take a few seconds.</li>
+          <li>Conversations are not stored permanently.</li>
+        </ol>
+      </div>
+    </div>
+
+    <div id="ai-panel" aria-hidden="true">
+      <div id="ai-header">
+        <div>Chat Me 🤖</div>
+        <button id="ai-mode" type="button" title="How to use" aria-label="How to use chat">i</button>
+      </div>
+
+      <div id="ai-body"></div>
+      <div id="ai-typing">Chat Me is typing...</div>
+
+      <div id="ai-inputbar">
+        <input id="ai-input" placeholder="Type a message..." />
+        <button id="ai-send">Send</button>
+      </div>
+    </div>
+  </div>
 
   <!-- Firebase & app scripts: defer to avoid render-blocking -->
   <script defer src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
   <script defer src="https://www.gstatic.com/firebasejs/10.12.0/firebase-auth-compat.js"></script>
   <script defer src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>
   <script defer src="https://www.gstatic.com/firebasejs/10.12.0/firebase-database-compat.js"></script>
+
+  <!-- GSAP & ScrollTrigger -->
+  <script defer src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+  <script defer src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
   <script defer src="script.js"></script>
 
 
@@ -1016,6 +983,7 @@
 
       // ---- AI Chat Panel ----
       const toggle = document.getElementById("ai-toggle");
+      const stack = document.getElementById("ai-floating-stack");
       const panel = document.getElementById("ai-panel");
       const body = document.getElementById("ai-body");
       const input = document.getElementById("ai-input");
@@ -1054,7 +1022,7 @@
         }, 3000);
       })();
 
-      if (!toggle || !panel || !body || !input || !send) return;
+      if (!toggle || !stack || !panel || !body || !input || !send || !instructionsBtn || !instructionsPanel) return;
 
       let open = false;
       const history = [];
@@ -1076,20 +1044,19 @@
 
       /* ---------- INSTRUCTIONS ---------- */
 
-      // Manual open
       instructionsBtn.addEventListener("click", (e) => {
         e.stopPropagation();
-        instructionsPanel.classList.add("open");
+        instructionsPanel.classList.toggle("open");
       });
 
 
 
-      // Close instructions when clicking outside
       document.addEventListener("click", (e) => {
         if (
           instructionsPanel.classList.contains("open") &&
           !instructionsPanel.contains(e.target) &&
-          !instructionsBtn.contains(e.target)
+          !instructionsBtn.contains(e.target) &&
+          !panel.contains(e.target)
         ) {
           instructionsPanel.classList.remove("open");
         }
@@ -1098,15 +1065,15 @@
       /* ---------- PANEL OPEN / CLOSE ---------- */
       const openPanel = () => {
         open = true;
+        stack.hidden = false;
+        stack.setAttribute("aria-hidden", "false");
+        stack.style.display = "flex";
         panel.style.display = "flex";
         panel.style.opacity = "1";
         panel.style.transform = "translateY(0)";
         panel.setAttribute("aria-hidden", "false");
-
-        // 🔥 AUTO OPEN INSTRUCTIONS
         instructionsPanel.classList.add("open");
 
-        // ✅ Focus input ONLY on desktop
         if (window.innerWidth > 768) {
           input.focus();
         }
@@ -1116,8 +1083,9 @@
       const closePanel = () => {
         open = false;
 
-        // 👇 FORCE keyboard to close
         input.blur();
+
+        instructionsPanel.classList.remove("open");
 
         panel.style.opacity = "0";
         panel.style.transform = "translateY(10px)";
@@ -1125,6 +1093,9 @@
 
         setTimeout(() => {
           panel.style.display = "none";
+          stack.style.display = "none";
+          stack.hidden = true;
+          stack.setAttribute("aria-hidden", "true");
         }, 200);
       };
       toggle.addEventListener("click", (e) => {
@@ -1136,14 +1107,12 @@
         }
       });
 
-      // Close chat when clicking outside
       document.addEventListener("click", (e) => {
-        if (open && !panel.contains(e.target) && !toggle.contains(e.target)) {
+        if (open && !stack.contains(e.target) && !toggle.contains(e.target)) {
           closePanel();
         }
       });
 
-      /* ---------- AUTO CLOSE INSTRUCTIONS ON TYPING ---------- */
       input.addEventListener("input", () => {
         instructionsPanel.classList.remove("open");
       });

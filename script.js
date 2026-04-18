@@ -8,7 +8,7 @@ const appearOptions = {
   rootMargin: "0px 0px -50px 0px"
 };
 
-const appearOnScroll = new IntersectionObserver(function(
+const appearOnScroll = new IntersectionObserver(function (
   entries,
   appearOnScroll
 ) {
@@ -31,25 +31,25 @@ const REVEAL_DELAY_MS = 80;
 const scrollRevealEls = document.querySelectorAll('.scroll-reveal');
 const scrollRevealOptions = { threshold: 0.12, rootMargin: '0px 0px -30px 0px' };
 
-const scrollRevealObserver = new IntersectionObserver(function(entries) {
+const scrollRevealObserver = new IntersectionObserver(function (entries) {
   entries.forEach(entry => {
     if (!entry.isIntersecting) return;
     const el = entry.target;
-    setTimeout(function() {
+    setTimeout(function () {
       el.classList.add('revealed');
       scrollRevealObserver.unobserve(el);
     }, REVEAL_DELAY_MS);
   });
 }, scrollRevealOptions);
 
-scrollRevealEls.forEach(function(el) {
+scrollRevealEls.forEach(function (el) {
   scrollRevealObserver.observe(el);
 });
 
 // Stagger parent: when parent enters view, add .revealed so stagger-child animations run
 const staggerParents = document.querySelectorAll('.stagger-parent');
 const staggerOptions = { threshold: 0.15, rootMargin: '0px 0px -40px 0px' };
-const staggerObserver = new IntersectionObserver(function(entries) {
+const staggerObserver = new IntersectionObserver(function (entries) {
   entries.forEach(entry => {
     if (!entry.isIntersecting) return;
     entry.target.classList.add('revealed');
@@ -61,7 +61,7 @@ staggerParents.forEach(el => staggerObserver.observe(el));
 // Section titles and single-element reveal (animate-on-scroll, timeline, edu, leetcode)
 const animateOnScrollEls = document.querySelectorAll('.animate-on-scroll, .timeline-item, .edu-entry, .leetcode-card');
 const animateOptions = { threshold: 0.18, rootMargin: '0px 0px -50px 0px' };
-const animateObserver = new IntersectionObserver(function(entries) {
+const animateObserver = new IntersectionObserver(function (entries) {
   entries.forEach(entry => {
     if (!entry.isIntersecting) return;
     const el = entry.target;
@@ -80,7 +80,7 @@ animateOnScrollEls.forEach(el => animateObserver.observe(el));
 const navLinks = document.querySelectorAll('a[href^="#"]');
 
 navLinks.forEach(link => {
-  link.addEventListener('click', function(e) {
+  link.addEventListener('click', function (e) {
     const href = this.getAttribute('href');
     if (href === '#') return;
     e.preventDefault();
@@ -91,8 +91,8 @@ navLinks.forEach(link => {
 
 const textArray = [
   "Problem Solver",
-  "Practical Coder", 
-  "AI Explorer", 
+  "Practical Coder",
+  "AI Explorer",
   "Web Developer",
   "DSA Enthusiast",
 ];
@@ -521,21 +521,12 @@ if (contactForm) {
 
 
 
-if (logoutBtn && !logoutBtn.hasAttribute("listener")) {
-  logoutBtn.setAttribute("listener", "true");
-  logoutBtn.addEventListener("click", () => {
-    const confirmLogout = confirm("❓ Do you want to logout?");
-    if (confirmLogout) {
-      auth.signOut().then(() => {
-        window.location.href = "index.html";
-      });
-    }
-  });
-}
 
 
 
-  const textEl = document.getElementById('resumeText');
+
+const textEl = document.getElementById('resumeText');
+if (textEl) {
   const messages = ["Download Resume", " 94+ ATS Score 😎 "];
   let i = 0;
 
@@ -554,27 +545,28 @@ if (logoutBtn && !logoutBtn.hasAttribute("listener")) {
       textEl.classList.add("fade-in");
     }, 200); // match transition time
   }, 1500); // total time per message cycle
+}
 
 
 
-  
 
 
 
 
-  function toggleAppMenu() {
-    const menu = document.getElementById('appMenu');
-    menu.classList.toggle('hidden');
+
+function toggleAppMenu() {
+  const menu = document.getElementById('appMenu');
+  menu.classList.toggle('hidden');
+}
+
+// 🔒 Close menu if clicked outside
+document.addEventListener('click', function (event) {
+  const launcher = document.querySelector('.app-launcher');
+  const menu = document.getElementById('appMenu');
+  if (!launcher.contains(event.target)) {
+    menu.classList.add('hidden');
   }
-
-  // 🔒 Close menu if clicked outside
-  document.addEventListener('click', function (event) {
-    const launcher = document.querySelector('.app-launcher');
-    const menu = document.getElementById('appMenu');
-    if (!launcher.contains(event.target)) {
-      menu.classList.add('hidden');
-    }
-  });
+});
 
 
 
@@ -586,7 +578,7 @@ if (logoutBtn && !logoutBtn.hasAttribute("listener")) {
 
 
 
- 
+
 
 const viewDocRef = db.collection("analytics").doc("visitCount");
 
@@ -630,10 +622,10 @@ trackAndDisplayViewCount();
 
 firebase.initializeApp(firebaseConfig);
 
-  // ✅ Google Sign-In Logic
-  const provider = new firebase.auth.GoogleAuthProvider();
+// ✅ Google Sign-In Logic
+const provider = new firebase.auth.GoogleAuthProvider();
 
-  document.getElementById("google-signin-btn").addEventListener("click", function () {
+document.getElementById("google-signin-btn").addEventListener("click", function () {
   const provider = new firebase.auth.GoogleAuthProvider();
 
   firebase.auth().signInWithPopup(provider)
@@ -702,44 +694,211 @@ firebase.auth().onAuthStateChanged((user) => {
 });
 
 
-  
-const currentPath = window.location.pathname;
 
-if (user) {
-  // ✅ Show Dashboard/Logout only on dashboard.html
-  if (currentPath.includes("dashboard.html")) {
-    dashboardLink.style.display = "block";
-    logoutBtn.style.display = "block";
-    loginBtn.style.display = "none";
+// ==========================================
+// GSAP SCROLL STORYTELLING LOGIC
+// ==========================================
+
+document.addEventListener("DOMContentLoaded", () => {
+  if (typeof gsap !== "undefined" && typeof ScrollTrigger !== "undefined") {
+    gsap.registerPlugin(ScrollTrigger);
+
+    const sections = gsap.utils.toArray(".story-section");
+
+    if (sections.length > 0) {
+      // 4. Cinematic Fly-in and Zoom for every section
+      sections.forEach((sec, i) => {
+        // Skip #home because it's the hero and has the avatar animation
+        if (sec.id === "home") return;
+
+        // Container zoom-in setup - Desktop only to avoid mobile layout breaking
+        if (window.innerWidth > 768) {
+          gsap.fromTo(sec,
+            { scale: 0.85, opacity: 0 },
+            {
+              scale: 1,
+              opacity: 1,
+              scrollTrigger: {
+                trigger: sec,
+                start: "top 95%", // starts entering from bottom
+                end: "top 30%",   // fully visible when it hits 30% from top
+                scrub: 1
+              }
+            }
+          );
+        } else {
+          // Simpler fade for mobile
+          gsap.fromTo(sec,
+            { opacity: 0.5 },
+            {
+              opacity: 1,
+              scrollTrigger: {
+                trigger: sec,
+                start: "top 95%",
+                end: "top 50%",
+                scrub: 1
+              }
+            }
+          );
+        }
+
+        // Animate inner elements (cards, paragraphs) cleanly sliding up - keeping headings (h2) stable!
+        const innerEls = sec.querySelectorAll('.glass-card, p, .github-card, .btn');
+
+        gsap.fromTo(innerEls,
+          { y: 60, opacity: 0, scale: 0.95 },
+          {
+            y: 0,
+            opacity: 1,
+            scale: 1,
+            stagger: 0.05,
+            ease: "power2.out",
+            scrollTrigger: {
+              trigger: sec,
+              start: "top 90%", // Feel earlier and more responsive
+              end: "center center",
+              scrub: 1
+            }
+          }
+        );
+      });
+    }
   }
-}
+});
 
-firebase.auth().signInWithPopup(provider)
-  .then((result) => {
-    // ✅ Hide modal immediately
-    document.getElementById("authModal").classList.add("hidden");
+// Profile photo → navbar logo: straight path from cached hero center (no jump to viewport center)
+document.addEventListener("DOMContentLoaded", () => {
+  const flyRoot = document.getElementById("profile-scroll-fly");
+  const flyImg = document.getElementById("profile-scroll-fly-img");
+  const home = document.getElementById("home");
+  const navbar = document.getElementById("navbar");
+  const placeholder = home && home.querySelector(".profile-pic-placeholder");
+  const heroImg = document.querySelector("#home .right .profile-pic");
+  const logoWrap = document.querySelector(".navbar .logo a");
+  const logoBrand = document.querySelector(".navbar .logo-img-brand");
+  const logoProfile = document.querySelector(".navbar .logo-img-profile");
 
-    // ✅ Redirect almost immediately (within 100ms)
-    setTimeout(() => {
-      window.location.href = "dashboard.html";
-    }, 100);
+  if (!flyRoot || !flyImg || !home || !navbar || !placeholder || !heroImg || !logoWrap) return;
+  if (!logoBrand || !logoProfile) return;
+  if (typeof gsap === "undefined" || typeof ScrollTrigger === "undefined") return;
+  if (window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+
+  const P_START = 0.03;
+  const P_END = 0.97;
+
+  /** Snapshot while hero is visible — size + center so motion has no jump when hero hides */
+  const heroMetrics = {
+    d: 280,
+    cx: typeof window !== "undefined" ? window.innerWidth * 0.5 : 0,
+    cy: typeof window !== "undefined" ? window.innerHeight * 0.5 : 0,
+  };
+
+  const refreshHeroMetrics = () => {
+    const r = placeholder.getBoundingClientRect();
+    if (r.width >= 48) {
+      heroMetrics.d = r.width;
+      heroMetrics.cx = r.left + r.width / 2;
+      heroMetrics.cy = r.top + r.height / 2;
+    }
+  };
+
+  const syncSources = () => {
+    const src = heroImg.currentSrc || heroImg.src;
+    if (!src) return;
+    flyImg.setAttribute("src", src);
+    logoProfile.setAttribute("src", src);
+    refreshHeroMetrics();
+  };
+  if (heroImg.complete) syncSources();
+  else heroImg.addEventListener("load", syncSources, { once: true });
+
+  const applyTop = () => {
+    placeholder.style.removeProperty("visibility");
+    placeholder.style.removeProperty("opacity");
+    flyRoot.style.opacity = "0";
+    flyRoot.style.visibility = "hidden";
+    navbar.classList.remove("navbar-profile-logo");
+    logoBrand.hidden = false;
+    logoProfile.hidden = true;
+  };
+
+  const applyDocked = () => {
+    placeholder.style.visibility = "hidden";
+    placeholder.style.opacity = "0";
+    flyRoot.style.opacity = "0";
+    flyRoot.style.visibility = "hidden";
+    navbar.classList.add("navbar-profile-logo");
+    logoBrand.hidden = true;
+    logoProfile.hidden = false;
+  };
+
+  const update = (progress) => {
+    const p = progress;
+    const lg = logoWrap.getBoundingClientRect();
+    const targetSize = Math.max(lg.width, lg.height, 36);
+    const vw = window.innerWidth;
+    const vh = window.innerHeight;
+
+    if (p <= P_START) {
+      refreshHeroMetrics();
+      applyTop();
+      return;
+    }
+
+    placeholder.style.visibility = "hidden";
+    placeholder.style.opacity = "0";
+
+    if (p >= P_END) {
+      applyDocked();
+      return;
+    }
+
+    navbar.classList.remove("navbar-profile-logo");
+    logoBrand.hidden = false;
+    logoProfile.hidden = true;
+
+    const t = Math.min(1, Math.max(0, (p - P_START) / (P_END - P_START)));
+    const lx = lg.left + lg.width / 2;
+    const ly = lg.top + lg.height / 2;
+    const cx = heroMetrics.cx + (lx - heroMetrics.cx) * t;
+    const cy = heroMetrics.cy + (ly - heroMetrics.cy) * t;
+    const sizeStart = Math.min(heroMetrics.d, Math.min(vw, vh) * 0.72);
+    const size = sizeStart + (targetSize - sizeStart) * t;
+
+    flyRoot.style.width = `${Math.max(32, size)}px`;
+    flyRoot.style.height = `${Math.max(32, size)}px`;
+    flyRoot.style.left = `${cx}px`;
+    flyRoot.style.top = `${cy}px`;
+    flyRoot.style.opacity = "1";
+    flyRoot.style.visibility = "visible";
+  };
+
+  ScrollTrigger.create({
+    trigger: home,
+    start: "top top",
+    end: "bottom top",
+    scrub: 0,
+    invalidateOnRefresh: true,
+    onUpdate: (self) => update(self.progress),
+    onLeave: () => update(1),
+    onRefresh: (self) => update(self.progress),
   });
 
-  firebase.auth().signInWithPopup(provider)
-  .then((result) => {
-    document.getElementById("authModal").classList.add("hidden");
-
-    // Show popup first
-    const popup = document.getElementById("success-popup");
-    popup.style.display = "block";
-
-    // ✅ Redirect quickly, before navbar updates
-    setTimeout(() => {
-      window.location.href = "dashboard.html";
-    }, 500); // Shorter delay
+  window.addEventListener("resize", () => {
+    refreshHeroMetrics();
+    try {
+      ScrollTrigger.refresh();
+    } catch (e) {
+      /* ignore */
+    }
   });
 
-
-
-
-
+  requestAnimationFrame(() => {
+    refreshHeroMetrics();
+    try {
+      ScrollTrigger.refresh();
+    } catch (e) {
+      /* ignore */
+    }
+  });
+});
